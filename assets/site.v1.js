@@ -9,7 +9,8 @@
   const fireLaunch = () => { if (launch.fired) return; launch.fired = true; launch.listeners.forEach((fn) => fn()); launch.listeners = []; };
   (() => {
     const gate = document.getElementById('gate');
-    if (!gate || !html.classList.contains('gate-pending')) { fireLaunch(); return; }
+    if (!gate) { html.classList.remove('gate-pending'); fireLaunch(); return; }   // a copy built without the gate must not stay locked
+    if (!html.classList.contains('gate-pending')) { fireLaunch(); return; }
     const behind = [...document.body.children].filter((el) => el !== gate && el.tagName !== 'SCRIPT');
     const write = () => {
       const stamp = String(Date.now());
@@ -140,7 +141,10 @@
         a.setAttribute('aria-label', `Deck ${d.n} · ${d.name}`);
         scope.append(a); return a;
       });
-      const place = () => { const max = maxScroll(); decks.forEach((d, i) => { blips[i].style.top = `${Math.min(1, d.el.offsetTop / max) * 100}%`; }); };
+      const place = () => {
+        const max = maxScroll(), H = scope.clientHeight || 1; let last = -Infinity;
+        decks.forEach((d, i) => { let y = Math.min(1, d.el.offsetTop / max) * H; if (y < last + 28) y = last + 28; last = y; blips[i].style.top = `${Math.min(100, (y / H) * 100)}%`; });
+      };
       place();
       addEventListener('resize', place, { passive: true });
       addEventListener('load', place, { once: true });
@@ -199,6 +203,31 @@
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
     els.forEach((el) => io.observe(el));
     setTimeout(() => els.forEach((el) => { el.classList.add('is-in'); io.unobserve(el); }), 1200);
+  })();
+  (() => {
+    if (!motionOn() || !CSS.supports('selector(html:active-view-transition-type(door))')) return;
+    const warm = () => {
+      const narrow = matchMedia('(max-width: 700px)').matches;
+      [narrow ? 'assets/img/airlock-leaves-tall-768.webp' : 'assets/img/airlock-leaves-1280.webp', 'assets/img/port-glass-320.webp', 'assets/img/frost-640.webp']
+        .forEach((src) => { const im = new Image(); im.src = src; });
+    };
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 300));
+    const later = () => setTimeout(() => idle(warm, { timeout: 3000 }), 1400);
+    if (document.readyState === 'complete') later();
+    else addEventListener('load', later, { once: true });
+  })();
+  (() => {
+    const els = [...document.querySelectorAll('.room, .travel, .intro, .section, .band')];
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-near')); return; }
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) {
+        e.target.classList.add('is-near');
+        for (const im of e.target.querySelectorAll('.line img[loading="lazy"]')) im.loading = 'eager';
+        io.unobserve(e.target);
+      }
+    }, { rootMargin: '150% 0px 150% 0px' });
+    els.forEach((el) => io.observe(el));
   })();
   (() => {
     if (!CSS.supports('width', 'calc(sibling-index() * 1px)')) {
@@ -334,6 +363,80 @@
     };
     along.addEventListener('input', update);
     update();
+    window.swPhase = { stops, set(t) { along.value = String(Math.min(1000, Math.round(t * 1000 / step) * step)); update(); svg.classList.add('is-drawn'); }, word: () => word.textContent };
+  })();
+  (() => {
+    const hosts = [...document.querySelectorAll('[data-run], [data-poster]')];
+    for (const host of hosts) {
+      const line = host.querySelector('.line');
+      const rail = host.querySelector('[data-rail]');
+      if (!line || !rail) continue;
+      const names = (host.dataset.stations || '').split(',').map((s) => s.trim()).filter(Boolean);
+      const stages = [...host.querySelectorAll('[data-stages] .stage')];
+      const hud = line.querySelector('[data-hud]');
+      const track = host.querySelector('.run__track');
+      const live = () => !!track && getComputedStyle(host).getPropertyValue('--live').trim() === '1';
+      const pad = (i) => String(i + 1).padStart(2, '0');
+      const holds = [0.17, 0.37, 0.62, 0.83];
+      let current = -1;
+      const buttons = names.map((name, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'rail__btn';
+        b.textContent = `${pad(i)} ${name}`;
+        b.setAttribute('aria-label', `Station ${pad(i)} · ${name}`);
+        b.addEventListener('click', () => go(i));
+        rail.appendChild(b);
+        return b;
+      });
+      const setOn = (i, state) => {
+        if (i === current && !state) return;
+        current = i;
+        stages.forEach((s, k) => s.classList.toggle('is-on', k === i));
+        buttons.forEach((b, k) => b.setAttribute('aria-current', k === i ? 'true' : 'false'));
+        if (hud) hud.textContent = `Stage ${pad(i)} of 04${state ? ` · ${state}` : ''}`;
+        const deck = document.getElementById('deck-stage');
+        if (deck && names[i]) deck.textContent = `${pad(i)} ${names[i]}`;
+      };
+      const go = (i) => {
+        if (live()) {
+          const top = track.getBoundingClientRect().top + scrollY + holds[i] * (track.offsetHeight - innerHeight);
+          scrollTo({ top, behavior: motionOn() ? 'smooth' : 'auto' });
+          return;
+        }
+        line.classList.remove('line--go-1', 'line--go-2', 'line--go-3', 'line--go-4');
+        line.classList.add(`line--go-${i + 1}`);
+        setOn(i);
+      };
+      if (!live()) { buttons.forEach((b) => b.setAttribute('aria-current', 'false')); continue; }
+      const readout = document.querySelector('.readout[aria-live]');
+      if (readout) readout.setAttribute('aria-live', 'off');
+      const stops = window.swPhase?.stops || [0, 0.33, 0.67, 1];
+      const map = [[0, 0], [0.24, 0], [0.44, stops[1]], [0.52, stops[1]], [0.58, stops[2]], [0.72, 1], [1, 1]];
+      const tOf = (p) => {
+        for (let k = 1; k < map.length; k++) {
+          if (p <= map[k][0]) { const [p0, t0] = map[k - 1], [p1, t1] = map[k]; return t0 + (t1 - t0) * ((p - p0) / (p1 - p0 || 1)); }
+        }
+        return 1;
+      };
+      let raf = 0, lastT = -1;
+      const onScroll = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const r = track.getBoundingClientRect();
+          const span = track.offsetHeight - innerHeight;
+          if (r.bottom < 0 || r.top > innerHeight || span <= 0) return;
+          const p = Math.min(1, Math.max(0, -r.top / span));
+          const i = p < 0.26 ? 0 : p < 0.48 ? 1 : p < 0.74 ? 2 : 3;
+          const t = Math.round(tOf(p) * 100) / 100;
+          if (window.swPhase && t !== lastT) { lastT = t; window.swPhase.set(t); }
+          setOn(i, window.swPhase ? window.swPhase.word() : '');
+        });
+      };
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    }
   })();
   (() => {
     const clips = [...document.querySelectorAll('video[data-clip], video[data-sky]')];
@@ -341,8 +444,10 @@
     const inView = new Set();
     const held = new Set();
     let ready = false;   // no clip fetches a byte until the page has loaded and settled: the first picture comes first
+    let readySky = false;   // the sky footage is the first window's largest paint: it starts at load, without the beat
     const sync = (v) => {
-      if (!ready || held.has(v) || !inView.has(v) || !motionOn()) { v.pause(); v.classList.remove('is-playing'); return; }
+      const ok = v.hasAttribute('data-sky') ? readySky : ready;
+      if (!ok || held.has(v) || !inView.has(v) || !motionOn()) { v.pause(); v.classList.remove('is-playing'); return; }
       v.play().then(() => v.classList.add('is-playing')).catch(() => {});
     };
     if ('IntersectionObserver' in window) {
@@ -350,10 +455,11 @@
       clips.forEach((v) => watch.observe(v));
     }
     const arm = () => { ready = true; clips.forEach(sync); };
+    const armSky = () => { readySky = true; clips.forEach(sync); setTimeout(arm, 1200); };
     const slow = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ''));
     if (slow) {  }
-    else if (document.readyState === 'complete') setTimeout(arm, 1200);
-    else addEventListener('load', () => setTimeout(arm, 1200), { once: true });
+    else if (document.readyState === 'complete') armSky();
+    else addEventListener('load', armSky, { once: true });
     clips.forEach((v) => {
       const toggle = v.closest('figure, section')?.querySelector('[data-clip-toggle]');
       if (!toggle) return;
@@ -386,7 +492,7 @@
     });
   })();
   (() => {
-    const form = document.querySelector('.form[data-mailto]');
+    const form = document.querySelector('.form[data-mailto]:not([data-compose])');
     if (!form) return;
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -400,6 +506,58 @@
       const note = form.querySelector('[data-form-note]');
       if (note) note.textContent = 'Your mail app should have opened with the message filled in. If it did not, write to info@spaceweedusa.com.';
     });
+  })();
+  (() => {
+    const form = document.querySelector('form[data-compose]');
+    if (!form) return;
+    const store = form.querySelector('#c-store');
+    const city = form.querySelector('#c-city');
+    const entry = form.querySelector('[data-entry]');
+    const note = form.querySelector('[data-compose-note]');
+    const copy = form.querySelector('[data-copy]');
+    if (!store || !city || !entry || !note) return;
+    const fills = { store: [...form.querySelectorAll('[data-fill="store"]')], city: [...form.querySelectorAll('[data-fill="city"]')] };
+    const blank = { store: 'your store’s name', city: 'your city' };
+    const clean = (v) => v.replace(/\s+/g, ' ').trim();
+    const render = () => {
+      const s = clean(store.value), c = clean(city.value);
+      fills.store.forEach((el) => { el.textContent = s || blank.store; el.classList.toggle('is-empty', !s); });
+      fills.city.forEach((el) => { el.textContent = c || blank.city; el.classList.toggle('is-empty', !c); });
+      entry.textContent = s ? (c ? `${s}, ${c}` : s) : 'Nothing written yet';
+      form.classList.toggle('is-ready', !!s);   // the little hatch shuts once an entry is written; the caption says it is only written here
+    };
+    const letter = () => {
+      const s = clean(store.value), c = clean(city.value);
+      const lines = ['Hello Space Weed,', '', 'Here is a store for your list.', '', `Store: ${s}`];
+      if (c) lines.push(`City: ${c}`);
+      lines.push('', 'Thank you.');
+      return lines.join('\r\n');
+    };
+    form.addEventListener('input', render);
+    render();
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent('A store for the Space Weed list')}&body=${encodeURIComponent(letter())}`;
+      form.classList.add('is-filed');
+      note.textContent = 'Your mail app should have opened with the message filled in. Nothing was sent from this page. If it did not open, write to info@spaceweedusa.com.';
+    });
+    if (copy) {
+      copy.hidden = false;
+      copy.addEventListener('click', async () => {
+        if (!form.reportValidity()) return;
+        const text = `To: info@spaceweedusa.com\r\nSubject: A store for the Space Weed list\r\n\r\n${letter()}`;
+        try {
+          await navigator.clipboard.writeText(text);
+          form.classList.add('is-filed');
+          note.textContent = 'Copied. Paste it into an email to info@spaceweedusa.com. Nothing was sent from this page.';
+        } catch {
+          const box = form.querySelector('.compose__letter');
+          if (box && getSelection) getSelection().selectAllChildren(box);
+          note.textContent = 'Copying was blocked, so the message is selected instead: press Ctrl+C, or Cmd+C on a Mac.';
+        }
+      });
+    }
   })();
   (() => {
     if (!motionOn() || !('IntersectionObserver' in window)) return;

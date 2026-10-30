@@ -18,7 +18,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/archivo.v2.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/jar-sweet-diesel-750.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/milky-way-640.webp" type="image/webp" fetchpriority="high">
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
@@ -35,7 +35,7 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
-<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__tag">21+</span></i></div>
+<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__frost"></span><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__frost"></span><span class="airlock__tag">21+</span></i></div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
   <div class="gate__scrim" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
     <p class="tag tag--ice gate__hail">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
     <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
     <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
-    <h2 class="gate__q" id="gate-q">Are you 21&nbsp;or older?</h2>
+    <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
     <div class="gate__buttons">
       <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
       <button class="button button--quiet" type="button" data-gate="no"><span class="button__in">No</span></button>
@@ -60,7 +60,7 @@
 </div>
 
 <div class="deck" aria-hidden="true">
-  <span class="deck__item deck__item--name"><span translate="no">Space&nbsp;Weed</span> · <span id="deck-name">Navigation</span></span>
+  <span class="deck__item deck__item--name"><span translate="no">Space&nbsp;Weed</span> · <span id="deck-name">Approach</span></span>
   <span class="deck__item deck__item--where">Deck <span id="deck-where">01</span></span>
   <span class="deck__item">Voyage <span class="deck__num" id="deck-voyage">00</span>%</span>
   <span class="deck__item deck__item--stage">Stage <span id="deck-stage">—</span></span>
@@ -93,95 +93,149 @@
 
 <main id="main" tabindex="-1">
 <noscript><p class="age wrap noscript-age">This site is for adults 21&nbsp;years of age and older. Keep out of reach of children.</p></noscript>
-<section class="page-hatch grid intro intro--pic" aria-labelledby="intro-title">
-  <div class="intro__sky" aria-hidden="true">
-    <picture>
-      <source type="image/webp" srcset="assets/img/milky-way-640.webp 640w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" sizes="(max-width: 700px) 60vw, 100vw">
-      <img src="assets/img/milky-way-2400.jpg" srcset="assets/img/milky-way-640.jpg 640w, assets/img/milky-way-1200.jpg 1200w, assets/img/milky-way-2400.jpg 2400w" sizes="(max-width: 700px) 60vw, 100vw" width="2400" height="1200" alt="" fetchpriority="high" decoding="async">
-    </picture>
-  </div>
-  <p class="tag tag--ice intro__tag" data-type>Searching for Space Weed?</p>
-  <h1 class="display intro__title" id="intro-title">Find Space&nbsp;Weed.</h1>
-  <div class="intro__lede">
-    <p class="lead"><span translate="no">Space&nbsp;Weed</span> is sold at licensed dispensaries only. We don’t have a store list to publish yet.</p>
-    <p>Search for <span translate="no">Space&nbsp;Weed</span> on your dispensary’s online menu, or ask for the jar at the counter. Call ahead to ask whether the store carries it.</p>
-    <p class="age">For adults 21+.</p>
-    <div class="actions">
-      <a class="button" href="mailto:info@spaceweedusa.com?subject=A%20store%20for%20the%20Space%20Weed%20list"><span class="button__in">Tell us your store</span></a>
-      <a class="textlink" href="#look-title">What to look for</a>
+<!-- DECK 01 · APPROACH: the dock. On the walk the deck pins for two screens and acts out the docking as the page scrolls;
+     the still page is the poster frame (hatch open, three lamps lit, the jar in the opening) -->
+<section class="room room--dock" id="approach" data-deck="Approach" aria-labelledby="intro-title">
+  <div class="dock__stage page-hatch">
+    <div class="room__window dock__window" aria-hidden="true">
+      <picture class="dock__sky">
+        <source type="image/webp" srcset="assets/img/milky-way-640.webp 640w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" sizes="100vw">
+        <img src="assets/img/milky-way-1200.jpg" srcset="assets/img/milky-way-640.jpg 640w, assets/img/milky-way-1200.jpg 1200w, assets/img/milky-way-2400.jpg 2400w" sizes="100vw" width="2400" height="1200" alt="" fetchpriority="high" decoding="async">
+      </picture>
+      <div class="dock__globe">
+        <picture>
+          <source type="image/webp" srcset="assets/img/black-marble-1200.webp 1200w, assets/img/black-marble-2400.webp 2400w" sizes="100vw">
+          <img src="assets/img/black-marble-1200.jpg" srcset="assets/img/black-marble-1200.jpg 1200w, assets/img/black-marble-2400.jpg 2400w" sizes="100vw" width="2400" height="800" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <span class="dock__rim"></span>
+    </div>
+    <span class="room__frame" aria-hidden="true"></span>
+    <p class="room__label" aria-hidden="true">Window 01 · the night side of the Earth under the Milky Way · NASA, NOAA, ESO/S. Brunier</p>
+    <div class="room__content dock">
+      <div class="dock__text">
+        <p class="tag tag--ice" data-type>Searching for Space Weed?</p>
+        <h1 class="display dock__title" id="intro-title">Find Space&nbsp;Weed.</h1>
+        <p class="lead"><span translate="no">Space&nbsp;Weed</span> is sold at licensed dispensaries only. We don’t have a store list to publish yet.</p>
+        <p class="age">For adults 21+.</p>
+        <p class="dock__links"><a class="textlink dock__skip" href="#log-title">Tell us your store</a> <a class="textlink dock__look" href="#look-title">What to look for</a></p>
+      </div>
+      <figure class="dock__port">
+        <div class="door door--port door--stage">
+          <span class="door__collar">
+            <span class="door__frame">
+              <span class="door__glass">
+                <picture class="door__lock"><source type="image/webp" srcset="assets/img/berth-800.webp"><img src="assets/img/berth-800.jpg" width="800" height="447" alt="" loading="lazy" decoding="async"></picture>
+                <picture class="door__jar"><source type="image/webp" srcset="assets/img/jar-blueberry-600.webp 600w, assets/img/jar-blueberry-700.webp 700w" sizes="(min-width: 960px) 26rem, 60vw"><img src="assets/img/jar-blueberry-700.png" srcset="assets/img/jar-blueberry-600.png 600w, assets/img/jar-blueberry-700.png 700w" sizes="(min-width: 960px) 26rem, 60vw" width="700" height="700" loading="lazy" decoding="async" alt="The Space Weed DJ Short Blueberry jar with its pink galaxy label, three green buds in front of it, lit in the open hatch."></picture>
+                <span class="door__frost"></span>
+              </span>
+              <span class="door__seam"></span>
+            </span>
+            <i class="door__lamp"></i><i class="door__lamp"></i><i class="door__lamp"></i>
+            <span class="lock door__lockon" aria-hidden="true"><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><span class="lock__tag tag tag--ice">Object · the jar</span></span>
+          </span>
+        </div>
+        <figcaption class="dock__cap"><span class="tag" data-type>What to look for</span><span class="small"><span translate="no">Space&nbsp;Weed</span> and Flash&nbsp;Frozen&nbsp;Cured on the jar’s label.</span></figcaption>
+      </figure>
+      <div class="dock__console plate">
+        <span class="plate__c"></span>
+        <p class="tag" data-type>Docking checklist · the course to the jar</p>
+        <p class="dock__read mono" aria-hidden="true"><span class="dock__step"></span></p>
+        <span class="course" aria-hidden="true"><span class="course__end">You</span><span class="course__rail"><i class="course__fill"></i></span><span class="course__end">Port</span></span>
+        <ol class="steps" aria-label="Three steps">
+          <li class="step" data-n="01"><span class="sub">Search the menu</span></li>
+          <li class="step" data-n="02"><span class="sub">Call ahead</span></li>
+          <li class="step" data-n="03"><span class="sub">Ask for it by name</span></li>
+        </ol>
+      </div>
     </div>
   </div>
-  <figure class="intro__pic plate">
-    <span class="plate__c"></span>
-    <picture>
-      <source type="image/webp" srcset="assets/img/jar-sweet-diesel-750.webp">
-      <img src="assets/img/jar-sweet-diesel-750.jpg" width="750" height="481" fetchpriority="high" alt="A Space Weed jar lid labelled Sweet Diesel, with the jar beside it on a dark ground.">
-    </picture>
-  </figure>
 </section>
 <i id="vt-ready" hidden></i>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Navigation</span></div>
-<section class="grid section nav nav--find" aria-labelledby="course-title">
-  <figure class="nav__chart plate" data-reveal aria-hidden="true">
+<!-- ON THE SHELF: the real label, with the two marks to look for locked on -->
+<section class="grid section pair look" aria-labelledby="look-title">
+  <figure class="pair__a plate look__fig" data-reveal>
     <span class="plate__c"></span>
-    <p class="tag" data-type>Navigation · star chart · the course to the jar</p>
-    <svg class="chart" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-      <circle class="chart__ring" cx="210" cy="210" r="190"/>
-      <circle class="chart__ring" cx="210" cy="210" r="130"/>
-      <circle class="chart__ring" cx="210" cy="210" r="70"/>
-      <line class="chart__axis" x1="210" y1="14" x2="210" y2="406"/>
-      <line class="chart__axis" x1="14" y1="210" x2="406" y2="210"/>
-      <line class="chart__axis chart__axis--diag" x1="72" y1="72" x2="348" y2="348"/>
-      <line class="chart__axis chart__axis--diag" x1="348" y1="72" x2="72" y2="348"/>
-      <polyline class="chart__course" pathLength="1" points="78,338 176,262 236,226 318,118"/>
-      <circle class="chart__you" cx="78" cy="338" r="6"/>
-      <text class="chart__t" x="92" y="356">You</text>
-      <circle class="chart__way" cx="176" cy="262" r="4"/>
-      <text class="chart__t" x="190" y="278">Ask for it by name</text>
-      <circle class="chart__way" cx="236" cy="226" r="4"/>
-      <text class="chart__t" x="248" y="214">Call ahead</text>
-      <circle class="chart__dest" cx="318" cy="118" r="9"/>
-      <text class="chart__t chart__t--dest" x="304" y="108">A licensed dispensary</text>
-      <text class="chart__t chart__t--n" x="210" y="34">N</text>
-    </svg>
-    <dl class="chart__readouts">
-      <div><dt>Heading</dt><dd>Licensed dispensaries only</dd></div>
-      <div><dt>Range</dt><dd>Call ahead</dd></div>
-      <div><dt>Course</dt><dd>Ask for it by name</dd></div>
-    </dl>
-  </figure>
-  <div class="nav__text" data-reveal>
-    <p class="tag" data-type>Navigation · the course</p>
-    <h2 class="head" id="course-title">The course to the jar.</h2>
-    <p><span translate="no">Space&nbsp;Weed</span> is sold at licensed dispensaries only. Ask for it by name, and call ahead to ask whether the store carries it.</p>
-    <p>If a store near you doesn’t carry it yet, send us the store’s name. We keep a list.</p>
-    <a class="button" href="mailto:info@spaceweedusa.com?subject=A%20store%20for%20the%20Space%20Weed%20list"><span class="button__in">Tell us your store</span></a>
-  </div>
-</section>
-
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">On the shelf</span></div>
-<section class="grid section pair" aria-labelledby="look-title">
-  <figure class="pair__a open-pic" data-reveal>
-    <picture>
-      <source type="image/webp" srcset="assets/img/jar-blueberry-close-757.webp">
-      <img src="assets/img/jar-blueberry-close-757.jpg" width="757" height="550" loading="lazy" decoding="async" alt="A Space Weed jar labelled DJ Short Blueberry, Flash Frozen Cured, with buds either side of it on a dark ground.">
-    </picture>
+    <div class="look__pic">
+      <picture>
+        <source type="image/webp" srcset="assets/img/jar-blueberry-close-757.webp">
+        <img src="assets/img/jar-blueberry-close-757.jpg" width="757" height="550" loading="lazy" decoding="async" alt="A Space Weed jar labelled DJ Short Blueberry, Flash Frozen Cured, with buds either side of it on a dark ground.">
+      </picture>
+      <span class="look__box look__box--a" aria-hidden="true"><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><b class="look__chip">A</b></span>
+      <span class="look__box look__box--b" aria-hidden="true"><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><b class="look__chip">B</b></span>
+    </div>
     <figcaption>The DJ Short Blueberry jar. “Flash&nbsp;Frozen&nbsp;Cured” is printed on the side.</figcaption>
   </figure>
   <div class="pair__b" data-reveal>
     <p class="tag" data-type>On the shelf</p>
     <h2 class="head" id="look-title">What to look for.</h2>
     <p class="lead"><span translate="no">Space&nbsp;Weed</span> and Flash&nbsp;Frozen&nbsp;Cured on the jar’s label.</p>
-    <p><span translate="no">Space&nbsp;Weed</span> is sold through licensed dispensaries only. If your store doesn’t list it, ask at the counter, and call ahead to ask whether they carry it.</p>
-    <p>If a store near you doesn’t carry it yet, send us the store’s name. We keep a list.</p>
-    <a class="textlink" href="mailto:info@spaceweedusa.com?subject=A%20store%20for%20the%20Space%20Weed%20list">Send us a store name</a>
+    <dl class="look__legend">
+      <div><dt>A</dt><dd>The white <span translate="no">Space&nbsp;Weed</span> box at the top of the label.</dd></div>
+      <div><dt>B</dt><dd>Flash&nbsp;Frozen&nbsp;Cured, set sideways down the label beside the snowflake.</dd></div>
+    </dl>
   </div>
 </section>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 04</span><span class="bulkhead__rule"></span><span class="bulkhead__name">At the counter</span></div>
+<!-- DECK 02 · THE BERTH: the docking log, where the visitor writes us their store (the one live thing). The lift brings it up. -->
+<section class="room room--berth room--lift" id="berth" data-deck="Docking log" aria-labelledby="log-title">
+  <div class="room__window" aria-hidden="true">
+    <picture>
+      <source type="image/webp" media="(max-width: 699px)" srcset="assets/img/berth-tall-768.webp">
+      <source media="(max-width: 699px)" srcset="assets/img/berth-tall-768.jpg">
+      <source type="image/webp" srcset="assets/img/berth-800.webp 800w, assets/img/berth-1280.webp 1280w" sizes="100vw">
+      <img src="assets/img/berth-1280.jpg" srcset="assets/img/berth-800.jpg 800w, assets/img/berth-1280.jpg 1280w" sizes="100vw" width="1280" height="715" alt="" loading="lazy" decoding="async">
+    </picture>
+  </div>
+  <span class="room__frame" aria-hidden="true"></span>
+  <p class="room__label" aria-hidden="true">Berth 01 · the ship’s own interior · a generated picture, not a photograph</p>
+  <div class="room__content berth">
+    <div class="berth__text" data-reveal>
+      <p class="tag" data-type>Docking log · your store</p>
+      <h2 class="head" id="log-title">Tell us your store.</h2>
+      <p class="statement">If a store near you doesn’t carry it yet, send us the store’s name. We keep a list.</p>
+      <p>Search for <span translate="no">Space&nbsp;Weed</span> on your dispensary’s online menu, or ask for the jar at the counter. It’s always best to call ahead or check store websites to make sure <span translate="no">Space&nbsp;Weed</span> is currently in stock!</p>
+    </div>
+    <form class="form plate compose" data-compose data-mailto="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com?subject=A%20store%20for%20the%20Space%20Weed%20list" enctype="text/plain" data-reveal>
+      <span class="plate__c"></span>
+      <p class="tag" data-type>New entry · docking log</p>
+      <dl class="compose__read" aria-label="The docking log’s readouts">
+        <div><dt>Port</dt><dd>A licensed dispensary</dd></div>
+        <div><dt>Your entry</dt><dd data-entry>Nothing written yet</dd></div>
+        <div><dt>Store list</dt><dd>None yet</dd></div>
+        <div><dt>Sent</dt><dd>Nothing from this page</dd></div>
+      </dl>
+      <div class="form__row">
+        <label for="c-store">Store name <span class="small">(required)</span></label>
+        <input id="c-store" name="store" type="text" maxlength="80" autocomplete="off" spellcheck="false" required>
+      </div>
+      <div class="form__row">
+        <label for="c-city">City <span class="small">(optional)</span></label>
+        <input id="c-city" name="city" type="text" maxlength="60" autocomplete="address-level2" spellcheck="false">
+      </div>
+      <div class="compose__letter mono js-only" role="group" aria-label="The email, as it will open">
+        <p>To: info@spaceweedusa.com</p>
+        <p>Subject: A store for the <span translate="no">Space&nbsp;Weed</span> list</p>
+        <p>Hello <span translate="no">Space&nbsp;Weed</span>,</p>
+        <p>Here is a store for your list.</p>
+        <p>Store: <span data-fill="store" class="is-empty">your store’s name</span></p>
+        <p>City: <span data-fill="city" class="is-empty">your city</span></p>
+        <p>Thank you.</p>
+      </div>
+      <div class="actions compose__actions">
+        <button class="button" type="submit"><span class="button__in">Open the email</span></button>
+        <button class="button button--quiet" type="button" data-copy hidden><span class="button__in">Copy the message</span></button>
+        <span class="compose__state" aria-hidden="true"><span class="door door--inline compose__door"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span></span></span><span class="compose__cap"></span></span>
+      </div>
+      <p class="small form__note">The button opens the message in your own mail app. Nothing is sent from this page, and nothing you type is kept.</p>
+      <p class="small form__status" data-compose-note role="status"></p>
+    </form>
+  </div>
+</section>
+
 <section class="section closer" aria-labelledby="counter-title" data-reveal>
-  <p class="tag" data-type>At the counter</p>
+  <p class="tag" data-type>At the counter · step 03</p>
   <h2 class="head" id="counter-title">Ask for it by name.</h2>
   <figure class="closer__pic open-pic">
     <picture>
@@ -216,8 +270,8 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
-      <p class="foot__credit small">The sky behind the title: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
+      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
+      <p class="foot__credit small">The window on approach: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed, over “Earth at Night” (the Black Marble), NASA Earth Observatory and NOAA NGDC, 2012, public domain. The jar in the hatch: the client’s own photograph. The hatch’s hull plate, the berth’s interior and the frost on the glass are generated pictures made for this mockup (the frost by way of the preview Angel built for the client); they are pictures of the ship itself, not photographs of any place.</p>
     </div>
   </div>
 </footer>

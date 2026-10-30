@@ -22,7 +22,7 @@
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
-
+<link rel="stylesheet" href="assets/line.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script src="assets/boot.v1.js"></script>
@@ -35,7 +35,7 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
-<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__tag">21+</span></i></div>
+<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__frost"></span><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__frost"></span><span class="airlock__tag">21+</span></i></div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
   <div class="gate__scrim" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
     <p class="tag tag--ice gate__hail">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
     <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
     <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
-    <h2 class="gate__q" id="gate-q">Are you 21&nbsp;or older?</h2>
+    <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
     <div class="gate__buttons">
       <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
       <button class="button button--quiet" type="button" data-gate="no"><span class="button__in">No</span></button>
@@ -100,13 +100,98 @@
       <img src="assets/img/chamber-1600.jpg" srcset="assets/img/chamber-560.jpg 560w, assets/img/chamber-800.jpg 800w, assets/img/chamber-1600.jpg 1600w" sizes="(max-width: 700px) 60vw, 100vw" width="1600" height="1200" alt="" fetchpriority="high" decoding="async">
     </picture>
   </div>
-  <p class="tag tag--ice how__tag" data-type>How it works</p>
+  <p class="tag tag--ice how__tag" data-type>What is Flash&nbsp;Frozen&nbsp;Cured?</p>
   <h1 class="head how__head" id="intro-title">Ice to vapour, never liquid.</h1>
-  <div class="how__statement">
-    <p class="lead">Flash&nbsp;Frozen&nbsp;Curing is a patented method: fresh cannabis is flash frozen and then dried under vacuum using temperature, time and pressure. No solvents or chemicals are ever used.</p>
-    <p>Below the triple point of water, <span translate="no">611.657&nbsp;pascals</span>, ice cannot melt. It can only leave as vapour, and that is how over 80% of the water leaves the flower.</p>
+  <div class="how__lede">
+    <p class="lead">Flash&nbsp;Frozen&nbsp;Curing is a patented scientific method whereby fresh cannabis is flash frozen and then dried under vacuum using temperature, time, and pressure. No solvents or chemicals are ever used.</p>
     <p class="age">For adults 21+.</p>
-    <p class="small">Behind this page: NASA’s Space Power Facility vacuum chamber in 1970, with a Skylab shroud inside it. NASA, public domain.</p>
+  </div>
+</section>
+<i id="vt-ready" hidden></i>
+
+<!-- THE LINE: the process as a cutaway chamber of four stations. On the walk the window pins and the scroll rides the line;
+     still, it is the poster with the four stage lines under it. -->
+<section class="run" data-run data-bulkhead="none" data-stations="Harvest,Freezer,Vacuum,Jar" aria-labelledby="stations-title">
+  <h2 class="sr" id="stations-title">The four stations</h2>
+  <div class="run__track">
+    <div class="run__stage">
+      <figure class="line" aria-hidden="true" data-line>
+  <div class="line__sky"><picture><source type="image/webp" srcset="assets/img/milky-way-1200.webp"><img src="assets/img/milky-way-1200.jpg" width="1200" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+  <p class="line__tag tag">Section · the four stations</p>
+  <div class="line__world">
+    <i class="line__face line__face--floor"></i><i class="line__face line__face--low"></i><i class="line__face line__face--wall"></i><i class="line__face line__face--high"></i>
+    <i class="line__ring line__ring--0"></i><i class="line__ring line__ring--1"></i><i class="line__ring line__ring--2"></i><i class="line__ring line__ring--3"></i><i class="line__ring line__ring--4"></i>
+    <div class="line__st line__st--1">
+      <i class="line__lamp"></i><div class="line__port line__port--open"></div><i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <img class="line__dew" src="assets/img/bud-dew-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <p class="line__name"><b>Station 01</b><span>Harvest</span><em>Water · liquid</em></p>
+    </div>
+    <div class="line__st line__st--2">
+      <i class="line__lamp"></i>
+      <div class="line__port"><img src="assets/img/freezer-port-640.webp" width="640" height="640" alt="" loading="lazy" fetchpriority="low" decoding="async"><i class="line__frost"></i></div>
+      <i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <img class="line__rime" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <p class="line__name"><b>Station 02</b><span>Freezer</span><em>Water · ice</em></p>
+    </div>
+    <div class="line__st line__st--3">
+      <i class="line__lamp"></i>
+      <div class="line__port"><img src="assets/img/chamber-port-640.webp" width="640" height="640" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <img class="line__rime" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <i class="line__vent"></i><span class="line__mist"><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i></span>
+      <div class="line__door"><i class="line__leaf line__leaf--t"></i><i class="line__leaf line__leaf--b"></i></div>
+      <p class="line__call"><b>No liquid</b><b>Pulled away</b></p>
+      <p class="line__name"><b>Station 03</b><span>Vacuum</span><em>Water · leaving as vapour</em></p>
+    </div>
+    <div class="line__st line__st--4">
+      <i class="line__lamp"></i>
+      <div class="line__port"><picture><source type="image/webp" srcset="assets/img/same-weight-jars-500.webp"><img src="assets/img/same-weight-jars-500.jpg" width="500" height="500" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture><i class="line__lvl"><b>fills the jar like two</b></i></div>
+      <i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <p class="line__name"><b>Station 04</b><span>Jar</span><em>Water · over 80% gone</em></p>
+    </div>
+  </div>
+  <p class="line__legend">An illustration drawn for this page. The flower and the jars are the client’s photographs.</p>
+  <p class="line__hud tag" data-hud></p>
+</figure>
+      <div class="run__cap">
+        <ol class="how__stages run__stages" data-stages>
+          <li class="stage is-on">
+            <h3 class="sub stage__title" data-n="01">Harvest</h3>
+            <p>The plant is harvested and the flower is taken off the stem.</p>
+          </li>
+          <li class="stage">
+            <h3 class="sub stage__title" data-n="02">Freezer</h3>
+            <p>Frozen within an hour of harvest. It waits as ice until it is dried.</p>
+          </li>
+          <li class="stage">
+            <h3 class="sub stage__title" data-n="03">Vacuum</h3>
+            <p>In the chamber the frozen water goes straight from ice to vapour and is pulled away. It never melts.</p>
+          </li>
+          <li class="stage">
+            <h3 class="sub stage__title" data-n="04">Jar</h3>
+            <p>Over 80% of the water is gone. With the water’s weight out of it, a gram fills the jar like two, and the bud breaks up by hand.</p>
+          </li>
+        </ol>
+        <div class="run__aside">
+          <div class="rail" role="group" aria-label="Jump to a station" data-rail></div>
+          <a class="textlink run__skip" href="#method-title">Skip to the diagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">The method</span></div>
+<section class="grid section how how--method" aria-labelledby="method-title">
+  <div class="how__statement">
+    <p class="tag" data-type>The method</p>
+    <h2 class="head" id="method-title">Follow the water.</h2>
+    <p class="statement">In a vacuum, ice skips melting and goes straight to vapour.</p>
+    <p>Below the triple point of water, <span translate="no">611.657&nbsp;pascals</span>, ice cannot melt. It can only leave as vapour, and that is how over 80% of the water leaves the flower.</p>
   </div>
   <figure class="how__figure plate">
     <span class="plate__c"></span>
@@ -182,24 +267,10 @@
     <div class="chips js-only" role="group" aria-label="Jump to a stage"></div>
     <figcaption class="how__caption">Water’s phase diagram. The curves are drawn from published data (Murphy and Koop 2005; IAPWS 2011); the triple point is at <span translate="no">0.01&nbsp;°C</span> and <span translate="no">611.657&nbsp;Pa</span>, and 1 atm is <span translate="no">101,325&nbsp;Pa</span>. The path is a sketch of the method. The process’s own settings are not shown.</figcaption>
   </figure>
-  <ol class="how__stages" data-reveal>
-    <li class="stage">
-      <h2 class="sub stage__title" data-n="01">Harvest</h2>
-      <p>The plant is harvested and the flower is taken off the stem.</p>
-    </li>
-    <li class="stage">
-      <h2 class="sub stage__title" data-n="02">Freezer</h2>
-      <p>Frozen within an hour of harvest. It waits as ice until it is dried.</p>
-    </li>
-    <li class="stage">
-      <h2 class="sub stage__title" data-n="03">Vacuum</h2>
-      <p>In the chamber the frozen water goes straight from ice to vapour and is pulled away. Only temperature, time and pressure.</p>
-    </li>
-    <li class="stage">
-      <h2 class="sub stage__title" data-n="04">Jar</h2>
-      <p>Over 80% of the water is gone. With the water’s weight out of it, a gram fills the jar like two, and the bud breaks up by hand.</p>
-    </li>
-  </ol>
+</section>
+
+<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 04</span><span class="bulkhead__rule"></span><span class="bulkhead__name"></span></div>
+<section class="grid section" aria-label="The comet">
   <figure class="how__clip how__clip--row">
     <video class="clip" data-clip muted loop playsinline preload="none" poster="assets/clip/comet-poster.jpg" width="960" height="924" aria-hidden="true">
       <source src="assets/clip/comet.webm" type="video/webm">
@@ -211,9 +282,8 @@
     </div>
   </figure>
 </section>
-<i id="vt-ready" hidden></i>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name">The record</span></div>
+<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 05</span><span class="bulkhead__rule"></span><span class="bulkhead__name">The record</span></div>
 <section class="grid section patents" aria-labelledby="patents-title">
   <div class="patents__head" data-reveal>
     <p class="tag" data-type>The record</p>
@@ -245,7 +315,7 @@
   </figure>
 </section>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Keeping it</span></div>
+<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 06</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Keeping it</span></div>
 <section class="grid section pair" aria-labelledby="keep-title">
   <div class="pair__a" data-reveal>
     <p class="tag" data-type>Keeping it</p>
@@ -262,7 +332,7 @@
   </figure>
 </section>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 04</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Engine room</span></div>
+<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 07</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Engine room</span></div>
 <section class="band" aria-labelledby="band-title">
   <div class="band__stage band__stage--photo" aria-hidden="true">
     <picture>
@@ -308,8 +378,8 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
-      <p class="foot__credit small">The sky behind the title: NASA’s Space Power Facility vacuum chamber with the Skylab payload shroud inside it, 1970, NASA Glenn Research Center (GRC-1970-C-03691), public domain. The band: the client’s own photograph of the flower, by way of the preview Angel built for the client. Footage: <a href="https://commons.wikimedia.org/wiki/File:Comet_67P-Churyumov-Gerasimenko_timelapse_2015-09-10_(50097148857).webm">“Comet 67P/Churyumov-Gerasimenko timelapse, 10&nbsp;September&nbsp;2015”</a>, ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, processing and time-lapse by Mark McCaughrean, via Wikimedia Commons; cropped, slowed and looped. The patent front pages: United States Patent and Trademark Office, public record. Source: United States Patent and Trademark Office.</p>
+      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
+      <p class="foot__credit small">The sky behind the title: NASA’s Space Power Facility vacuum chamber with the Skylab payload shroud inside it, 1970, NASA Glenn Research Center (GRC-1970-C-03691), public domain. The four stations: the flower and the jars are the client’s own photographs, by way of the preview Angel built for the client; the freezer window and the frost are renders from that preview; the vacuum chamber window is a generated illustration made for this mockup; the cutaway itself is drawn in code. None of it is a photograph of a facility or of the product. The band: the client’s own photograph of the flower, by way of the preview. Footage: <a href="https://commons.wikimedia.org/wiki/File:Comet_67P-Churyumov-Gerasimenko_timelapse_2015-09-10_(50097148857).webm">“Comet 67P/Churyumov-Gerasimenko timelapse, 10&nbsp;September&nbsp;2015”</a>, ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, processing and time-lapse by Mark McCaughrean, via Wikimedia Commons; cropped, slowed and looped. The patent front pages: United States Patent and Trademark Office, public record. Source: United States Patent and Trademark Office.</p>
     </div>
   </div>
 </footer>

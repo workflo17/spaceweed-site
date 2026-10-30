@@ -44,6 +44,7 @@
   let shoot = null, nextShoot = 0;
   let twTick = 0, now = 0;
   const draw = () => {
+    if (!glow) return;   // nothing to draw with until the first fit has made the sprite
     ctx.clearRect(0, 0, W, H);
     const sx = px * 18, sy = py * 12;
     const streak = Math.min(Math.abs(vel), 60) / 60;

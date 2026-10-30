@@ -35,7 +35,7 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
-<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__tag">21+</span></i></div>
+<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__frost"></span><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__frost"></span><span class="airlock__tag">21+</span></i></div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
   <div class="gate__scrim" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
     <p class="tag tag--ice gate__hail">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
     <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
     <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
-    <h2 class="gate__q" id="gate-q">Are you 21&nbsp;or older?</h2>
+    <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
     <div class="gate__buttons">
       <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
       <button class="button button--quiet" type="button" data-gate="no"><span class="button__in">No</span></button>
@@ -99,11 +99,12 @@
       <source type="image/webp" srcset="assets/img/earthrise-800.webp 800w, assets/img/earthrise-1600.webp 1600w" sizes="(max-width: 700px) 60vw, 100vw">
       <img src="assets/img/earthrise-1600.jpg" srcset="assets/img/earthrise-800.jpg 800w, assets/img/earthrise-1600.jpg 1600w" sizes="(max-width: 700px) 60vw, 100vw" width="1600" height="1280" alt="" fetchpriority="high" decoding="async">
     </picture>
+    <span class="fg fg--wing fg--flip fg--drift"><picture><source type="image/webp" srcset="assets/img/fg-wing-640.webp 640w, assets/img/fg-wing-914.webp 914w" sizes="50vw"><img src="assets/img/fg-wing-914.png" srcset="assets/img/fg-wing-640.png 640w, assets/img/fg-wing-914.png 914w" sizes="50vw" width="914" height="550" alt="" loading="lazy" decoding="async"></picture></span>
   </div>
   <p class="tag tag--ice intro__tag" data-type>Send us a transmission</p>
   <h1 class="display intro__title" id="intro-title">Mission Control.</h1>
   <div class="intro__lede">
-    <p class="lead">Questions about stocking the flower, licensing the process, press, or the flower itself? Send us a transmission and one of our crew members will get back to you.</p>
+    <p class="lead">Questions about stocking the flower, licensing the process, press, or the flower itself? Send us a message and one of our Space Cadets will get back to you in an intergalactic minute!</p>
     <p>Email is how to reach us.</p>
     <p class="age">For adults 21+.</p>
     <a class="button" href="mailto:info@spaceweedusa.com"><span class="button__in">Email info@spaceweedusa.com</span></a>
@@ -124,7 +125,7 @@
     <p class="tag" data-type>Transmission</p>
     <h2 class="head" id="write-title">Write to us.</h2>
     <p class="lead"><a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></p>
-    <p>Say which of the three you are: a store, a budtender or a grower. One of the crew will get back to you.</p>
+    <p>Say which of the three you are: a store, a budtender or a grower.</p>
   </div>
   <div class="two__body">
     <form class="form plate" data-mailto="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" data-reveal>
@@ -135,7 +136,7 @@
         <input id="f-name" name="name" type="text" autocomplete="name" spellcheck="false" required>
       </div>
       <div class="form__row">
-        <label for="f-about">What it’s about</label>
+        <label for="f-about">How can we help?</label>
         <select id="f-about" name="about">
           <option value="">Choose one</option>
           <option>Carrying <span translate="no">Space&nbsp;Weed</span> in my store</option>
@@ -179,7 +180,7 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
+      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
       <p class="foot__credit small">The sky behind the title: “Earthrise”, Apollo 8, 24&nbsp;December&nbsp;1968, NASA, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Earth-moon.jpg">Wikimedia Commons</a>, cropped and dimmed.</p>
     </div>
   </div>

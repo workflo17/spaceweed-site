@@ -22,7 +22,7 @@
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
-
+<link rel="stylesheet" href="assets/line.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script src="assets/boot.v1.js"></script>
@@ -35,7 +35,7 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
-<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__tag">21+</span></i></div>
+<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__frost"></span><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__frost"></span><span class="airlock__tag">21+</span></i></div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
   <div class="gate__scrim" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
     <p class="tag tag--ice gate__hail">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
     <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
     <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
-    <h2 class="gate__q" id="gate-q">Are you 21&nbsp;or older?</h2>
+    <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
     <div class="gate__buttons">
       <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
       <button class="button button--quiet" type="button" data-gate="no"><span class="button__in">No</span></button>
@@ -101,6 +101,7 @@
       <source src="assets/clip/aurora.webm" type="video/webm">
       <source src="assets/clip/aurora.mp4" type="video/mp4">
     </video>
+    <span class="fg fg--wing"><picture><source type="image/webp" srcset="assets/img/fg-wing-640.webp 640w, assets/img/fg-wing-914.webp 914w" sizes="(min-width: 600px) 60vw, 80vw"><img src="assets/img/fg-wing-914.png" srcset="assets/img/fg-wing-640.png 640w, assets/img/fg-wing-914.png 914w" sizes="(min-width: 600px) 60vw, 80vw" width="914" height="550" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
   </div>
   <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Window 01 · forward · aurora australis from the ISS, 17 Aug 2022 · NASA</p>
@@ -148,7 +149,7 @@
       <p class="tag" data-type>Cargo bay · the one thing</p>
       <h2 class="head" id="proof-title">2x more bud. Same weight.</h2>
       <p class="statement">Most cannabis is dried by hanging for weeks. <span translate="no">Space&nbsp;Weed</span> is frozen within an hour of harvest and dried under vacuum.</p>
-      <p>Over 80% of the water leaves. What’s left is the flower, with the water’s weight gone. That is why the jar looks twice as full, and why the bud breaks up by hand.</p>
+      <p>Flash&nbsp;Frozen&nbsp;Curing removes excess moisture from the bud. Since water is so heavy, <span translate="no">Space&nbsp;Weed</span> has twice the volume of hang-dried flower.</p>
       <ul class="proof__facts" aria-label="The checked facts">
         <li class="fact"><span class="fact__n mono">1 h</span><span class="tag">frozen within an hour</span></li>
         <li class="fact"><span class="fact__n mono">80%</span><span class="tag">of the water gone</span></li>
@@ -171,16 +172,16 @@
     <div class="cargo__hold" data-reveal>
       <p class="tag" data-type>Cargo bay · what we make</p>
       <ul class="cargo__bays" aria-label="What we make">
-        <li class="bay"><picture><source type="image/webp" srcset="assets/img/jar-open-700.webp"><img src="assets/img/jar-open-700.jpg" width="700" height="482" loading="lazy" decoding="async" alt="A closed Space Weed jar standing on white, with green buds inside it and beside it."></picture><span class="sub">Flower</span><span class="small">Flash&nbsp;Frozen&nbsp;Cured flower in the jar. The soft texture breaks apart by hand; no grinder needed.</span></li>
-        <li class="bay"><picture><source type="image/webp" srcset="assets/img/pre-rolls-700.webp"><img src="assets/img/pre-rolls-700.jpg" width="700" height="700" loading="lazy" decoding="async" alt="Two Space Weed pre-rolls lying side by side, close up, with green flower visible at the ends."></picture><span class="sub">Space Cones</span><span class="small">Flash&nbsp;Frozen&nbsp;Cured flower, pre-ground and rolled. More flower, same size.</span></li>
-        <li class="bay"><picture><source type="image/webp" srcset="assets/img/capsule-700.webp"><img src="assets/img/capsule-700.jpg" width="700" height="700" loading="lazy" decoding="async" alt="One clear capsule filled with green Space Weed flower, lying on white."></picture><span class="sub">Space Capsules</span><span class="small">Flower capsules in two varieties, activated and raw. Free of solvents, sugar and additives.</span></li>
+        <li class="bay"><picture><source type="image/webp" srcset="assets/img/jar-open-700.webp"><img src="assets/img/jar-open-700.jpg" width="700" height="482" loading="lazy" decoding="async" alt="A closed Space Weed jar standing on white, with green buds inside it and beside it."></picture><span class="sub">Flower</span><span class="small">Our flower is different from other brands because it’s Flash&nbsp;Frozen&nbsp;Cured.</span></li>
+        <li class="bay"><picture><source type="image/webp" srcset="assets/img/pre-rolls-700.webp"><img src="assets/img/pre-rolls-700.jpg" width="700" height="700" loading="lazy" decoding="async" alt="Two Space Weed pre-rolls lying side by side, close up, with green flower visible at the ends."></picture><span class="sub">Space Cones</span><span class="small">Our space cones are filled with pre-ground flower. More flower, same size.</span></li>
+        <li class="bay"><picture><source type="image/webp" srcset="assets/img/capsule-700.webp"><img src="assets/img/capsule-700.jpg" width="700" height="700" loading="lazy" decoding="async" alt="One clear capsule filled with green Space Weed flower, lying on white."></picture><span class="sub">Space Capsules</span><span class="small">Our flower capsules come in two varieties: activated and raw. Both versions are free of chemical solvents, sugar, and other additives.</span></li>
       </ul>
     </div>
     <div class="cargo__notes plate" data-reveal>
       <span class="plate__c"></span>
       <p class="tag" data-type>Cargo bay · what you’ll notice</p>
       <dl class="notes">
-        <div class="note"><dt class="sub">In the hand</dt><dd>Airy texture like astronaut ice cream. The bud breaks up between your fingers. No grinder.</dd></div>
+        <div class="note"><dt class="sub">In the hand</dt><dd><span translate="no">Space&nbsp;Weed</span> has a uniquely soft texture which makes it super easy and fun to break apart. No grinder needed.</dd></div>
         <div class="note"><dt class="sub">On the shelf</dt><dd>Keep it sealed, cool and dark. No humidity packs, no fussing.</dd></div>
       </dl>
     </div>
@@ -218,6 +219,7 @@
       <source src="assets/clip/comet.webm" type="video/webm">
       <source src="assets/clip/comet.mp4" type="video/mp4">
     </video>
+    <span class="window__frost"></span>
   </div>
   <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Window 03 · comet 67P · ESA/Rosetta, 10 Sep 2015</p>
@@ -226,23 +228,62 @@
       <p class="tag tag--ice" data-type>Engine room · how it works</p>
       <h2 class="head" id="how-title">Ice to vapour, never liquid.</h2>
       <p class="statement">In a vacuum, ice skips melting and goes straight to vapour.</p>
-      <p>Below the triple point of water, <span translate="no">611.657&nbsp;pascals</span>, ice cannot melt. That is how over 80% of the water leaves the flower. The comet in the window is doing the same thing: sunlight turns its ice straight to vapour.</p>
+      <p>Flash&nbsp;Frozen&nbsp;Curing is a patented scientific method whereby fresh cannabis is flash frozen and then dried under vacuum using temperature, time, and pressure.</p>
     </div>
     <div class="engine__clipnote">
       <button class="clip-toggle" type="button" data-clip-toggle aria-pressed="false" hidden>Pause the clip</button>
       <p class="small">The window: comet 67P, photographed by ESA’s Rosetta on 10&nbsp;September&nbsp;2015. Sunlight warms the comet’s ice and the ice turns straight to vapour, carrying dust out in jets. Slowed, looped and tinted in processing.</p>
     </div>
-    <div class="engine__console plate" data-reveal>
+    <figure class="engine__line plate" data-reveal data-poster data-stations="Harvest,Freezer,Vacuum,Jar">
       <span class="plate__c"></span>
-      <p class="tag" data-type>Engine room · the four stages</p>
-      <ol class="engine__stages" aria-label="The four stages">
-        <li class="stage is-on"><span class="sub stage__title" data-n="01">Harvest</span><span class="small">The flower comes off the stem.</span></li>
-        <li class="stage"><span class="sub stage__title" data-n="02">Freezer</span><span class="small">Frozen within the hour. It waits as ice until it is dried under vacuum.</span></li>
-        <li class="stage"><span class="sub stage__title" data-n="03">Vacuum</span><span class="small">Ice leaves as vapour. Only temperature, time and pressure.</span></li>
-        <li class="stage"><span class="sub stage__title" data-n="04">Jar</span><span class="small">A gram fills the jar like two.</span></li>
-      </ol>
-      <a class="door door--inline engine__door" href="process.html"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span></span><span class="door__name tag tag--ice">Enter · the whole process</span></a>
+      <p class="tag" data-type>Engine room · the four stations</p>
+      <figure class="line line--poster" aria-hidden="true" data-line>
+  <div class="line__sky"><picture><source type="image/webp" srcset="assets/img/milky-way-1200.webp"><img src="assets/img/milky-way-1200.jpg" width="1200" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+  <p class="line__tag tag">Section · the four stations</p>
+  <div class="line__world">
+    <i class="line__face line__face--floor"></i><i class="line__face line__face--low"></i><i class="line__face line__face--wall"></i><i class="line__face line__face--high"></i>
+    <i class="line__ring line__ring--0"></i><i class="line__ring line__ring--1"></i><i class="line__ring line__ring--2"></i><i class="line__ring line__ring--3"></i><i class="line__ring line__ring--4"></i>
+    <div class="line__st line__st--1">
+      <i class="line__lamp"></i><div class="line__port line__port--open"></div><i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <img class="line__dew" src="assets/img/bud-dew-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <p class="line__name"><b>Station 01</b><span>Harvest</span><em>Water · liquid</em></p>
     </div>
+    <div class="line__st line__st--2">
+      <i class="line__lamp"></i>
+      <div class="line__port"><img src="assets/img/freezer-port-640.webp" width="640" height="640" alt="" loading="lazy" fetchpriority="low" decoding="async"><i class="line__frost"></i></div>
+      <i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <img class="line__rime" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <p class="line__name"><b>Station 02</b><span>Freezer</span><em>Water · ice</em></p>
+    </div>
+    <div class="line__st line__st--3">
+      <i class="line__lamp"></i>
+      <div class="line__port"><img src="assets/img/chamber-port-640.webp" width="640" height="640" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <img class="line__rime" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <i class="line__vent"></i><span class="line__mist"><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i><i class="line__vap"></i></span>
+      <div class="line__door"><i class="line__leaf line__leaf--t"></i><i class="line__leaf line__leaf--b"></i></div>
+      <p class="line__call"><b>No liquid</b><b>Pulled away</b></p>
+      <p class="line__name"><b>Station 03</b><span>Vacuum</span><em>Water · leaving as vapour</em></p>
+    </div>
+    <div class="line__st line__st--4">
+      <i class="line__lamp"></i>
+      <div class="line__port"><picture><source type="image/webp" srcset="assets/img/same-weight-jars-500.webp"><img src="assets/img/same-weight-jars-500.jpg" width="500" height="500" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture><i class="line__lvl"><b>fills the jar like two</b></i></div>
+      <i class="line__pool"></i><i class="line__tray"></i><i class="line__shadow"></i>
+      <img class="line__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
+      <p class="line__name"><b>Station 04</b><span>Jar</span><em>Water · over 80% gone</em></p>
+    </div>
+  </div>
+  <p class="line__legend">An illustration drawn for this page. The flower and the jars are the client’s photographs.</p>
+  <p class="line__hud tag" data-hud></p>
+</figure>
+      <div class="engine__foot">
+        <div class="rail" role="group" aria-label="Look at a station" data-rail></div>
+        <a class="door door--inline engine__door" href="process.html"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span></span><span class="door__name tag tag--ice">Enter · the whole process</span></a>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -300,6 +341,7 @@
 <section class="room room--log" id="log" data-deck="Observation deck" aria-labelledby="band-title">
   <div class="room__window" aria-hidden="true">
     <img src="assets/img/black-marble-1200.jpg" srcset="assets/img/black-marble-1200.jpg 1200w, assets/img/black-marble-2400.jpg 2400w" sizes="100vw" width="2400" height="800" alt="" loading="lazy" decoding="async">
+    <span class="fg fg--array"><picture><source type="image/webp" srcset="assets/img/fg-array-640.webp 640w, assets/img/fg-array-1200.webp 1200w" sizes="58vw"><img src="assets/img/fg-array-1200.png" srcset="assets/img/fg-array-640.png 640w, assets/img/fg-array-1200.png 1200w" sizes="58vw" width="1200" height="700" alt="" loading="lazy" decoding="async"></picture></span>
   </div>
   <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Window 05 · Earth at night · NASA Earth Observatory, 2012</p>
@@ -319,10 +361,10 @@
     <div class="log__text" data-reveal>
       <p class="tag" data-type>Observation deck · ship’s log</p>
       <h2 class="head" id="band-title">Why it’s called <span translate="no">Space&nbsp;Weed</span>.</h2>
-      <p>We got our name from our early supporters, who compared the texture of our Flash Frozen bud to astronaut ice cream. The process happens in a vacuum, and most of the flower’s water leaves as vapour.</p>
+      <p>We got our name from our early supporters, who compared the texture of our Flash Frozen bud to astronaut ice cream. <span translate="no">Space&nbsp;Weed</span> is the product of our unique Flash&nbsp;Frozen&nbsp;Curing process. <a href="process.html" aria-label="Learn more about that here: how Flash Frozen Curing works">Learn more about that here.</a> <span translate="no">Space&nbsp;Weed</span> is one of the only truly different cannabis products on the market.</p>
       <div class="story plate">
         <span class="plate__c"></span>
-        <p>We experimented with temperature, pressure and timing until we had a method. It became Flash&nbsp;Frozen&nbsp;Cured.</p>
+        <p>Cannabis defined itself in the era of prohibition, as an element of counter-culture. Those days are gone, but much of what cannabis is and how it’s produced and consumed are still defined by antiquated techniques. There’s no reason that inertia should inhibit cannabis development. We believe that science needs to be the new guiding light.</p>
       </div>
       <p class="small">Through the porthole: “The Blue Marble”, photographed by the crew of Apollo 17 on 7&nbsp;December&nbsp;1972. NASA.</p>
     </div>
@@ -343,44 +385,38 @@
 <section class="room room--nav" id="navigation" data-deck="Navigation" aria-labelledby="find-title">
   <div class="room__window" aria-hidden="true">
     <img src="assets/img/milky-way-1200.jpg" srcset="assets/img/milky-way-640.jpg 640w, assets/img/milky-way-1200.jpg 1200w, assets/img/milky-way-2400.jpg 2400w" sizes="100vw" width="2400" height="1200" alt="" loading="lazy" decoding="async">
+    <span class="fg fg--mast"><picture><source type="image/webp" srcset="assets/img/fg-mast-604.webp"><img src="assets/img/fg-mast-604.png" width="604" height="1293" alt="" loading="lazy" decoding="async"></picture></span>
   </div>
   <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Window 06 · the Milky Way · ESO/S. Brunier</p>
   <div class="room__content nav">
-    <figure class="nav__chart plate" data-reveal aria-hidden="true">
-      <span class="plate__c"></span>
-      <p class="tag" data-type>Navigation · star chart · the course to the jar</p>
-      <svg class="chart" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-        <circle class="chart__ring" cx="210" cy="210" r="190"/>
-        <circle class="chart__ring" cx="210" cy="210" r="130"/>
-        <circle class="chart__ring" cx="210" cy="210" r="70"/>
-        <line class="chart__axis" x1="210" y1="14" x2="210" y2="406"/>
-        <line class="chart__axis" x1="14" y1="210" x2="406" y2="210"/>
-        <line class="chart__axis chart__axis--diag" x1="72" y1="72" x2="348" y2="348"/>
-        <line class="chart__axis chart__axis--diag" x1="348" y1="72" x2="72" y2="348"/>
-        <polyline class="chart__course" pathLength="1" points="78,338 176,262 236,226 318,118"/>
-        <circle class="chart__you" cx="78" cy="338" r="6"/>
-        <text class="chart__t" x="92" y="356">You</text>
-        <circle class="chart__way" cx="176" cy="262" r="4"/>
-        <text class="chart__t" x="190" y="278">Ask for it by name</text>
-        <circle class="chart__way" cx="236" cy="226" r="4"/>
-        <text class="chart__t" x="248" y="214">Call ahead</text>
-        <circle class="chart__dest" cx="318" cy="118" r="9"/>
-        <text class="chart__t chart__t--dest" x="304" y="108">A licensed dispensary</text>
-        <text class="chart__t chart__t--n" x="210" y="34">N</text>
-      </svg>
-      <dl class="chart__readouts">
-        <div><dt>Heading</dt><dd>Licensed dispensaries only</dd></div>
-        <div><dt>Range</dt><dd>Call ahead</dd></div>
-        <div><dt>Course</dt><dd>Ask for it by name</dd></div>
+    <div class="nav__port" data-reveal>
+      <a class="door door--port" href="find.html" aria-label="Enter: where to find it">
+        <span class="door__collar">
+          <span class="door__frame">
+            <span class="door__glass">
+              <picture class="door__lock"><source type="image/webp" srcset="assets/img/berth-800.webp"><img src="assets/img/berth-800.jpg" width="800" height="447" alt="" loading="lazy" decoding="async"></picture>
+              <picture class="door__jar"><source type="image/webp" srcset="assets/img/jar-blueberry-600.webp"><img src="assets/img/jar-blueberry-600.png" width="600" height="600" loading="lazy" decoding="async" alt=""></picture>
+              <span class="door__frost"></span>
+            </span>
+            <span class="door__seam"></span>
+          </span>
+          <i class="door__lamp"></i><i class="door__lamp"></i><i class="door__lamp"></i>
+        </span>
+        <span class="door__name tag tag--ice">Enter · where to find it</span>
+      </a>
+      <dl class="nav__read">
+        <div><dt>Port</dt><dd>A licensed dispensary</dd></div>
+        <div><dt>Course</dt><dd>Search the menu, call ahead, ask by name</dd></div>
       </dl>
-    </figure>
+    </div>
     <div class="nav__text" data-reveal>
       <p class="tag" data-type>Navigation · searching for Space Weed?</p>
       <h2 class="head" id="find-title">Ask for it by name.</h2>
-      <p class="statement"><span translate="no">Space&nbsp;Weed</span> is sold through licensed dispensaries. Call ahead to ask whether the store carries it.</p>
-      <a class="button button--big" href="find.html"><span class="button__in">Where to find it</span></a>
+      <p class="statement"><span translate="no">Space&nbsp;Weed</span> is sold through licensed dispensaries.</p>
+      <p>It’s always best to call ahead or check store websites to make sure <span translate="no">Space&nbsp;Weed</span> is currently in stock!</p>
       <p class="small">If a store near you doesn’t carry it yet, send us the store’s name. We keep a list.</p>
+      <a class="textlink" href="find.html">Where to find it</a>
     </div>
   </div>
 </section>
@@ -389,6 +425,7 @@
 <section class="room room--crew room--lift" id="crew" data-deck="Crew" aria-labelledby="partner-title">
   <div class="room__window" aria-hidden="true">
     <img src="assets/img/cliffs-169-960.jpg" srcset="assets/img/cliffs-169-640.jpg 640w, assets/img/cliffs-169-960.jpg 960w, assets/img/cliffs-169-1920.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+    <span class="fg fg--ring"><picture><source type="image/webp" srcset="assets/img/fg-ring-640.webp 640w, assets/img/fg-ring-746.webp 746w" sizes="32vw"><img src="assets/img/fg-ring-746.png" srcset="assets/img/fg-ring-640.png 640w, assets/img/fg-ring-746.png 746w" sizes="32vw" width="746" height="905" alt="" loading="lazy" decoding="async"></picture></span>
   </div>
   <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Window 07 · Cosmic Cliffs · NASA, ESA, CSA, STScI</p>
@@ -400,16 +437,16 @@
     </div>
     <ul class="hatches" data-reveal aria-label="Three ways in">
       <li class="hatch">
-        <a class="door door--hatch" href="partner.html#stores-title" aria-label="For stores"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span><span class="door__sign">Hatch A1</span></span><span class="door__name roster__name">Stores</span></a>
-        <p>Bring <span translate="no">Space&nbsp;Weed</span> to your dispensary. Our flower turns fast, and your budtenders can take the certification course.</p>
+        <a class="door door--hatch" href="partner.html#stores-title"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span><span class="door__sign">Hatch A1</span></span><span class="door__name roster__name">Stores</span></a>
+        <p>Bring <span translate="no">Space&nbsp;Weed</span> to your dispensary. Our flower turns fast, and your budtenders can take the certification program.</p>
       </li>
       <li class="hatch">
-        <a class="door door--hatch" href="partner.html#budtenders-title" aria-label="For budtenders"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span><span class="door__sign">Hatch A2</span></span><span class="door__name roster__name">Budtenders</span></a>
-        <p>Become a Space Cadet. The Space Academy course is short and free.</p>
+        <a class="door door--hatch" href="partner.html#budtenders-title"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span><span class="door__sign">Hatch A2</span></span><span class="door__name roster__name">Budtenders</span></a>
+        <p>Here at the mothership we value budtenders! We invite you to complete our (very fast!) <span translate="no">Space&nbsp;Weed</span> Certification Program.</p>
       </li>
       <li class="hatch">
-        <a class="door door--hatch" href="partner.html#growers-title" aria-label="For growers"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span><span class="door__sign">Hatch A3</span></span><span class="door__name roster__name">Growers</span></a>
-        <p>License the Flash&nbsp;Frozen&nbsp;Cured process from CannaGenesis, under the <span translate="no">Space&nbsp;Weed</span> brand or your own label.</p>
+        <a class="door door--hatch" href="partner.html#growers-title"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span><span class="door__sign">Hatch A3</span></span><span class="door__name roster__name">Growers</span></a>
+        <p>We are currently in the process of partnering with select growers/producers interested in licensing our technology, the <span translate="no">Space&nbsp;Weed</span> brand or both.</p>
       </li>
     </ul>
   </div>
@@ -419,6 +456,7 @@
 <section class="room room--control room--lift" id="control" data-deck="Mission Control" aria-labelledby="control-title">
   <div class="room__window" aria-hidden="true">
     <img src="assets/img/earthrise-800.jpg" srcset="assets/img/earthrise-800.jpg 800w, assets/img/earthrise-1600.jpg 1600w" sizes="100vw" width="1600" height="1280" alt="" loading="lazy" decoding="async">
+    <span class="fg fg--mast fg--flip"><picture><source type="image/webp" srcset="assets/img/fg-mast-604.webp"><img src="assets/img/fg-mast-604.png" width="604" height="1293" alt="" loading="lazy" decoding="async"></picture></span>
   </div>
   <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Window 08 · Earthrise · NASA, 24 Dec 1968</p>
@@ -426,7 +464,7 @@
     <div class="control__text" data-reveal>
       <p class="tag" data-type>Mission Control · send us a transmission</p>
       <h2 class="head" id="control-title">Contact Mission Control.</h2>
-      <p class="lead">Questions about stocking the flower, licensing the process, press, or the flower itself? Send us a transmission and one of our crew members will get back to you.</p>
+      <p class="lead">Questions about stocking the flower, licensing the process, press, or the flower itself? Send us a message and one of our Space Cadets will get back to you in an intergalactic minute!</p>
       <p class="age">For adults 21+.</p>
       <a class="button" href="contact.html"><span class="button__in">Contact Mission Control</span></a>
     </div>
@@ -464,8 +502,8 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
-      <p class="foot__credit small">The cargo bay’s window: the client’s own photograph of <span translate="no">Space&nbsp;Weed</span> flower. The forward window: aurora australis from the International Space Station, 17&nbsp;August&nbsp;2022, NASA Johnson Space Center Earth Science and Remote Sensing Unit, via <a href="https://svs.gsfc.nasa.gov/31281">NASA SVS 31281</a>, public domain; trimmed, cropped and graded, no sound. The observation deck: “The Blue Marble”, Apollo 17, 7&nbsp;December&nbsp;1972, NASA, public domain, in the porthole; through the window, “Earth at Night” (the Black Marble), NASA Earth Observatory and NOAA NGDC, 2012, public domain. The crew deck’s window: “Cosmic Cliffs” in the Carina Nebula, NASA’s James Webb Space Telescope, 2022, <a href="https://esawebb.org/images/weic2205b/">NASA, ESA, CSA, STScI</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> via ESA/Webb. Mission Control’s window: “Earthrise”, Apollo 8, 24&nbsp;December&nbsp;1968, NASA, public domain. The engine room’s window: <a href="https://commons.wikimedia.org/wiki/File:Comet_67P-Churyumov-Gerasimenko_timelapse_2015-09-10_(50097148857).webm">“Comet 67P/Churyumov-Gerasimenko timelapse, 10&nbsp;September&nbsp;2015”</a>, ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, processing and time-lapse by Mark McCaughrean, via Wikimedia Commons; cropped, slowed and looped. The patent front pages: United States Patent and Trademark Office, public record. Source: United States Patent and Trademark Office.</p>
+      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
+      <p class="foot__credit small">The cargo bay’s window: the client’s own photograph of <span translate="no">Space&nbsp;Weed</span> flower. The forward window: aurora australis from the International Space Station, 17&nbsp;August&nbsp;2022, NASA Johnson Space Center Earth Science and Remote Sensing Unit, via <a href="https://svs.gsfc.nasa.gov/31281">NASA SVS 31281</a>, public domain; trimmed, cropped and graded, no sound. The observation deck: “The Blue Marble”, Apollo 17, 7&nbsp;December&nbsp;1972, NASA, public domain, in the porthole; through the window, “Earth at Night” (the Black Marble), NASA Earth Observatory and NOAA NGDC, 2012, public domain. The crew deck’s window: “Cosmic Cliffs” in the Carina Nebula, NASA’s James Webb Space Telescope, 2022, <a href="https://esawebb.org/images/weic2205b/">NASA, ESA, CSA, STScI</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> via ESA/Webb. Mission Control’s window: “Earthrise”, Apollo 8, 24&nbsp;December&nbsp;1968, NASA, public domain. The engine room’s window: <a href="https://commons.wikimedia.org/wiki/File:Comet_67P-Churyumov-Gerasimenko_timelapse_2015-09-10_(50097148857).webm">“Comet 67P/Churyumov-Gerasimenko timelapse, 10&nbsp;September&nbsp;2015”</a>, ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, processing and time-lapse by Mark McCaughrean, via Wikimedia Commons; cropped, slowed and looped. The engine room’s four stations: the flower and the jars are the client’s own photographs, by way of the preview Angel built for the client; the freezer window and the frost are renders from that preview; the vacuum chamber window is a generated illustration made for this mockup; the cutaway itself is drawn in code. None of it is a photograph of a facility or of the product. The patent front pages: United States Patent and Trademark Office, public record. Source: United States Patent and Trademark Office.</p>
     </div>
   </div>
 </footer>

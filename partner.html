@@ -35,7 +35,7 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
-<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__tag">21+</span></i></div>
+<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__frost"></span><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__frost"></span><span class="airlock__tag">21+</span></i></div>
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
   <div class="gate__scrim" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
     <p class="tag tag--ice gate__hail">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
     <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
     <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
-    <h2 class="gate__q" id="gate-q">Are you 21&nbsp;or older?</h2>
+    <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
     <div class="gate__buttons">
       <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
       <button class="button button--quiet" type="button" data-gate="no"><span class="button__in">No</span></button>
@@ -99,6 +99,7 @@
       <source type="image/webp" srcset="assets/img/cliffs-169-640.webp 640w, assets/img/cliffs-169-960.webp 960w, assets/img/cliffs-169-1920.webp 1920w" sizes="(max-width: 700px) 60vw, 100vw">
       <img src="assets/img/cliffs-169-1920.jpg" srcset="assets/img/cliffs-169-640.jpg 640w, assets/img/cliffs-169-960.jpg 960w, assets/img/cliffs-169-1920.jpg 1920w" sizes="(max-width: 700px) 60vw, 100vw" width="1920" height="1113" alt="" fetchpriority="high" decoding="async">
     </picture>
+    <span class="fg fg--wing fg--flip fg--drift"><picture><source type="image/webp" srcset="assets/img/fg-wing-b-640.webp 640w, assets/img/fg-wing-b-961.webp 961w" sizes="50vw"><img src="assets/img/fg-wing-b-961.png" srcset="assets/img/fg-wing-b-640.png 640w, assets/img/fg-wing-b-961.png 961w" sizes="50vw" width="961" height="533" alt="" loading="lazy" decoding="async"></picture></span>
   </div>
   <p class="tag tag--ice intro__tag" data-type>Crew · stores, budtenders, growers</p>
   <h1 class="display intro__title" id="intro-title">Ready for liftoff?</h1>
@@ -137,7 +138,8 @@
       </figure>
       <h2 class="sub" id="stores-title">Stores</h2>
       <p>Bring <span translate="no">Space&nbsp;Weed</span> to your dispensary. Flash&nbsp;Frozen&nbsp;Cured flower that sells itself. Our flower turns fast.</p>
-      <p>We use your sales data to bring you the items that sell through, and your budtenders take the <span translate="no">Space&nbsp;Weed</span> certification course so they can explain what is different in the jar.</p>
+      <p><span translate="no">Space&nbsp;Weed</span> is different. But why does that difference matter to you at the dispensary? The <span translate="no">Space&nbsp;Weed</span> Flash&nbsp;Frozen&nbsp;Cured process is so fast that we can typically go from harvest to shelf within days. Amazing right?</p>
+      <p>We use your sales data to bring you the items that sell through. Your store’s budtenders take our <span translate="no">Space&nbsp;Weed</span> Certification Program on spaceweedusa.com to achieve a better understanding of our unique product.</p>
       <a class="button" href="mailto:info@spaceweedusa.com?subject=Carrying%20Space%20Weed"><span class="button__in">Write to us about carrying it</span></a>
     </li>
     <li>
@@ -149,9 +151,9 @@
         <figcaption>The texture is the thing to show at the counter.</figcaption>
       </figure>
       <h2 class="sub" id="budtenders-title">Budtenders</h2>
-      <p>Here at the mothership we value budtenders. Budtenders, want to get <span translate="no">Space&nbsp;Weed</span> Certified? The Space Academy course is short and free, and it covers what Flash&nbsp;Frozen&nbsp;Curing does to the flower and how to talk about it at the counter.</p>
+      <p>Here at the mothership we value budtenders! Budtenders, want to get <span translate="no">Space&nbsp;Weed</span> Certified? We invite you to complete our (very fast!) <span translate="no">Space&nbsp;Weed</span> Certification Program.</p>
       <p>Set the jar next to a conventionally cured gram at the same weight, and let the customer see the difference. The bud breaks up by hand.</p>
-      <a class="textlink" href="https://www.spaceweedusa.com/space-academy-home">Become a Space Cadet: take the course</a>
+      <a class="textlink" href="https://www.spaceweedusa.com/space-academy-home">Access Space Academy</a>
     </li>
     <li>
       <figure class="audiences__pic open-pic">
@@ -162,8 +164,8 @@
         <figcaption>Flash&nbsp;Frozen&nbsp;Cured flower.</figcaption>
       </figure>
       <h2 class="sub" id="growers-title">Growers and producers</h2>
-      <p>CannaGenesis licenses the process to certified producers, under the <span translate="no">Space&nbsp;Weed</span> brand or your own label. The process dries flower in days rather than weeks.</p>
-      <p>CannaGenesis is the vision of Eric Young. We conduct focus groups and research to develop new techniques, such as Flash&nbsp;Frozen&nbsp;Curing. Four issued US patents cover the method: <span translate="no">US 10,639,340, 11,191,797, 11,351,212 and 11,980,304</span>.</p>
+      <p>Interested in Flash&nbsp;Frozen&nbsp;Curing, our patented process? We are currently in the process of partnering with select growers/producers interested in licensing our technology, the <span translate="no">Space&nbsp;Weed</span> brand or both. The process dries flower in days rather than weeks.</p>
+      <p>CannaGenesis is the vision of Eric Young. We use science to revolutionize cannabis. We conduct focus groups and use research to develop new techniques, such as Flash&nbsp;Frozen&nbsp;Curing. Four issued US patents cover the method: <span translate="no">US 10,639,340, 11,191,797, 11,351,212 and 11,980,304</span>.</p>
       <a class="textlink" href="https://www.cannagenesis.com/partnership">Become a certified producer, at cannagenesis.com</a>
     </li>
   </ul>
@@ -204,7 +206,7 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
+      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
       <p class="foot__credit small">The sky behind the title: “Cosmic Cliffs” in the Carina Nebula, NASA’s James Webb Space Telescope, 2022, <a href="https://esawebb.org/images/weic2205b/">NASA, ESA, CSA, STScI</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> via ESA/Webb, cropped and dimmed.</p>
     </div>
   </div>
