@@ -223,7 +223,7 @@
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) if (e.isIntersecting) {
         e.target.classList.add('is-near');
-        for (const im of e.target.querySelectorAll('.line img[loading="lazy"]')) im.loading = 'eager';
+        for (const im of e.target.querySelectorAll('.chamber img[loading="lazy"]')) im.loading = 'eager';
         io.unobserve(e.target);
       }
     }, { rootMargin: '150% 0px 150% 0px' });
@@ -368,7 +368,7 @@
   (() => {
     const hosts = [...document.querySelectorAll('[data-run], [data-poster]')];
     for (const host of hosts) {
-      const line = host.querySelector('.line');
+      const line = host.querySelector('.chamber');
       const rail = host.querySelector('[data-rail]');
       if (!line || !rail) continue;
       const names = (host.dataset.stations || '').split(',').map((s) => s.trim()).filter(Boolean);
@@ -403,8 +403,8 @@
           scrollTo({ top, behavior: motionOn() ? 'smooth' : 'auto' });
           return;
         }
-        line.classList.remove('line--go-1', 'line--go-2', 'line--go-3', 'line--go-4');
-        line.classList.add(`line--go-${i + 1}`);
+        line.classList.remove('chamber--go-1', 'chamber--go-2', 'chamber--go-3', 'chamber--go-4');
+        line.classList.add(`chamber--go-${i + 1}`);
         setOn(i);
       };
       if (!live()) { buttons.forEach((b) => b.setAttribute('aria-current', 'false')); continue; }
