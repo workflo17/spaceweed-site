@@ -10,6 +10,18 @@
   (() => {
     const gate = document.getElementById('gate');
     if (!gate) { html.classList.remove('gate-pending'); fireLaunch(); return; }   // a copy built without the gate must not stay locked
+    const chip = document.querySelector('.deck__item--age');
+    if (chip && !chip.querySelector('button')) {
+      const again = document.createElement('button');
+      again.type = 'button'; again.className = 'deck__again'; again.textContent = chip.textContent.trim();
+      again.setAttribute('aria-label', `${again.textContent} · show the age check again`);
+      chip.replaceChildren(again);
+      again.addEventListener('click', () => {
+        try { localStorage.removeItem('sw-age-ok'); } catch {  }
+        try { sessionStorage.removeItem('sw-age-ok'); } catch {  }
+        location.reload();
+      });
+    }
     if (!html.classList.contains('gate-pending')) { fireLaunch(); return; }
     const behind = [...document.body.children].filter((el) => el !== gate && el.tagName !== 'SCRIPT');
     const write = () => {
@@ -32,8 +44,9 @@
           const status = gate.querySelector('[data-gate-status]');
           if (status) status.textContent = 'Transporter · energising';
           html.classList.add('gate-opening');
-          setTimeout(() => { html.classList.remove('gate-pending'); html.classList.remove('gate-opening'); }, 1400);
-          setTimeout(fireLaunch, 620);
+          setTimeout(() => html.classList.add('gate-arriving'), 700);
+          setTimeout(() => { html.classList.remove('gate-pending'); html.classList.remove('gate-opening'); fireLaunch(); }, 1000);
+          setTimeout(() => html.classList.remove('gate-arriving'), 2500);
         } else {
           html.classList.remove('gate-pending');
           fireLaunch();
@@ -213,7 +226,8 @@
     };
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 300));
     const later = () => setTimeout(() => idle(warm, { timeout: 3000 }), 1400);
-    if (document.readyState === 'complete') later();
+    if (html.classList.contains('gate-pending')) warm();   // the gate's arrival is through these leaves, within seconds
+    else if (document.readyState === 'complete') later();
     else addEventListener('load', later, { once: true });
   })();
   (() => {
@@ -437,6 +451,56 @@
       addEventListener('resize', onScroll, { passive: true });
       onScroll();
     }
+  })();
+  (() => {
+    const travels = [...document.querySelectorAll('main > .travel')];
+    if (!travels.length || !CSS.supports('animation-timeline: view()')) return;
+    const pinnedMq = matchMedia('(prefers-reduced-motion: no-preference) and (min-height: 520px)');
+    const live = () => pinnedMq.matches && !html.classList.contains('motion-off') && !html.classList.contains('gate-pending');
+    const roomBefore = (t) => { let el = t.previousElementSibling; while (el && !el.classList.contains('room')) el = el.previousElementSibling; return el; };
+    const roomAfter = (t) => { let el = t.nextElementSibling; while (el && !el.classList.contains('room')) el = el.nextElementSibling; return el; };
+    let riding = false, ridingIn = null, quiet = null, raf = 0, lastWheel = 0, lastTouch = 0, prevY = scrollY;
+    const inZone = (t, y, vh) => y > t.offsetTop - vh * 0.6 && y < t.offsetTop + t.offsetHeight;
+    const stop = () => { riding = false; ridingIn = null; if (raf) cancelAnimationFrame(raf); raf = 0; html.classList.remove('is-riding'); };
+    const handBack = () => { if (riding) { quiet = ridingIn; stop(); } };
+    addEventListener('wheel', () => { lastWheel = performance.now(); handBack(); }, { passive: true });
+    addEventListener('touchstart', () => { lastTouch = performance.now(); handBack(); }, { passive: true });
+    addEventListener('touchmove', () => { lastTouch = performance.now(); }, { passive: true });
+    addEventListener('touchend', () => { lastTouch = performance.now(); }, { passive: true });
+    addEventListener('keydown', (e) => { if (/^(ArrowUp|ArrowDown|PageUp|PageDown|Home|End|Escape| )$/.test(e.key)) { lastWheel = performance.now(); handBack(); } });
+    addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.clientX > innerWidth - 24) handBack(); }, { passive: true });   // the scrollbar
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const ride = (t, to, ms) => {
+      stop();
+      const from = scrollY, t0 = performance.now();
+      riding = true; ridingIn = t;
+      window.swRideLast = { from, to, ms };   // read by tools/ride.mjs
+      html.classList.add('is-riding');
+      const step = (now) => {
+        if (!riding) return;
+        const p = Math.min(1, (now - t0) / ms);
+        scrollTo({ top: from + (to - from) * ease(p), behavior: 'instant' });
+        prevY = scrollY;
+        if (p < 1) raf = requestAnimationFrame(step); else stop();
+      };
+      raf = requestAnimationFrame(step);
+    };
+    const onScroll = () => {
+      const y = scrollY, dir = y > prevY ? 1 : y < prevY ? -1 : 0;
+      prevY = y;
+      if (riding || !dir || !live()) return;
+      const now = performance.now();
+      if (now - lastWheel > 400 && now - lastTouch > 1600) return;   // not the visitor's own scroll
+      const vh = innerHeight;
+      if (quiet) { if (inZone(quiet, y, vh)) return; quiet = null; }
+      for (const t of travels) {
+        const top = t.offsetTop, bottom = top + t.offsetHeight;
+        const ms = 1300 + (t.offsetHeight / vh) * 420;
+        if (dir > 0 && y > top - vh * 0.6 && y < bottom - vh) { const next = roomAfter(t); if (next) ride(t, next.offsetTop, ms); return; }
+        if (dir < 0 && y < bottom - vh * 0.4 && y > top) { const prev = roomBefore(t); if (prev) ride(t, prev.offsetTop, ms); return; }
+      }
+    };
+    addEventListener('scroll', onScroll, { passive: true });
   })();
   (() => {
     const clips = [...document.querySelectorAll('video[data-clip], video[data-sky]')];

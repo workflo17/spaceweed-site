@@ -6,7 +6,11 @@ document.documentElement.classList.add('js');
   var html = document.documentElement;
   var ok = 0;
   try { ok = Number(localStorage.getItem('sw-age-ok') || 0); } catch (e) { try { ok = Number(sessionStorage.getItem('sw-age-ok') || 0); } catch (e2) { ok = 0; } }
-  if (ok + 30 * 864e5 < Date.now()) html.classList.add('gate-pending');
+  /* a reload asks again (the review build: the client can see the gate on any page with a refresh); a door from deck to
+     deck, or a return within 30 days, does not */
+  var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
+  var reload = nav ? nav.type === 'reload' : !!(performance.navigation && performance.navigation.type === 1);
+  if (reload || ok + 30 * 864e5 < Date.now()) html.classList.add('gate-pending');
   /* motion: off when the visitor said so, or when the system asks for reduced motion and they have not said otherwise */
   var choice = null;
   try { choice = localStorage.getItem('sw-motion'); } catch (e) { choice = null; }
