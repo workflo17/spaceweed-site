@@ -44,9 +44,9 @@
           const status = gate.querySelector('[data-gate-status]');
           if (status) status.textContent = 'Transporter · energising';
           html.classList.add('gate-opening');
-          setTimeout(() => html.classList.add('gate-arriving'), 700);
-          setTimeout(() => { html.classList.remove('gate-pending'); html.classList.remove('gate-opening'); fireLaunch(); }, 1000);
-          setTimeout(() => html.classList.remove('gate-arriving'), 2500);
+          setTimeout(() => html.classList.add('gate-arriving'), 1100);
+          setTimeout(() => { html.classList.remove('gate-pending'); html.classList.remove('gate-opening'); fireLaunch(); }, 1400);
+          setTimeout(() => html.classList.remove('gate-arriving'), 2900);
         } else {
           html.classList.remove('gate-pending');
           fireLaunch();
