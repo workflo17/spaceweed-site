@@ -96,7 +96,8 @@
       const at = [...document.querySelectorAll('main > section, main > .travel')].find((el) => el.getBoundingClientRect().bottom > line);
       const inTravel = at?.classList.contains('travel');
       const mark = inTravel ? at.nextElementSibling : at;
-      const was = inTravel ? 0 : mark?.getBoundingClientRect().top;
+      const arrived = inTravel && mark?.getBoundingClientRect().top <= 0;
+      const was = inTravel && !arrived ? 0 : mark?.getBoundingClientRect().top;
       change();
       if (mark) scrollTo({ top: scrollY + mark.getBoundingClientRect().top - was, behavior: 'instant' });
     };
@@ -411,6 +412,12 @@
       html.classList.toggle('nugs-on', seen.size > 0);
     });
     fields.forEach((f) => io.observe(f));
+  })();
+  (() => {
+    const hall = document.querySelector('.corridor');
+    if (!hall) return;
+    if (!('IntersectionObserver' in window)) { html.classList.add('hall-on'); return; }
+    new IntersectionObserver((entries) => { for (const e of entries) html.classList.toggle('hall-on', e.isIntersecting); }).observe(hall);
   })();
   (() => {
     const svg = document.querySelector('.phase');
