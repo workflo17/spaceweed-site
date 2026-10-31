@@ -25,7 +25,7 @@
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
-
+<link rel="stylesheet" href="assets/line.v1.css"><link rel="stylesheet" href="assets/walks.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script src="assets/boot.v1.js"></script>
@@ -117,13 +117,91 @@
 </section>
 <i id="vt-ready" hidden></i>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Transmission</span></div>
+<!-- THE TRANSMISSION: a walk along mission control to the form: the Earth, the mast and the desk where the answer comes
+     from. -->
+<section class="run run--words" data-run data-bulkhead="none" data-stations="Who you are,Your message,Our answer" data-unit="Window" aria-labelledby="path-title">
+  <div class="run__track">
+    <i class="run__stop"></i><i class="run__stop"></i><i class="run__stop"></i>
+    <div class="run__stage">
+      <figure class="gangway gangway--3 gangway--control" aria-hidden="true" data-line>
+  <div class="gangway__view">
+    <div class="gangway__world">
+      <i class="gangway__floor"></i><i class="gangway__ceil"></i><i class="gangway__far"></i><i class="gangway__end"></i><i class="gangway__lead"></i>
+      <i class="gangway__part gangway__part--1"></i><i class="gangway__part gangway__part--2"></i>
+      <div class="gangway__bay gangway__bay--1">
+  
+  <i class="gangway__dim"></i>
+  <img class="gangway__out" src="assets/img/out-rise-2800.webp" srcset="assets/img/out-rise-1400.webp 1400w, assets/img/out-rise-2800.webp 2800w" sizes="(max-width: 700px) 440px, 2800px" width="2800" height="1000" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <img class="gangway__wall" src="assets/img/bay-control-a-1920.webp" srcset="assets/img/bay-control-a-800.webp 800w, assets/img/bay-control-a-1280.webp 1280w, assets/img/bay-control-a-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Window 01</b><span>Who you are</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--2">
+  
+  <i class="gangway__dim"></i>
+  <div class="gangway__hang"><img class="gangway__pic" src="assets/img/fg-steel-604.webp" srcset="assets/img/fg-steel-320.webp 320w, assets/img/fg-steel-604.webp 604w" sizes="(max-width: 700px) 110px, 400px" width="604" height="1293" alt="" loading="lazy" fetchpriority="low" decoding="async"><i class="gangway__pulse"></i><i class="gangway__pulse"></i><i class="gangway__pulse"></i></div>
+  <img class="gangway__wall" src="assets/img/bay-control-b-1920.webp" srcset="assets/img/bay-control-b-800.webp 800w, assets/img/bay-control-b-1280.webp 1280w, assets/img/bay-control-b-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Window 02</b><span>Your message</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--3">
+  <img class="gangway__room" src="assets/img/inside-cadet-1280.webp" srcset="assets/img/inside-cadet-800.webp 800w, assets/img/inside-cadet-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  
+  <img class="gangway__wall" src="assets/img/bay-control-c-1920.webp" srcset="assets/img/bay-control-c-800.webp 800w, assets/img/bay-control-c-1280.webp 1280w, assets/img/bay-control-c-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Window 03</b><span>Our answer</span></p>
+  <i class="gangway__spill"></i>
+</div>
+      <i class="gangway__rail"></i>
+    </div>
+  </div>
+  <p class="gangway__tag tag">Mission Control · the way a message goes</p>
+  <p class="gangway__hud tag" data-hud></p>
+</figure>
+      <div class="run__aside">
+        <div class="rail" role="group" aria-label="Jump to a window" data-rail></div>
+        <a class="textlink run__skip" href="#write-title">Skip to the form</a>
+      </div>
+    </div>
+    <div class="run__open">
+      <div class="run__plate">
+        <p class="tag" data-type>Transmission</p>
+        <h2 class="head" id="path-title">How a transmission travels.</h2>
+      </div>
+    </div>
+    <ol class="run__words run__words--cols">
+      <li class="run__word">
+        <div class="run__plate">
+          <h3 class="sub">Who you are</h3>
+          <p>Say which of the three you are: a store, a budtender or a grower.</p>
+        </div>
+      </li>
+      <li class="run__word">
+        <div class="run__plate">
+          <h3 class="sub">Your message</h3>
+          <p>Email is how to reach us: <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></p>
+        </div>
+      </li>
+      <li class="run__word">
+        <div class="run__plate">
+          <h3 class="sub">Our answer</h3>
+          <p>One of our Space Cadets will get back to you in an intergalactic minute!</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Transmission</span></div>
 <section class="grid section two" aria-labelledby="write-title">
   <div class="two__head" data-reveal>
     <p class="tag" data-type>Transmission</p>
     <h2 class="head" id="write-title">Write to us.</h2>
     <p class="lead"><a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></p>
-    <p>Say which of the three you are: a store, a budtender or a grower.</p>
   </div>
   <div class="two__body">
     <form class="form plate" data-mailto="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" data-reveal>
@@ -178,7 +256,7 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Ship interiors made with AI. Space pictures: NASA, ESA/Webb, ESO. Not affiliated with or endorsed by any space agency.</p>
-      
+      <p class="foot__credit small">The Milky Way: <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
     </div>
   </div>
 </footer>

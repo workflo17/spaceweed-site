@@ -25,7 +25,7 @@
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
-
+<link rel="stylesheet" href="assets/line.v1.css"><link rel="stylesheet" href="assets/walks.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script src="assets/boot.v1.js"></script>
@@ -116,39 +116,102 @@
 </section>
 <i id="vt-ready" hidden></i>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Cargo bay</span></div>
-<section class="grid section manifest" aria-labelledby="products-title">
-  <div class="manifest__head" data-reveal>
-    <p class="tag" data-type>Cargo bay · manifest</p>
-    <h2 class="head" id="products-title">Three products.</h2>
-    <p class="lead">Flower, pre-rolls and capsules. Ask your store which strains are on the shelf this week.</p>
+<!-- THE MANIFEST: a walk along the cargo bay past three display chambers, the client’s own product in each. On the walk the
+     scene pins and the three plates rise over it, one at each window; still, it is the long view with the three products
+     under it. -->
+<section class="run run--words" data-run data-bulkhead="none" data-stations="Flower,Space Cones,Space Capsules" data-unit="Bay" aria-labelledby="products-title">
+  <div class="run__track">
+    <i class="run__stop"></i><i class="run__stop"></i><i class="run__stop"></i>
+    <div class="run__stage">
+      <figure class="gangway gangway--3 gangway--cargo" aria-hidden="true" data-line>
+  <div class="gangway__view">
+    <div class="gangway__world">
+      <i class="gangway__floor"></i><i class="gangway__ceil"></i><i class="gangway__far"></i><i class="gangway__end"></i><i class="gangway__lead"></i>
+      <i class="gangway__part gangway__part--1"></i><i class="gangway__part gangway__part--2"></i>
+      <div class="gangway__bay gangway__bay--1">
+  <img class="gangway__room" src="assets/img/inside-chamber-a-1280.webp" srcset="assets/img/inside-chamber-a-800.webp 800w, assets/img/inside-chamber-a-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  <div class="gangway__hang"><img class="gangway__pic" src="assets/img/lit-jar-700.webp" srcset="assets/img/lit-jar-420.webp 420w, assets/img/lit-jar-700.webp 700w" sizes="(max-width: 700px) 140px, 440px" width="700" height="700" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+<i class="gangway__tube"></i>
+  <img class="gangway__wall" src="assets/img/bay-cargo-a-1920.webp" srcset="assets/img/bay-cargo-a-800.webp 800w, assets/img/bay-cargo-a-1280.webp 1280w, assets/img/bay-cargo-a-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Bay 01</b><span>Flower</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--2">
+  <img class="gangway__room" src="assets/img/inside-chamber-b-1280.webp" srcset="assets/img/inside-chamber-b-800.webp 800w, assets/img/inside-chamber-b-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  <div class="gangway__hang"><img class="gangway__pic" src="assets/img/cut-cone-760.webp" srcset="assets/img/cut-cone-420.webp 420w, assets/img/cut-cone-760.webp 760w" sizes="(max-width: 700px) 140px, 460px" width="760" height="222" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+<i class="gangway__tube"></i>
+  <img class="gangway__wall" src="assets/img/bay-cargo-b-1920.webp" srcset="assets/img/bay-cargo-b-800.webp 800w, assets/img/bay-cargo-b-1280.webp 1280w, assets/img/bay-cargo-b-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Bay 02</b><span>Space Cones</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--3">
+  <img class="gangway__room" src="assets/img/inside-chamber-c-1280.webp" srcset="assets/img/inside-chamber-c-800.webp 800w, assets/img/inside-chamber-c-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  <div class="gangway__hang"><img class="gangway__pic" src="assets/img/cut-capsule-760.webp" srcset="assets/img/cut-capsule-420.webp 420w, assets/img/cut-capsule-760.webp 760w" sizes="(max-width: 700px) 110px, 340px" width="760" height="271" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+<i class="gangway__tube"></i>
+  <img class="gangway__wall" src="assets/img/bay-cargo-c-1920.webp" srcset="assets/img/bay-cargo-c-800.webp 800w, assets/img/bay-cargo-c-1280.webp 1280w, assets/img/bay-cargo-c-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Bay 03</b><span>Space Capsules</span></p>
+  <i class="gangway__spill"></i>
+</div>
+      <i class="gangway__rail"></i>
+    </div>
   </div>
-  <ul class="cargo__bays manifest__bays" data-reveal>
-      <li class="bay">
+  <p class="gangway__tag tag">The manifest · three chambers in the bay</p>
+  <p class="gangway__hud tag" data-hud></p>
+</figure>
+      <div class="run__aside">
+        <div class="rail" role="group" aria-label="Jump to a bay" data-rail></div>
+        <a class="textlink run__skip" href="#shelf-title">Skip to the jars</a>
+      </div>
+    </div>
+    <div class="run__open">
+      <div class="run__plate">
+        <p class="tag" data-type>Cargo bay · manifest</p>
+        <h2 class="head" id="products-title">Three products.</h2>
+        <p class="lead">Flower, pre-rolls and capsules. Ask your store which strains are on the shelf this week.</p>
+      </div>
+    </div>
+    <ul class="cargo__bays manifest__bays run__words">
+      <li class="bay run__word">
+        <div class="run__plate">
           <picture>
             <source type="image/webp" srcset="assets/img/jar-open-700.webp 700w, assets/img/jar-open-800.webp 800w, assets/img/jar-open-1400.webp 1400w" sizes="(min-width: 600px) 30vw, 92vw">
             <img src="assets/img/jar-open-1400.jpg" srcset="assets/img/jar-open-700.jpg 700w, assets/img/jar-open-800.jpg 800w, assets/img/jar-open-1400.jpg 1400w" sizes="(min-width: 600px) 30vw, 92vw" width="1400" height="963" loading="lazy" decoding="async" alt="A closed Space Weed jar standing on white, with green buds inside it and beside it.">
           </picture>
-        <h3 class="sub">Flower</h3>
-        <p class="small">Our flower is different from other brands because it’s Flash&nbsp;Frozen&nbsp;Cured. Removing excess moisture also gives our flower a unique, soft texture, making it easy and fun to break apart; no grinder necessary!</p>
+          <h3 class="sub">Flower</h3>
+          <p class="small">Our flower is different from other brands because it’s Flash&nbsp;Frozen&nbsp;Cured. Removing excess moisture also gives our flower a unique, soft texture, making it easy and fun to break apart; no grinder necessary!</p>
+        </div>
       </li>
-      <li class="bay">
+      <li class="bay run__word">
+        <div class="run__plate">
           <picture>
             <source type="image/webp" srcset="assets/img/pre-rolls-600.webp 600w, assets/img/pre-rolls-700.webp 700w, assets/img/pre-rolls-1000.webp 1000w" sizes="(min-width: 600px) 30vw, 92vw">
             <img src="assets/img/pre-rolls-1000.jpg" srcset="assets/img/pre-rolls-600.jpg 600w, assets/img/pre-rolls-700.jpg 700w, assets/img/pre-rolls-1000.jpg 1000w" sizes="(min-width: 600px) 30vw, 92vw" width="1000" height="1000" loading="lazy" decoding="async" alt="Two Space Weed pre-rolls lying side by side, close up, with green flower visible at the ends.">
           </picture>
-        <h3 class="sub">Space Cones</h3>
-        <p class="small">Our space cones are filled with pre-ground flower. Because of the reduced water weight, a half-gram Space Cone looks like a full-gram joint from other brands. More flower, same size.</p>
+          <h3 class="sub">Space Cones</h3>
+          <p class="small">Our space cones are filled with pre-ground flower. Because of the reduced water weight, a half-gram Space Cone looks like a full-gram joint from other brands. More flower, same size.</p>
+        </div>
       </li>
-      <li class="bay">
+      <li class="bay run__word">
+        <div class="run__plate">
           <picture>
             <source type="image/webp" srcset="assets/img/capsule-500.webp 500w, assets/img/capsule-700.webp 700w, assets/img/capsule-800.webp 800w" sizes="(min-width: 600px) 30vw, 92vw">
             <img src="assets/img/capsule-800.jpg" srcset="assets/img/capsule-500.jpg 500w, assets/img/capsule-700.jpg 700w, assets/img/capsule-800.jpg 800w" sizes="(min-width: 600px) 30vw, 92vw" width="800" height="800" loading="lazy" decoding="async" alt="One clear capsule filled with green Space Weed flower, lying on white.">
           </picture>
-        <h3 class="sub">Space Capsules</h3>
-        <p class="small">Our flower capsules come in two varieties: activated and raw. Both versions are free of chemical solvents, sugar, and other additives.</p>
+          <h3 class="sub">Space Capsules</h3>
+          <p class="small">Our flower capsules come in two varieties: activated and raw. Both versions are free of chemical solvents, sugar, and other additives.</p>
+        </div>
       </li>
-  </ul>
+    </ul>
+  </div>
 </section>
 
 <div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Cargo bay</span></div>

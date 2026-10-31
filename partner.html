@@ -18,14 +18,14 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/archivo.v2.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/buds-1080.webp" imagesrcset="assets/img/buds-600.webp 600w, assets/img/buds-1080.webp 1080w" imagesizes="(min-width: 960px) 42vw, 90vw" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/buds-1080.webp" imagesrcset="assets/img/buds-600.webp 600w, assets/img/buds-760.webp 760w, assets/img/buds-1080.webp 1080w" imagesizes="(min-width: 960px) 42vw, 90vw" type="image/webp" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/shell-crewhall-tall-900.webp" media="(max-aspect-ratio: 1/1)" type="image/webp" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/shell-crewhall-1280.webp" media="(min-aspect-ratio: 1/1) and (max-width: 1280px)" type="image/webp" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/shell-crewhall-1920.webp" media="(min-aspect-ratio: 1/1) and (min-width: 1281px)" type="image/webp" fetchpriority="high">
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
-
+<link rel="stylesheet" href="assets/line.v1.css"><link rel="stylesheet" href="assets/walks.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script src="assets/boot.v1.js"></script>
@@ -110,62 +110,136 @@
   </div>
   <figure class="intro__pic">
     <picture>
-      <source type="image/webp" srcset="assets/img/buds-600.webp 600w, assets/img/buds-1080.webp 1080w" sizes="(min-width: 960px) 42vw, 90vw">
+      <source type="image/webp" srcset="assets/img/buds-600.webp 600w, assets/img/buds-760.webp 760w, assets/img/buds-1080.webp 1080w" sizes="(min-width: 960px) 42vw, 90vw">
       <img src="assets/img/buds-1080.png" srcset="assets/img/buds-600.png 600w, assets/img/buds-1080.png 1080w" sizes="(min-width: 960px) 42vw, 90vw" width="1080" height="1080" fetchpriority="high" alt="Three green Space Weed buds, cut out against the dark page.">
     </picture>
   </figure>
 </section>
 <i id="vt-ready" hidden></i>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Crew</span></div>
-<section class="grid section audiences" aria-labelledby="ways-title">
-  <div class="audiences__head" data-reveal>
-    <p class="tag" data-type>Crew</p>
-    <h2 class="head" id="ways-title">Three ways in.</h2>
-    <p class="lead">Carry it, get certified to sell it, or license the process and make it.</p>
+<!-- THREE WAYS IN: the crew corridor behind the home page’s three doors, a window on each way in. The doors link to the
+     plates here, and a plate’s id is on its box, so a link lands with the camera at that window. -->
+<section class="run run--words run--long" data-run data-bulkhead="none" data-stations="Stores,Budtenders,Growers" data-unit="Window" aria-labelledby="ways-head">
+  <div class="run__track">
+    <i class="run__stop"></i><i class="run__stop"></i><i class="run__stop"></i>
+    <div class="run__stage">
+      <figure class="gangway gangway--3 gangway--crew" aria-hidden="true" data-line>
+  <div class="gangway__view">
+    <div class="gangway__world">
+      <i class="gangway__floor"></i><i class="gangway__ceil"></i><i class="gangway__far"></i><i class="gangway__end"></i><i class="gangway__lead"></i>
+      <i class="gangway__part gangway__part--1"></i><i class="gangway__part gangway__part--2"></i>
+      <div class="gangway__bay gangway__bay--1">
+  <img class="gangway__room" src="assets/img/inside-stocked-1280.webp" srcset="assets/img/inside-stocked-800.webp 800w, assets/img/inside-stocked-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  
+  <img class="gangway__wall" src="assets/img/bay-crew-a-1920.webp" srcset="assets/img/bay-crew-a-800.webp 800w, assets/img/bay-crew-a-1280.webp 1280w, assets/img/bay-crew-a-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Window 01</b><span>Stores</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--2">
+  <img class="gangway__room" src="assets/img/inside-training-1280.webp" srcset="assets/img/inside-training-800.webp 800w, assets/img/inside-training-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  <div class="gangway__hang"><i class="gangway__shadow"></i><img class="gangway__pic" src="assets/img/lit-macro-600.webp" srcset="assets/img/lit-macro-320.webp 320w, assets/img/lit-macro-600.webp 600w" sizes="(max-width: 700px) 90px, 280px" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+  <img class="gangway__wall" src="assets/img/bay-crew-b-1920.webp" srcset="assets/img/bay-crew-b-800.webp 800w, assets/img/bay-crew-b-1280.webp 1280w, assets/img/bay-crew-b-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Window 02</b><span>Budtenders</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--3">
+  <img class="gangway__room" src="assets/img/inside-dryers-1280.webp" srcset="assets/img/inside-dryers-800.webp 800w, assets/img/inside-dryers-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  <div class="gangway__hang"><i class="gangway__shadow"></i><img class="gangway__pic" src="assets/img/lit-standing-420.webp" srcset="assets/img/lit-standing-240.webp 240w, assets/img/lit-standing-420.webp 420w" sizes="(max-width: 700px) 70px, 230px" width="420" height="698" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+  <img class="gangway__wall" src="assets/img/bay-crew-c-1920.webp" srcset="assets/img/bay-crew-c-800.webp 800w, assets/img/bay-crew-c-1280.webp 1280w, assets/img/bay-crew-c-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Window 03</b><span>Growers</span></p>
+  <i class="gangway__spill"></i>
+</div>
+      <i class="gangway__rail"></i>
+    </div>
   </div>
-  <ul class="audiences__cols" data-reveal>
-    <li>
-      <figure class="audiences__pic open-pic">
-        <picture>
-          <source type="image/webp" srcset="assets/img/same-weight-jars-800.webp">
-          <img src="assets/img/same-weight-jars-800.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Two clear jars side by side, holding the same weight of flower. The Space Weed jar on the left is full to the lid; the jar of conventionally cured flower on the right is well under half full.">
-        </picture>
-        <figcaption>The same weight in each jar.</figcaption>
-      </figure>
-      <h2 class="sub" id="stores-title">Stores</h2>
-      <p>Bring <span translate="no">Space&nbsp;Weed</span> to your dispensary. Flash&nbsp;Frozen&nbsp;Cured flower that sells itself. Our flower turns fast.</p>
-      <p><span translate="no">Space&nbsp;Weed</span> is different. But why does that difference matter to you at the dispensary? The <span translate="no">Space&nbsp;Weed</span> Flash&nbsp;Frozen&nbsp;Cured process is so fast that we can typically go from harvest to shelf within days. Amazing right?</p>
-      <p>We use your sales data to bring you the items that sell through. Your store’s budtenders take our <span translate="no">Space&nbsp;Weed</span> Certification Program on spaceweedusa.com to achieve a better understanding of our unique product.</p>
-      <a class="button" href="mailto:info@spaceweedusa.com?subject=Carrying%20Space%20Weed"><span class="button__in">Write to us about carrying it</span></a>
-    </li>
-    <li>
-      <figure class="audiences__pic open-pic">
-        <picture>
-          <source type="image/webp" srcset="assets/img/bud-macro-400.webp 400w, assets/img/bud-macro-600.webp 600w, assets/img/bud-macro-800.webp 800w" sizes="(min-width: 900px) 30vw, 90vw">
-          <img src="assets/img/bud-macro-800.jpg" srcset="assets/img/bud-macro-400.jpg 400w, assets/img/bud-macro-600.jpg 600w, assets/img/bud-macro-800.jpg 800w" sizes="(min-width: 900px) 30vw, 90vw" width="800" height="800" loading="lazy" decoding="async" alt="One Space Weed bud in close-up: pale green, covered in fine hairs, purple at the leaf tips, on black.">
-        </picture>
-        <figcaption>The texture is the thing to show at the counter.</figcaption>
-      </figure>
-      <h2 class="sub" id="budtenders-title">Budtenders</h2>
-      <p>Here at the mothership we value budtenders! Budtenders, want to get <span translate="no">Space&nbsp;Weed</span> Certified? We invite you to complete our (very fast!) <span translate="no">Space&nbsp;Weed</span> Certification Program.</p>
-      <p>Set the jar next to a conventionally cured gram at the same weight, and let the customer see the difference. The bud breaks up by hand.</p>
-      <a class="textlink" href="https://www.spaceweedusa.com/space-academy-home">Access Space Academy</a>
-    </li>
-    <li>
-      <figure class="audiences__pic open-pic">
-        <picture>
-          <source type="image/webp" srcset="assets/img/bud-standing-400.webp 400w, assets/img/bud-standing-606.webp 606w" sizes="(min-width: 900px) 30vw, 90vw">
-          <img class="is-contain" src="assets/img/bud-standing-606.png" srcset="assets/img/bud-standing-400.png 400w, assets/img/bud-standing-606.png 606w" sizes="(min-width: 900px) 30vw, 90vw" width="606" height="1007" loading="lazy" decoding="async" alt="A single dark purple and green Space Weed bud standing upright, photographed in a studio.">
-        </picture>
-        <figcaption>Flash&nbsp;Frozen&nbsp;Cured flower.</figcaption>
-      </figure>
-      <h2 class="sub" id="growers-title">Growers and producers</h2>
-      <p>Interested in Flash&nbsp;Frozen&nbsp;Curing, our patented process? We are currently in the process of partnering with select growers/producers interested in licensing our technology, the <span translate="no">Space&nbsp;Weed</span> brand or both. The process dries flower in days rather than weeks.</p>
-      <p>CannaGenesis is the vision of Eric Young. We use science to revolutionize cannabis. We conduct focus groups and use research to develop new techniques, such as Flash&nbsp;Frozen&nbsp;Curing. Four issued US patents cover the method: <span translate="no">US 10,639,340, 11,191,797, 11,351,212 and 11,980,304</span>.</p>
-      <a class="textlink" href="https://www.cannagenesis.com/partnership">Become a certified producer, at cannagenesis.com</a>
-    </li>
-  </ul>
+  <p class="gangway__tag tag">Crew · the corridor behind the three doors</p>
+  <p class="gangway__hud tag" data-hud></p>
+</figure>
+      <div class="run__aside">
+        <div class="rail" role="group" aria-label="Jump to a window" data-rail></div>
+        <a class="textlink run__skip" href="#talk-title">Skip to Mission Control</a>
+      </div>
+    </div>
+    <div class="run__open" id="ways-title">
+      <div class="run__plate">
+        <p class="tag" data-type>Crew</p>
+        <h2 class="head" id="ways-head">Three ways in.</h2>
+        <p class="lead">Carry it, get certified to sell it, or license the process and make it.</p>
+      </div>
+    </div>
+    <ul class="audiences__cols run__words">
+      <li class="run__word" id="stores-title">
+        <div class="run__plate">
+          <figure class="audiences__pic open-pic">
+            <picture>
+              <source type="image/webp" srcset="assets/img/same-weight-jars-800.webp">
+              <img src="assets/img/same-weight-jars-800.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Two clear jars side by side, holding the same weight of flower. The Space Weed jar on the left is full to the lid; the jar of conventionally cured flower on the right is well under half full.">
+            </picture>
+            <figcaption>The same weight in each jar.</figcaption>
+          </figure>
+          <h3 class="sub">Stores</h3>
+          <div class="run__text">
+            <p>Bring <span translate="no">Space&nbsp;Weed</span> to your dispensary. Flash&nbsp;Frozen&nbsp;Cured flower that sells itself. Our flower turns fast.</p>
+            <div class="run__rest">
+              <p><span translate="no">Space&nbsp;Weed</span> is different. But why does that difference matter to you at the dispensary? The <span translate="no">Space&nbsp;Weed</span> Flash&nbsp;Frozen&nbsp;Cured process is so fast that we can typically go from harvest to shelf within days. Amazing right?</p>
+              <p>We use your sales data to bring you the items that sell through. Your store’s budtenders take our <span translate="no">Space&nbsp;Weed</span> Certification Program on spaceweedusa.com to achieve a better understanding of our unique product.</p>
+            </div>
+          </div>
+          <button class="textlink run__read" type="button" aria-expanded="false">Read on</button>
+          <a class="button" href="mailto:info@spaceweedusa.com?subject=Carrying%20Space%20Weed"><span class="button__in">Write to us about carrying it</span></a>
+        </div>
+      </li>
+      <li class="run__word" id="budtenders-title">
+        <div class="run__plate">
+          <figure class="audiences__pic open-pic">
+            <picture>
+              <source type="image/webp" srcset="assets/img/bud-macro-400.webp 400w, assets/img/bud-macro-600.webp 600w, assets/img/bud-macro-800.webp 800w" sizes="(min-width: 900px) 30vw, 90vw">
+              <img src="assets/img/bud-macro-800.jpg" srcset="assets/img/bud-macro-400.jpg 400w, assets/img/bud-macro-600.jpg 600w, assets/img/bud-macro-800.jpg 800w" sizes="(min-width: 900px) 30vw, 90vw" width="800" height="800" loading="lazy" decoding="async" alt="One Space Weed bud in close-up: pale green, covered in fine hairs, purple at the leaf tips, on black.">
+            </picture>
+            <figcaption>The texture is the thing to show at the counter.</figcaption>
+          </figure>
+          <h3 class="sub">Budtenders</h3>
+          <div class="run__text">
+            <p>Here at the mothership we value budtenders! Budtenders, want to get <span translate="no">Space&nbsp;Weed</span> Certified? We invite you to complete our (very fast!) <span translate="no">Space&nbsp;Weed</span> Certification Program.</p>
+            <div class="run__rest">
+              <p>Set the jar next to a conventionally cured gram at the same weight, and let the customer see the difference. The bud breaks up by hand.</p>
+            </div>
+          </div>
+          <button class="textlink run__read" type="button" aria-expanded="false">Read on</button>
+          <a class="textlink" href="https://www.spaceweedusa.com/space-academy-home">Access Space Academy</a>
+        </div>
+      </li>
+      <li class="run__word" id="growers-title">
+        <div class="run__plate">
+          <figure class="audiences__pic open-pic">
+            <picture>
+              <source type="image/webp" srcset="assets/img/bud-standing-400.webp 400w, assets/img/bud-standing-606.webp 606w" sizes="(min-width: 900px) 30vw, 90vw">
+              <img class="is-contain" src="assets/img/bud-standing-606.png" srcset="assets/img/bud-standing-400.png 400w, assets/img/bud-standing-606.png 606w" sizes="(min-width: 900px) 30vw, 90vw" width="606" height="1007" loading="lazy" decoding="async" alt="A single dark purple and green Space Weed bud standing upright, photographed in a studio.">
+            </picture>
+            <figcaption>Flash&nbsp;Frozen&nbsp;Cured flower.</figcaption>
+          </figure>
+          <h3 class="sub">Growers and producers</h3>
+          <div class="run__text">
+            <p>Interested in Flash&nbsp;Frozen&nbsp;Curing, our patented process? We are currently in the process of partnering with select growers/producers interested in licensing our technology, the <span translate="no">Space&nbsp;Weed</span> brand or both. The process dries flower in days rather than weeks.</p>
+            <div class="run__rest">
+              <p>CannaGenesis is the vision of Eric Young. We use science to revolutionize cannabis. We conduct focus groups and use research to develop new techniques, such as Flash&nbsp;Frozen&nbsp;Curing. Four issued US patents cover the method: <span translate="no">US 10,639,340, 11,191,797, 11,351,212 and 11,980,304</span>.</p>
+            </div>
+          </div>
+          <button class="textlink run__read" type="button" aria-expanded="false">Read on</button>
+          <a class="textlink" href="https://www.cannagenesis.com/partnership">Become a certified producer, at cannagenesis.com</a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>
 
 <div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Mission Control</span></div>

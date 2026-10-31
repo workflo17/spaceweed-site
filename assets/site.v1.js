@@ -312,7 +312,16 @@
         io.unobserve(e.target);
       }
     }, { rootMargin: '150% 0px 150% 0px' });
-    const watch = () => els.forEach((el) => io.observe(el));
+    const watch = () => {
+      const runs = els.filter((el) => el.matches('.run'));
+      els.filter((el) => !el.matches('.run')).forEach((el) => io.observe(el));
+      if (!runs.length) return;
+      let started = false;
+      const start = () => { if (started) return; started = true; runs.forEach((el) => io.observe(el)); };
+      if (scrollY > 0 || location.hash) { start(); return; }
+      addEventListener('scroll', start, { once: true, passive: true });
+      setTimeout(start, 4000);
+    };
     if (document.readyState === 'complete') watch(); else addEventListener('load', watch, { once: true });
   })();
   (() => {
@@ -520,12 +529,13 @@
       const live = () => !!track && getComputedStyle(host).getPropertyValue('--live').trim() === '1';
       const pad = (i) => String(i + 1).padStart(2, '0');
       const stopEls = [...host.querySelectorAll('.run__stop')];
+      const unit = host.dataset.unit;   // what this walk calls a stop; the tour's are stations, read as stages
       let current = -1;
       const buttons = names.map((name, i) => {
         const b = document.createElement('button');
         b.type = 'button'; b.className = 'rail__btn';
         b.textContent = `${pad(i)} ${name}`;
-        b.setAttribute('aria-label', `Station ${pad(i)} · ${name}`);
+        b.setAttribute('aria-label', `${unit || 'Station'} ${pad(i)} · ${name}`);
         b.addEventListener('click', () => go(i));
         rail.appendChild(b);
         return b;
@@ -535,7 +545,7 @@
         current = i;
         stages.forEach((s, k) => s.classList.toggle('is-on', k === i));
         buttons.forEach((b, k) => b.setAttribute('aria-current', k === i ? 'true' : 'false'));
-        put(hud, `Stage ${pad(i)} of 04${state ? ` · ${state}` : ''}`);
+        put(hud, `${unit || 'Stage'} ${pad(i)} of ${pad(names.length - 1)}${state ? ` · ${state}` : ''}`);
         const deck = document.getElementById('deck-stage');
         if (names[i]) put(deck, `${pad(i)} ${names[i]}`);
       };
@@ -561,7 +571,19 @@
         }
         wanted = i;
       };
+      for (const read of host.querySelectorAll('.run__read')) read.addEventListener('click', () => {
+        const on = read.closest('.run__plate').classList.toggle('is-open');
+        read.setAttribute('aria-expanded', String(on));
+        read.textContent = on ? 'Show less' : 'Read on';
+      });
       if (!live()) { buttons.forEach((b) => b.setAttribute('aria-current', 'false')); continue; }
+      const aside = host.querySelector('.run--words .run__aside');
+      if (aside) {
+        const fit = () => host.style.setProperty('--rail-w', `${aside.offsetWidth}px`);
+        fit();
+        addEventListener('resize', fit, { passive: true });
+        document.fonts?.ready.then(fit);
+      }
       const readout = document.querySelector('.readout[aria-live]');
       if (readout) readout.setAttribute('aria-live', 'off');
       const stops = window.swPhase?.stops || [0, 0.33, 0.67, 1];
@@ -572,6 +594,8 @@
         }
         return 1;
       };
+      const ats = stopEls.map((s) => parseFloat(getComputedStyle(s).getPropertyValue('--at')));
+      const halves = window.swPhase ? [0.29, 0.51, 0.75] : ats.slice(1).map((a, k) => (a + ats[k]) / 2);
       let raf = 0, lastT = -1;
       const onScroll = () => {
         if (raf) return;
@@ -581,7 +605,7 @@
           const span = track.offsetHeight - innerHeight;
           if (r.bottom < 0 || r.top > innerHeight || span <= 0) return;
           const p = Math.min(1, Math.max(0, -r.top / span));
-          const i = p < 0.29 ? 0 : p < 0.51 ? 1 : p < 0.75 ? 2 : 3;
+          const i = halves.filter((h) => p >= h).length;
           const t = Math.round(tOf(p) * 2000) / 2000;
           if (window.swPhase && t !== lastT) { lastT = t; window.swPhase.set(t); }
           setOn(i, window.swPhase ? window.swPhase.word() : '');
@@ -596,6 +620,7 @@
     const travels = [...document.querySelectorAll('main > .travel')];
     const track = document.querySelector('.run__track');
     const stops = track ? [...track.querySelectorAll('.run__stop')] : [];
+    const plates = track ? [...track.querySelectorAll('.run__plate')] : [];
     if ((!travels.length && !stops.length) || !CSS.supports('animation-timeline: view()')) return;
     const pinnedMq = matchMedia('(prefers-reduced-motion: no-preference) and (min-height: 520px)');
     const live = () => pinnedMq.matches && !html.classList.contains('motion-off') && !html.classList.contains('gate-pending');
@@ -633,6 +658,7 @@
     addEventListener('focusin', handBack);   // a focus move is the visitor's own, and it scrolls: the ride must not write over it
     document.addEventListener('click', (e) => { if (e.target.closest?.('a[href^="#"]')) { lastWheel = lastTouch = -Infinity; handBack(); } }, true);
     const ease = (p) => p + p * p - p * p * p;   // leaves at the page's own speed, peaks a third over the average, settles at rest
+    const reading = (dir) => plates.some((p) => { const r = p.getBoundingClientRect(), vh = innerHeight; return r.height > vh - 70 && r.top < vh * 0.5 && (dir > 0 ? r.bottom > vh * 0.72 : r.top < 40 && r.bottom > vh * 0.5); });
     const ride = (t, room) => {
       stop();
       let from = scrollY, t0 = 0;
@@ -672,6 +698,7 @@
       if (stops.length) {   // the tour: on to the next window in the direction of the push; past the last, the page goes on by hand
         const top = yOf(track);
         if (y > top - vh * 0.7 && y < top + track.offsetHeight - vh) {
+          if (reading(lastDir)) return;   // a plate taller than the screen stays in the hand until the reader has reached its end
           const next = lastDir > 0 ? stops.find((s) => yOf(s) > y + 12) : stops.findLast((s) => yOf(s) < y - 12);
           if (next) ride(track, next);
           return;
@@ -695,6 +722,11 @@
       const now = performance.now();
       if (now - lastWheel < 1500 || now - lastTouch < 4000 || now - lastPress < 1500) return;
       const y = scrollY;
+      if (plates.length && y > yOf(track) && y < yOf(track) + track.offsetHeight - innerHeight && !reading(1) && !reading(-1) && !document.activeElement?.closest?.('.run__plate')) {
+        const near = [track, ...stops].reduce((a, b) => (Math.abs(yOf(b) - y) < Math.abs(yOf(a) - y) ? b : a));
+        if (Math.abs(yOf(near) - y) > 2) scrollTo({ top: yOf(near), behavior: 'instant' });
+        return;
+      }
       for (const t of travels) {
         const room = t.nextElementSibling;
         if (!arrives(room)) continue;

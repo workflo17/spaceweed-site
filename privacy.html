@@ -24,7 +24,7 @@
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
-
+<link rel="stylesheet" href="assets/line.v1.css"><link rel="stylesheet" href="assets/walks.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script src="assets/boot.v1.js"></script>
@@ -106,15 +106,82 @@
 </section>
 <i id="vt-ready" hidden></i>
 
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name"></span></div>
-<section class="grid section two" aria-labelledby="what-title">
-  <div class="two__head" data-reveal>
-    <h2 class="head" id="what-title">What is stored.</h2>
+<!-- THE LOG: a walk along the archive past three ports, an empty aisle, one lit drawer and the message room. -->
+<section class="run run--words" data-run data-bulkhead="none" data-stations="No cookies,One value,Your email" data-unit="Window" aria-labelledby="what-title">
+  <div class="run__track">
+    <i class="run__stop"></i><i class="run__stop"></i><i class="run__stop"></i>
+    <div class="run__stage">
+      <figure class="gangway gangway--3 gangway--log" aria-hidden="true" data-line>
+  <div class="gangway__view">
+    <div class="gangway__world">
+      <i class="gangway__floor"></i><i class="gangway__ceil"></i><i class="gangway__far"></i><i class="gangway__end"></i><i class="gangway__lead"></i>
+      <i class="gangway__part gangway__part--1"></i><i class="gangway__part gangway__part--2"></i>
+      <div class="gangway__bay gangway__bay--1">
+  <img class="gangway__room" src="assets/img/inside-log-a-1280.webp" srcset="assets/img/inside-log-a-800.webp 800w, assets/img/inside-log-a-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  
+  <img class="gangway__wall" src="assets/img/bay-archive-1920.webp" srcset="assets/img/bay-archive-800.webp 800w, assets/img/bay-archive-1280.webp 1280w, assets/img/bay-archive-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Port 01</b><span>No cookies</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--2">
+  <img class="gangway__room" src="assets/img/inside-log-b-1280.webp" srcset="assets/img/inside-log-b-800.webp 800w, assets/img/inside-log-b-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  
+  <img class="gangway__wall" src="assets/img/bay-archive-1920.webp" srcset="assets/img/bay-archive-800.webp 800w, assets/img/bay-archive-1280.webp 1280w, assets/img/bay-archive-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Port 02</b><span>One value</span></p>
+  <i class="gangway__spill"></i>
+</div>
+<div class="gangway__bay gangway__bay--3">
+  <img class="gangway__room" src="assets/img/inside-log-c-1280.webp" srcset="assets/img/inside-log-c-800.webp 800w, assets/img/inside-log-c-1280.webp 1280w" sizes="(max-width: 700px) 480px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+<i class="gangway__side"></i>
+  <i class="gangway__dim"></i>
+  
+  <img class="gangway__wall" src="assets/img/bay-archive-1920.webp" srcset="assets/img/bay-archive-800.webp 800w, assets/img/bay-archive-1280.webp 1280w, assets/img/bay-archive-1920.webp 1920w" sizes="(max-width: 700px) 420px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+  <i class="gangway__glass"></i>
+  <p class="gangway__name"><b>Port 03</b><span>Your email</span></p>
+  <i class="gangway__spill"></i>
+</div>
+      <i class="gangway__rail"></i>
+    </div>
   </div>
-  <div class="two__body" data-reveal>
-    <p>This site sets no cookies and loads nothing from advertising or analytics companies. Its fonts, pictures and footage are served from the site itself. It is hosted on GitHub Pages, which keeps its own server logs.</p>
-    <p>One value is stored in your browser: your answer to the age question, kept for 30 days so you are not asked on every page. Clearing your browser’s site data removes it.</p>
-    <p>If you email info@spaceweedusa.com, your message is handled by the <span translate="no">Space&nbsp;Weed</span> team. The contact page’s form opens your own mail app; it sends nothing from here. The store-name form on the find page does the same: it writes the email in your browser, sends nothing from this site, and keeps nothing you type.</p>
+  <p class="gangway__tag tag">Ship’s log · three ports</p>
+  <p class="gangway__hud tag" data-hud></p>
+</figure>
+      <div class="run__aside">
+        <div class="rail" role="group" aria-label="Jump to a window" data-rail></div>
+      </div>
+    </div>
+    <div class="run__open">
+      <div class="run__plate">
+        <p class="tag" data-type>Ship’s log</p>
+        <h2 class="head" id="what-title">What is stored.</h2>
+      </div>
+    </div>
+    <ol class="run__words run__words--cols">
+      <li class="run__word">
+        <div class="run__plate">
+          <h3 class="sub">No cookies</h3>
+          <p>This site sets no cookies and loads nothing from advertising or analytics companies. Its fonts, pictures and footage are served from the site itself. It is hosted on GitHub Pages, which keeps its own server logs.</p>
+        </div>
+      </li>
+      <li class="run__word">
+        <div class="run__plate">
+          <h3 class="sub">One value</h3>
+          <p>One value is stored in your browser: your answer to the age question, kept for 30 days so you are not asked on every page. Clearing your browser’s site data removes it.</p>
+        </div>
+      </li>
+      <li class="run__word">
+        <div class="run__plate">
+          <h3 class="sub">Your email</h3>
+          <p>If you email info@spaceweedusa.com, your message is handled by the <span translate="no">Space&nbsp;Weed</span> team. The contact page’s form opens your own mail app; it sends nothing from here. The store-name form on the find page does the same: it writes the email in your browser, sends nothing from this site, and keeps nothing you type.</p>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
