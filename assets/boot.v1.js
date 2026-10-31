@@ -46,6 +46,7 @@ document.documentElement.classList.add('js');
     try { sessionStorage.setItem('sw-vt', lastX + ',' + lastY + ',' + kind); } catch (err) { /* then the new page decides alone */ }
     if (kind === 'hatch') {
       var tile = lastDoor.querySelector('.door__frame') || document.querySelector('a.door[href$="' + slug(to) + '"] .door__frame');
+      if (!tile && lastDoor.nextElementSibling && lastDoor.nextElementSibling.classList.contains('door__frame')) tile = lastDoor.nextElementSibling;   /* a door set in a wall: its leaves stand behind the picture, beside the link */
       if (tile) {
         tile.style.viewTransitionName = 'hatch';
         var clear = function () { tile.style.viewTransitionName = ''; };   /* cleared, or a bfcache restore keeps a duplicate name */

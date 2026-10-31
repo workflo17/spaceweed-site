@@ -226,6 +226,26 @@
     document.addEventListener('pointerleave', () => { on = false; r.classList.remove('is-on'); });
     document.documentElement.addEventListener('mouseleave', () => { on = false; r.classList.remove('is-on'); });
   })();
+  (() => {
+    const hero = document.querySelector('.room--bridge'), first = document.querySelector('main > .travel--walk');
+    if (!hero || !first) return;
+    const crew = document.querySelector('.room--crew'), copy = first.querySelector('.travel__a');
+    const pieces = [[hero.querySelector(':scope > .room__window'), copy.querySelector('.travel__pic')], [hero.querySelector(':scope > .shell'), copy.querySelector('.shell')], [hero.querySelector('.hero__pic'), copy.querySelector('.pass__flower')]];
+    const place = () => {
+      const top = hero.getBoundingClientRect().top + scrollY, run = first.getBoundingClientRect().top + scrollY;
+      const boxes = pieces.map(([from]) => ({ left: `${from.offsetLeft}px`, top: `${top + from.offsetTop}px`, width: `${from.offsetWidth}px`, height: `${from.offsetHeight}px` }));
+      const hang = top + pieces[0][0].offsetTop;   // the hull piece hangs from the window, and the window starts where the deck says
+      const crewRun = crew ? Math.max(0, crew.offsetHeight - document.documentElement.clientHeight) : 0, crewTop = crew ? crew.querySelector('.crew').offsetTop : 0;
+      html.style.setProperty('--hero-run', `${run}px`);
+      html.style.setProperty('--crew-run', `${crewRun}px`);
+      html.style.setProperty('--crew-top', `${crewTop}px`);   // a phone's deck has padding above the wall
+      pieces.forEach(([, to], i) => Object.assign(to.style, boxes[i]));
+      copy.querySelector('.fg').style.marginTop = `${hang}px`;
+    };
+    place();
+    addEventListener('resize', place, { passive: true });
+    addEventListener('load', place, { once: true });
+  })();
   const arrives = (room) => !!room && getComputedStyle(room).animationName === 'deck-arrive';
   const whenArrived = (els, watch) => {
     const rooms = new Map();
@@ -288,7 +308,7 @@
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) if (e.isIntersecting) {
         e.target.classList.add('is-near');
-        for (const im of e.target.querySelectorAll('.run .gangway img[loading="lazy"]')) im.loading = 'eager';
+        for (const im of e.target.querySelectorAll('.run .gangway img[loading="lazy"], .pass img[loading="lazy"], .travel__a img[loading="lazy"]')) im.loading = 'eager';
         io.unobserve(e.target);
       }
     }, { rootMargin: '150% 0px 150% 0px' });
@@ -387,7 +407,7 @@
         else if (seen.has(e.target)) { release(seen.get(e.target)); seen.delete(e.target); }
       }
     });
-    document.querySelectorAll('.room__window, .hold, .travel__b').forEach((w) => io.observe(w));
+    document.querySelectorAll('.room__window, .hold, .travel__a, .travel__b').forEach((w) => io.observe(w));
     let raf = 0, x = 0, y = 0, tx = 0, ty = 0;
     const tick = () => {
       raf = 0;
@@ -585,7 +605,8 @@
     const restY = (el) => (el.classList.contains('run__stop') ? yOf(el) : yOf(el) - (parseFloat(getComputedStyle(el).scrollMarginTop) || 0) - (parseFloat(getComputedStyle(html).scrollPaddingTop) || 0));
     let riding = false, ridingIn = null, quiet = null, raf = 0, prevY = scrollY, lastDir = 0, touching = 0;
     let lastWheel = -Infinity, lastTouch = -Infinity, lastPress = -Infinity, lastWheelT = -Infinity, lastDy = 0, peak = 0, decay = 0, tail = false, lone = false;
-    const inZone = (t, y, vh) => y > yOf(t) - vh * 0.6 && y < yOf(t) + t.offsetHeight;
+    const zoneOf = (t) => { let a = t, z = t; while (a.previousElementSibling?.classList.contains('travel')) a = a.previousElementSibling; while (z.nextElementSibling?.classList.contains('travel')) z = z.nextElementSibling; return [yOf(a), yOf(z) + z.offsetHeight]; };
+    const inZone = (t, y, vh) => { const [top, bottom] = zoneOf(t); return y > top - vh * 0.6 && y < bottom; };
     const stop = () => { riding = false; ridingIn = null; if (raf) cancelAnimationFrame(raf); raf = 0; html.classList.remove('is-riding'); };
     const handBack = () => { if (riding) { quiet = ridingIn; stop(); } };
     let swallowing = false;
@@ -617,7 +638,7 @@
       let from = scrollY, t0 = 0;
       const lead = restY(room) - yOf(room);   // the page's height can change under a ride, so the aim is the deck, not a number
       let to = yOf(room) + lead;
-      const ms = Math.min(3300, Math.max(900, 700 + Math.abs(to - from) * 0.75));
+      const ms = Math.min(5600, Math.max(900, 700 + Math.abs(to - from) * 0.75));
       riding = true; ridingIn = t;
       window.swRideLast = { from, to, ms };   // read by tools/smooth.mjs and tools/ride.mjs
       html.classList.add('is-riding');
