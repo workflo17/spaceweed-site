@@ -18,7 +18,10 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/archivo.v2.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/milky-way-640.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/milky-way-1200.webp" imagesrcset="assets/img/milky-way-640.webp 640w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" imagesizes="100vw" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/shell-dock-tall-900.webp" media="(max-aspect-ratio: 1/1)" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/shell-dock-1280.webp" media="(min-aspect-ratio: 1/1) and (max-width: 1280px)" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/shell-dock-1920.webp" media="(min-aspect-ratio: 1/1) and (min-width: 1281px)" type="image/webp" fetchpriority="high">
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
@@ -29,9 +32,7 @@
 </head>
 <body class="page-find">
 
-<canvas class="sky-photo" aria-hidden="true"></canvas>
-<canvas class="sky" aria-hidden="true"></canvas>
-<script src="assets/sky-first.v1.js"></script>
+
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
@@ -95,6 +96,10 @@
 <noscript><p class="age wrap noscript-age">This site is for adults 21&nbsp;years of age and older. Keep out of reach of children.</p></noscript>
 <!-- DECK 01 · APPROACH: the dock. On the walk the deck pins for two screens and acts out the docking as the page scrolls;
      the still page is the poster frame (hatch open, three lamps lit, the jar in the opening) -->
+<div class="hold" aria-hidden="true">
+  <picture><source type="image/webp" srcset="assets/img/milky-way-640.webp 640w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" sizes="100vw"><img src="assets/img/milky-way-1200.jpg" width="2400" height="1200" alt="" decoding="async"></picture>
+  <i class="shell shell--dock"></i>
+</div>
 <section class="room room--dock" id="approach" data-deck="Approach" aria-labelledby="intro-title">
   <div class="dock__stage page-hatch">
     <div class="room__window dock__window" aria-hidden="true">
@@ -109,8 +114,8 @@
         </picture>
       </div>
       <span class="dock__rim"></span>
+      <i class="shell shell--dock"></i>
     </div>
-    <span class="room__frame" aria-hidden="true"></span>
     <p class="room__label" aria-hidden="true">Window 01 · the night side of the Earth under the Milky Way · NASA, NOAA, ESO/S. Brunier</p>
     <div class="room__content dock">
       <div class="dock__text">
@@ -188,7 +193,6 @@
       <img src="assets/img/berth-1280.jpg" srcset="assets/img/berth-800.jpg 800w, assets/img/berth-1280.jpg 1280w" sizes="100vw" width="1280" height="715" alt="" loading="lazy" decoding="async">
     </picture>
   </div>
-  <span class="room__frame" aria-hidden="true"></span>
   <p class="room__label" aria-hidden="true">Berth 01 · the ship’s own interior · a generated picture, not a photograph</p>
   <div class="room__content berth">
     <div class="berth__text" data-reveal>
@@ -270,13 +274,13 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, its transporter room, the four stations’ walls on the engine deck and the process page, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
+      <p class="foot__credit small">The ship’s compartments, its doors, its corridor, the iris, its transporter room, the gangway with its four windows and the rooms behind them, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used. What you see through the glass is real where the label says so.</p>
       <p class="foot__credit small">The window on approach: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed, over “Earth at Night” (the Black Marble), NASA Earth Observatory and NOAA NGDC, 2012, public domain. The jar in the hatch: the client’s own photograph. The hatch’s hull plate, the berth’s interior and the frost on the glass are generated pictures made for this mockup (the frost by way of the preview Angel built for the client); they are pictures of the ship itself, not photographs of any place.</p>
     </div>
   </div>
 </footer>
 
 <script src="assets/site.v1.js" defer></script>
-<script src="assets/sky.v1.js" defer></script>
+
 </body>
 </html>

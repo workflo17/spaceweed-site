@@ -19,6 +19,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/archivo.v2.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/chamber-800.webp" imagesrcset="assets/img/chamber-560.webp 560w, assets/img/chamber-800.webp 800w, assets/img/chamber-1600.webp 1600w" imagesizes="(max-width: 700px) 60vw, 100vw" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/shell-engine-tall-900.webp" media="(max-aspect-ratio: 1/1)" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/shell-engine-1280.webp" media="(min-aspect-ratio: 1/1) and (max-width: 1280px)" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/shell-engine-1920.webp" media="(min-aspect-ratio: 1/1) and (min-width: 1281px)" type="image/webp" fetchpriority="high">
 <link rel="expect" href="#vt-ready" blocking="render">
 <link rel="stylesheet" href="assets/site.v1.css">
 <link rel="stylesheet" href="assets/ship.v1.css">
@@ -29,9 +32,7 @@
 </head>
 <body class="page-process">
 
-<canvas class="sky-photo" aria-hidden="true"></canvas>
-<canvas class="sky" aria-hidden="true"></canvas>
-<script src="assets/sky-first.v1.js"></script>
+
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
@@ -93,13 +94,11 @@
 
 <main id="main" tabindex="-1">
 <noscript><p class="age wrap noscript-age">This site is for adults 21&nbsp;years of age and older. Keep out of reach of children.</p></noscript>
+<div class="hold" aria-hidden="true">
+  <picture><source type="image/webp" srcset="assets/img/chamber-560.webp 560w, assets/img/chamber-800.webp 800w, assets/img/chamber-1600.webp 1600w" sizes="(max-width: 700px) 60vw, 100vw"><img src="assets/img/chamber-1600.jpg" srcset="assets/img/chamber-560.jpg 560w, assets/img/chamber-800.jpg 800w, assets/img/chamber-1600.jpg 1600w" sizes="(max-width: 700px) 60vw, 100vw" width="1600" height="1200" alt="" fetchpriority="high" decoding="async"></picture>
+  <i class="shell shell--engine"></i>
+</div>
 <section class="page-hatch grid how how--first" aria-labelledby="intro-title">
-  <div class="intro__sky" aria-hidden="true">
-    <picture>
-      <source type="image/webp" srcset="assets/img/chamber-560.webp 560w, assets/img/chamber-800.webp 800w, assets/img/chamber-1600.webp 1600w" sizes="(max-width: 700px) 60vw, 100vw">
-      <img src="assets/img/chamber-1600.jpg" srcset="assets/img/chamber-560.jpg 560w, assets/img/chamber-800.jpg 800w, assets/img/chamber-1600.jpg 1600w" sizes="(max-width: 700px) 60vw, 100vw" width="1600" height="1200" alt="" fetchpriority="high" decoding="async">
-    </picture>
-  </div>
   <p class="tag tag--ice how__tag" data-type>What is Flash&nbsp;Frozen&nbsp;Cured?</p>
   <h1 class="head how__head" id="intro-title">Ice to vapour, never liquid.</h1>
   <div class="how__lede">
@@ -109,53 +108,68 @@
 </section>
 <i id="vt-ready" hidden></i>
 
-<!-- THE LINE: the process as a cutaway chamber of four stations. On the walk the window pins and the scroll rides the line;
-     still, it is the poster with the four stage lines under it. -->
+<!-- THE TOUR: the process as a walk along a factory gangway past four windows, the flower riding the conveyor from room to
+     room behind the glass. On the walk the scene pins and the scroll is the visitor’s feet; still, it is the long view down
+     the gangway with the four stage lines under it. -->
 <section class="run" data-run data-bulkhead="none" data-stations="Harvest,Freezer,Vacuum,Jar" aria-labelledby="stations-title">
   <h2 class="sr" id="stations-title">The four stations</h2>
   <div class="run__track">
+    <i class="run__stop"></i><i class="run__stop"></i><i class="run__stop"></i><i class="run__stop"></i>
     <div class="run__stage">
-      <figure class="chamber" aria-hidden="true" data-line>
-  <div class="chamber__sky"><picture><source type="image/webp" srcset="assets/img/milky-way-1200.webp"><img src="assets/img/milky-way-1200.jpg" width="1200" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
-  <p class="chamber__tag tag">Section · the four stations</p>
-  <div class="chamber__world">
-    <i class="chamber__face chamber__face--floor"></i><i class="chamber__face chamber__face--low"></i><i class="chamber__face chamber__face--wall"></i><i class="chamber__face chamber__face--high"></i>
-    <i class="chamber__ring chamber__ring--0"></i><i class="chamber__ring chamber__ring--1"></i><i class="chamber__ring chamber__ring--2"></i><i class="chamber__ring chamber__ring--3"></i><i class="chamber__ring chamber__ring--4"></i>
-    <div class="chamber__st chamber__st--1">
-      <i class="chamber__lamp"></i><div class="chamber__port chamber__port--open"></div><i class="chamber__pool"></i><i class="chamber__tray"></i><i class="chamber__shadow"></i>
-      <img class="chamber__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <img class="chamber__dew" src="assets/img/bud-dew-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <p class="chamber__name"><b>Station 01</b><span>Harvest</span><em>Water · liquid</em></p>
-    </div>
-    <div class="chamber__st chamber__st--2">
-      <i class="chamber__lamp"></i>
-      <div class="chamber__port"><img src="assets/img/freezer-port-640.webp" width="640" height="640" alt="" loading="lazy" fetchpriority="low" decoding="async"><i class="chamber__frost"></i></div>
-      <i class="chamber__pool"></i><i class="chamber__tray"></i><i class="chamber__shadow"></i>
-      <img class="chamber__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <img class="chamber__rime" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <p class="chamber__name"><b>Station 02</b><span>Freezer</span><em>Water · ice</em></p>
-    </div>
-    <div class="chamber__st chamber__st--3">
-      <i class="chamber__lamp"></i>
-      <div class="chamber__port"><img src="assets/img/chamber-port-640.webp" width="640" height="640" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
-      <i class="chamber__pool"></i><i class="chamber__tray"></i><i class="chamber__shadow"></i>
-      <img class="chamber__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <img class="chamber__rime" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <i class="chamber__vent"></i><span class="chamber__mist"><i class="chamber__vap"></i><i class="chamber__vap"></i><i class="chamber__vap"></i><i class="chamber__vap"></i><i class="chamber__vap"></i><i class="chamber__vap"></i></span>
-      <div class="chamber__door"><i class="chamber__leaf chamber__leaf--t"></i><i class="chamber__leaf chamber__leaf--b"></i></div>
-      <p class="chamber__call"><b>No liquid</b><b>Pulled away</b></p>
-      <p class="chamber__name"><b>Station 03</b><span>Vacuum</span><em>Water · leaving as vapour</em></p>
-    </div>
-    <div class="chamber__st chamber__st--4">
-      <i class="chamber__lamp"></i>
-      <div class="chamber__port"><picture><source type="image/webp" srcset="assets/img/same-weight-jars-500.webp"><img src="assets/img/same-weight-jars-500.jpg" width="500" height="500" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture><i class="chamber__lvl"><b>fills the jar like two</b></i></div>
-      <i class="chamber__pool"></i><i class="chamber__tray"></i><i class="chamber__shadow"></i>
-      <img class="chamber__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async">
-      <p class="chamber__name"><b>Station 04</b><span>Jar</span><em>Water · over 80% gone</em></p>
+      <figure class="gangway" aria-hidden="true" data-line>
+  <div class="gangway__view">
+    <div class="gangway__world">
+      <i class="gangway__floor"></i><i class="gangway__ceil"></i><i class="gangway__far"></i><i class="gangway__end"></i><i class="gangway__lead"></i>
+      <i class="gangway__part gangway__part--1"></i><i class="gangway__part gangway__part--2"></i><i class="gangway__part gangway__part--3"></i>
+      <div class="gangway__bay gangway__bay--1">
+        <img class="gangway__room" src="assets/img/inside-harvest2-1280.webp" srcset="assets/img/inside-harvest2-800.webp 800w, assets/img/inside-harvest2-1280.webp 1280w" sizes="(max-width: 700px) 800px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__side"></i>
+        <i class="gangway__dim"></i>
+        <div class="gangway__load"><i class="gangway__shadow"></i><img class="gangway__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"><img class="gangway__coat" src="assets/img/bud-dew-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+        <img class="gangway__wall" src="assets/img/bay-harvest-1920.webp" srcset="assets/img/bay-harvest-800.webp 800w, assets/img/bay-harvest-1920.webp 1920w" sizes="(max-width: 700px) 800px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__glass"></i>
+        <p class="gangway__name"><b>Station 01</b><span>Harvest</span><em>Water · liquid</em></p>
+        <i class="gangway__spill"></i>
+      </div>
+      <div class="gangway__bay gangway__bay--2">
+        <img class="gangway__room" src="assets/img/inside-freezer2-1280.webp" srcset="assets/img/inside-freezer2-800.webp 800w, assets/img/inside-freezer2-1280.webp 1280w" sizes="(max-width: 700px) 800px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__side"></i>
+        <i class="gangway__dim"></i>
+        <div class="gangway__load"><i class="gangway__shadow"></i><img class="gangway__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"><img class="gangway__coat" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+        <img class="gangway__wall" src="assets/img/bay-freezer-1920.webp" srcset="assets/img/bay-freezer-800.webp 800w, assets/img/bay-freezer-1920.webp 1920w" sizes="(max-width: 700px) 800px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__glass"><i class="gangway__frost"></i></i>
+        <p class="gangway__name"><b>Station 02</b><span>Freezer</span><em>Water · ice</em></p>
+        <i class="gangway__spill"></i>
+      </div>
+      <div class="gangway__bay gangway__bay--3">
+        <img class="gangway__room" src="assets/img/inside-vacuum-1280.webp" srcset="assets/img/inside-vacuum-800.webp 800w, assets/img/inside-vacuum-1280.webp 1280w" sizes="(max-width: 700px) 800px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__side"></i>
+        <i class="gangway__dim"></i>
+        <div class="gangway__load"><i class="gangway__shadow"></i><img class="gangway__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"><img class="gangway__coat" src="assets/img/bud-rime-480.webp" width="480" height="480" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+        <i class="gangway__vap"></i><i class="gangway__vap"></i><i class="gangway__vap"></i><i class="gangway__vap"></i>
+        <img class="gangway__wall" src="assets/img/bay-vacuum-1920.webp" srcset="assets/img/bay-vacuum-800.webp 800w, assets/img/bay-vacuum-1920.webp 1920w" sizes="(max-width: 700px) 800px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__glass"></i>
+        <p class="gangway__call"><b>No liquid</b><b>Pulled away</b></p>
+        <p class="gangway__name"><b>Station 03</b><span>Vacuum</span><em>Water · leaving as vapour</em></p>
+        <i class="gangway__spill"></i>
+      </div>
+      <div class="gangway__bay gangway__bay--4">
+        <img class="gangway__room" src="assets/img/inside-jar2-1280.webp" srcset="assets/img/inside-jar2-800.webp 800w, assets/img/inside-jar2-1280.webp 1280w" sizes="(max-width: 700px) 800px, 1280px" width="1280" height="714" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__side"></i>
+        <i class="gangway__dim"></i>
+        <div class="gangway__jars"><picture><source type="image/webp" srcset="assets/img/same-weight-jars-500.webp"><img src="assets/img/same-weight-jars-500.jpg" width="500" height="500" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture><i class="gangway__lvl"><b>fills the jar like two</b></i></div>
+        <div class="gangway__load"><i class="gangway__shadow"></i><img class="gangway__bud" src="assets/img/bud-macro-cut-600.webp" width="600" height="600" alt="" loading="lazy" fetchpriority="low" decoding="async"></div>
+        <img class="gangway__wall" src="assets/img/bay-jar-1920.webp" srcset="assets/img/bay-jar-800.webp 800w, assets/img/bay-jar-1920.webp 1920w" sizes="(max-width: 700px) 800px, 1920px" width="1920" height="1072" alt="" loading="lazy" fetchpriority="low" decoding="async">
+        <i class="gangway__glass"></i>
+        <p class="gangway__name"><b>Station 04</b><span>Jar</span><em>Water · over 80% gone</em></p>
+        <i class="gangway__spill"></i>
+      </div>
+      <i class="gangway__rail"></i>
     </div>
   </div>
-  <p class="chamber__legend">Drawn for this page, with generated pictures of the ship’s stations. The flower and the jars are the client’s photographs.</p>
-  <p class="chamber__hud tag" data-hud></p>
+  <p class="gangway__tag tag">The tour · four windows on the line</p>
+  <p class="gangway__legend">Drawn for this page, with generated pictures of the ship’s stations. The flower and the jars are the client’s photographs.</p>
+  <p class="gangway__hud tag" data-hud></p>
 </figure>
       <div class="run__cap">
         <ol class="how__stages run__stages" data-stages>
@@ -378,13 +392,13 @@
     </ul>
     <div class="foot__credits">
       <p class="foot__agency small">Space imagery: NASA, ESA/Webb and ESO, used as photographs of Earth and space. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The star field behind every page: “The Milky Way panorama”, <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed. The ship’s doors, its corridor, the iris, its transporter room, the four stations’ walls on the engine deck and the process page, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used.</p>
-      <p class="foot__credit small">The sky behind the title: NASA’s Space Power Facility vacuum chamber with the Skylab payload shroud inside it, 1970, NASA Glenn Research Center (GRC-1970-C-03691), public domain. The four stations: the flower and the jars are the client’s own photographs, by way of the preview Angel built for the client; the freezer window and the frost are renders from that preview; the vacuum chamber window is a generated illustration made for this mockup; the cutaway itself is drawn in code. None of it is a photograph of a facility or of the product. The band: the client’s own photograph of the flower, by way of the preview. Footage: <a href="https://commons.wikimedia.org/wiki/File:Comet_67P-Churyumov-Gerasimenko_timelapse_2015-09-10_(50097148857).webm">“Comet 67P/Churyumov-Gerasimenko timelapse, 10&nbsp;September&nbsp;2015”</a>, ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, processing and time-lapse by Mark McCaughrean, via Wikimedia Commons; cropped, slowed and looped. The patent front pages: United States Patent and Trademark Office, public record. Source: United States Patent and Trademark Office.</p>
+      <p class="foot__credit small">The ship’s compartments, its doors, its corridor, the iris, its transporter room, the gangway with its four windows and the rooms behind them, the hull pieces outside some windows and the berth are generated pictures of the ship itself, made for this mockup; they are not photographs of any facility, and no photograph of a spacecraft is used. What you see through the glass is real where the label says so.</p>
+      <p class="foot__credit small">Through the engine room’s window: NASA’s Space Power Facility vacuum chamber with the Skylab payload shroud inside it, 1970, NASA Glenn Research Center (GRC-1970-C-03691), public domain. The four stations: the flower and the jars are the client’s own photographs, by way of the preview Angel built for the client; the frost is a render from that preview; the gangway, its windows and the four rooms behind them are generated illustrations made for this mockup. None of it is a photograph of a facility or of the product. The band: the client’s own photograph of the flower, by way of the preview. Footage: <a href="https://commons.wikimedia.org/wiki/File:Comet_67P-Churyumov-Gerasimenko_timelapse_2015-09-10_(50097148857).webm">“Comet 67P/Churyumov-Gerasimenko timelapse, 10&nbsp;September&nbsp;2015”</a>, ESA/Rosetta/MPS for OSIRIS Team MPS/UPD/LAM/IAA/SSO/INTA/UPM/DASP/IDA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, processing and time-lapse by Mark McCaughrean, via Wikimedia Commons; cropped, slowed and looped. The patent front pages: United States Patent and Trademark Office, public record. Source: United States Patent and Trademark Office.</p>
     </div>
   </div>
 </footer>
 
 <script src="assets/site.v1.js" defer></script>
-<script src="assets/sky.v1.js" defer></script>
+
 </body>
 </html>

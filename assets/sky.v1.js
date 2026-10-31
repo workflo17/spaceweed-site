@@ -8,6 +8,7 @@
   const calm = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   const motionOn = () => !html.classList.contains('motion-off') && !calm.matches;
+  const covered = document.body.classList.contains('page-home');
   const SEED = 20150521;
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const phone = !fine.matches || innerWidth < 700;
@@ -47,12 +48,13 @@
     if (!glow) return;   // nothing to draw with until the first fit has made the sprite
     ctx.clearRect(0, 0, W, H);
     const sx = px * 18, sy = py * 12;
-    const streak = Math.min(Math.abs(vel), 60) / 60;
+    const streak = covered || phone ? 0 : Math.min(Math.abs(vel), 60) / 60;
+    const sc = covered ? 0 : scroll;
     for (const s of stars) {
       if (density < 1 && s.li === 0 && s.ph > 3.1) continue;
       const depth = s.d;
       let x = (s.x * 1.2 - 0.1) * W + sx * depth;
-      let y = ((s.y * 1.3 - 0.15) * H - (scroll * 0.2 * depth) % (H * 1.3)) ;
+      let y = ((s.y * 1.3 - 0.15) * H - (sc * 0.2 * depth) % (H * 1.3)) ;
       if (y < -20) y += H * 1.3; else if (y > H + 20) y -= H * 1.3;
       let a = s.a;
       if (s.tw) a *= 0.78 + 0.22 * Math.sin(s.ph + now / 900);
@@ -99,12 +101,12 @@
     const dt = lastT ? t - lastT : 16; lastT = t;
     if (!running) return;
     ema = ema * 0.9 + dt * 0.1;
-    if (ema > 20) { slowFor += dt; if (slowFor > 1000) { if (density === 1) { density = 0.5; slowFor = 0; } else if (ema > 24) { frozen = true; draw(); return; } } } else slowFor = 0;
+    if (!covered && ema > 20) { slowFor += dt; if (slowFor > 1000) { if (density === 1) { density = 0.5; slowFor = 0; } else if (ema > 24) { frozen = true; draw(); return; } } } else slowFor = 0;
     px += (tx - px) * 0.08; py += (ty - py) * 0.08;
-    if (Math.abs(tx - px) > 0.002 || Math.abs(ty - py) > 0.002) dirty = true;
+    if (!covered && (Math.abs(tx - px) > 0.002 || Math.abs(ty - py) > 0.002)) dirty = true;
     if (warp > 0) { const w = 1 - Math.min(1, (t - warpStart) / 1400); warp = w * w * w; dirty = true; if (warp < 0.02) warp = 0; }
     vel *= 0.82; if (Math.abs(vel) > 0.5) dirty = true; else vel = 0;
-    if (t - twTick > 50) { twTick = t; dirty = true; }
+    if (t - twTick > (covered ? 250 : 50)) { twTick = t; dirty = true; }
     if (!shoot && t > nextShoot && !phone) { const r = Math.random; shoot = { t0: t, x: W * (0.1 + r() * 0.5), y: H * (0.05 + r() * 0.4), dx: W * (0.18 + r() * 0.12), dy: H * (0.08 + r() * 0.1) }; nextShoot = t + 20000 + r() * 20000; }
     if (shoot) dirty = true;
     if (dirty) { draw(); dirty = false; }
@@ -117,7 +119,7 @@
   onResize();
   addEventListener('resize', onResize, { passive: true });
   if (fine.matches) addEventListener('pointermove', (e) => { tx = (e.clientX / W - 0.5) * 2; ty = (e.clientY / H - 0.5) * 2; }, { passive: true });
-  addEventListener('scroll', () => { const y = scrollY; vel = vel * 0.5 + (y - lastScroll) * 0.5; lastScroll = y; scroll = y; dirty = true; }, { passive: true });
+  if (!covered) addEventListener('scroll', () => { const y = scrollY; vel = vel * 0.5 + (y - lastScroll) * 0.5; lastScroll = y; scroll = y; dirty = true; }, { passive: true });
   document.addEventListener('visibilitychange', sync);
   calm.addEventListener('change', sync);
   new MutationObserver(sync).observe(html, { attributes: true, attributeFilter: ['class'] });

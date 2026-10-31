@@ -6,6 +6,7 @@
   const motionOn = () => !html.classList.contains('motion-off') && !calm.matches;
   const launch = { fired: false, listeners: [] };
   const onLaunch = (fn) => { if (launch.fired) fn(); else launch.listeners.push(fn); };
+  const put = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
   const fireLaunch = () => { if (launch.fired) return; launch.fired = true; launch.listeners.forEach((fn) => fn()); launch.listeners = []; };
   (() => {
     const gate = document.getElementById('gate');
@@ -14,6 +15,7 @@
     if (chip && !chip.querySelector('button')) {
       const again = document.createElement('button');
       again.type = 'button'; again.className = 'deck__again'; again.textContent = chip.textContent.trim();
+      again.tabIndex = -1;   // the strip is hidden from assistive tech and comes before the skip link; a keyboard visitor refreshes instead
       again.setAttribute('aria-label', `${again.textContent} · show the age check again`);
       chip.replaceChildren(again);
       again.addEventListener('click', () => {
@@ -33,25 +35,33 @@
     const denied = gate.querySelector('.gate__denied');
     behind.forEach((el) => { el.inert = true; });
     gate.querySelector('[data-gate="yes"]')?.focus();
+    let boarding = false;   // the first Yes is the answer: the keyboard can still reach these buttons while the beam runs
     gate.addEventListener('click', (e) => {
       const b = e.target.closest('[data-gate]');
-      if (!b) return;
+      if (!b || boarding) return;
       if (b.dataset.gate === 'yes') {
+        boarding = true;
         write();
-        behind.forEach((el) => { el.inert = false; });
-        gate.setAttribute('aria-hidden', 'true');
+        const wake = () => {
+          behind.forEach((el) => { el.inert = false; });
+          gate.setAttribute('aria-hidden', 'true');
+          document.getElementById('main')?.focus({ preventScroll: true });
+        };
         if (motionOn()) {
           const status = gate.querySelector('[data-gate-status]');
           if (status) status.textContent = 'Transporter · energising';
-          html.classList.add('gate-opening');
+          html.classList.add('gate-opening', 'gate-hold');
           setTimeout(() => html.classList.add('gate-arriving'), 1100);
-          setTimeout(() => { html.classList.remove('gate-pending'); html.classList.remove('gate-opening'); fireLaunch(); }, 1400);
+          setTimeout(wake, 1160);   // the page's full style and layout, while the closed leaves hide it and nothing moves
+          setTimeout(() => { html.classList.remove('gate-pending', 'gate-opening'); fireLaunch(); }, 1400);
+          setTimeout(() => { html.classList.remove('gate-hold'); dispatchEvent(new Event('sw-aboard')); }, 1900);
           setTimeout(() => html.classList.remove('gate-arriving'), 2900);
         } else {
+          wake();
           html.classList.remove('gate-pending');
           fireLaunch();
+          dispatchEvent(new Event('sw-aboard'));
         }
-        document.getElementById('main')?.focus({ preventScroll: true });
         return;
       }
       if (b.dataset.gate === 'back') {
@@ -81,9 +91,18 @@
     if (!btns.length) return;
     const show = () => { const off = html.classList.contains('motion-off'); btns.forEach((btn) => { btn.setAttribute('aria-pressed', off ? 'false' : 'true'); btn.textContent = off ? 'Motion: off' : 'Motion: on'; }); };
     show();
+    const keepPlace = (change) => {
+      const line = innerHeight * 0.4;
+      const at = [...document.querySelectorAll('main > section, main > .travel')].find((el) => el.getBoundingClientRect().bottom > line);
+      const inTravel = at?.classList.contains('travel');
+      const mark = inTravel ? at.nextElementSibling : at;
+      const was = inTravel ? 0 : mark?.getBoundingClientRect().top;
+      change();
+      if (mark) scrollTo({ top: scrollY + mark.getBoundingClientRect().top - was, behavior: 'instant' });
+    };
     btns.forEach((btn) => btn.addEventListener('click', () => {
       const off = !html.classList.contains('motion-off');
-      html.classList.toggle('motion-off', off);
+      keepPlace(() => html.classList.toggle('motion-off', off));
       try { localStorage.setItem('sw-motion', off ? 'off' : 'on'); } catch {  }
       show();
     }));
@@ -121,7 +140,7 @@
     const stage = document.getElementById('deck-stage');
     if (!voyage) return;
     let raf = 0;
-    const tick = () => { raf = 0; const max = document.documentElement.scrollHeight - innerHeight; voyage.textContent = String(Math.round(max > 0 ? scrollY / max * 100 : 0)).padStart(2, '0'); };
+    const tick = () => { raf = 0; const max = document.documentElement.scrollHeight - innerHeight; put(voyage, String(Math.round(max > 0 ? scrollY / max * 100 : 0)).padStart(2, '0')); };
     addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive: true });
     tick();
     const clock = () => { if (utc) utc.textContent = new Date().toISOString().slice(11, 16); };
@@ -167,8 +186,8 @@
     let cur = -1;
     const update = () => {
       if (marker) marker.style.top = `${Math.min(1, scrollY / maxScroll()) * 100}%`;
-      const y = scrollY + innerHeight * 0.4;
-      let k = 0; decks.forEach((d, i) => { if (d.el.offsetTop <= y) k = i; });
+      const at = (d) => { const t = d.el.previousElementSibling; return t && t.classList.contains('travel') && t.offsetHeight > innerHeight ? t.offsetTop + 0.72 * (t.offsetHeight - innerHeight) : d.el.offsetTop - innerHeight * 0.4; };
+      let k = 0; decks.forEach((d, i) => { if (scrollY >= at(d)) k = i; });
       if (k === cur) return; cur = k;
       if (where) where.textContent = decks[k].n;
       if (deckName && decks[k].el.dataset.deck) deckName.textContent = decks[k].el.dataset.deck;
@@ -206,16 +225,47 @@
     document.addEventListener('pointerleave', () => { on = false; r.classList.remove('is-on'); });
     document.documentElement.addEventListener('mouseleave', () => { on = false; r.classList.remove('is-on'); });
   })();
+  const arrives = (room) => !!room && getComputedStyle(room).animationName === 'deck-arrive';
+  const whenArrived = (els, watch) => {
+    const rooms = new Map();
+    for (const el of els) {
+      const room = el.closest('.travel + .room');
+      if (!arrives(room)) { watch(el); continue; }
+      if (!rooms.has(room)) rooms.set(room, []);
+      rooms.get(room).push(el);
+    }
+    rooms.forEach((list, room) => {
+      let done = false;
+      const release = () => { if (done) return; done = true; io.disconnect(); removeEventListener('resize', check); list.forEach(watch); };
+      const check = () => { if (!arrives(room)) release(); };   // a rotation or a short window: the deck is plain flow now
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) release(); }, { rootMargin: '0px 0px -90% 0px' });
+      io.observe(room);
+      room.addEventListener('focusin', release, { once: true });   // a keyboard reaches a deck before its arrival
+      addEventListener('resize', check, { passive: true });
+    });
+  };
   (() => {
     document.querySelectorAll('.tag[data-type]').forEach((t) => t.style.setProperty('--n', String(t.textContent.trim().length)));
     const els = [...document.querySelectorAll('[data-reveal], .tag[data-type], .how__figure')];
     if (!els.length) return;
     if (!('IntersectionObserver' in window) || !motionOn()) { els.forEach((el) => el.classList.add('is-in')); return; }
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
-    els.forEach((el) => io.observe(el));
-    setTimeout(() => els.forEach((el) => { el.classList.add('is-in'); io.unobserve(el); }), 1200);
+    const all = () => els.forEach((el) => el.classList.add('is-in'));
+    const watch = () => {
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+      const live = new Set();
+      whenArrived(els, (el) => { live.add(el); io.observe(el); });
+      let idle = 0;
+      addEventListener('scroll', () => {
+        clearTimeout(idle);
+        idle = setTimeout(() => live.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) { el.classList.add('is-in'); io.unobserve(el); live.delete(el); } }), 200);
+      }, { passive: true });
+    };
+    if (html.classList.contains('gate-pending')) addEventListener('sw-aboard', watch, { once: true }); else watch();
+    addEventListener('beforeprint', all);
+    addEventListener('resize', () => { if (innerHeight > 1800) all(); }, { passive: true });
+    if (innerHeight > 1800) all();
   })();
   (() => {
     if (!motionOn() || !CSS.supports('selector(html:active-view-transition-type(door))')) return;
@@ -231,17 +281,18 @@
     else addEventListener('load', later, { once: true });
   })();
   (() => {
-    const els = [...document.querySelectorAll('.room, .travel, .intro, .section, .band')];
+    const els = [...document.querySelectorAll('.room, .travel, .intro, .section, .band, .run')];
     if (!els.length) return;
     if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-near')); return; }
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) if (e.isIntersecting) {
         e.target.classList.add('is-near');
-        for (const im of e.target.querySelectorAll('.chamber img[loading="lazy"]')) im.loading = 'eager';
+        for (const im of e.target.querySelectorAll('.run .gangway img[loading="lazy"]')) im.loading = 'eager';
         io.unobserve(e.target);
       }
     }, { rootMargin: '150% 0px 150% 0px' });
-    els.forEach((el) => io.observe(el));
+    const watch = () => els.forEach((el) => io.observe(el));
+    if (document.readyState === 'complete') watch(); else addEventListener('load', watch, { once: true });
   })();
   (() => {
     if (!CSS.supports('width', 'calc(sibling-index() * 1px)')) {
@@ -253,11 +304,23 @@
     if (!plates.length) return;
     const on = (p) => p.classList.add('is-online');
     if (!('IntersectionObserver' in window) || !motionOn()) { plates.forEach(on); return; }
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { on(e.target); io.unobserve(e.target); }
-    }, { threshold: 0.35 });
-    plates.forEach((p) => io.observe(p));
-    setTimeout(() => plates.forEach((p) => { on(p); io.unobserve(p); }), 1500);
+    const all = () => plates.forEach(on);
+    const watch = () => {
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { on(e.target); io.unobserve(e.target); }
+      }, { threshold: 0.35 });
+      const live = new Set();
+      whenArrived(plates, (p) => { live.add(p); io.observe(p); });
+      let idle = 0;
+      addEventListener('scroll', () => {
+        clearTimeout(idle);
+        idle = setTimeout(() => live.forEach((p) => { if (p.getBoundingClientRect().top < innerHeight) { on(p); io.unobserve(p); live.delete(p); } }), 200);
+      }, { passive: true });
+    };
+    if (html.classList.contains('gate-pending')) addEventListener('sw-aboard', watch, { once: true }); else watch();
+    addEventListener('beforeprint', all);
+    addEventListener('resize', () => { if (innerHeight > 1800) all(); }, { passive: true });
+    if (innerHeight > 1800) all();
   })();
   onLaunch(() => {
     if (!motionOn() || !window.sky) return;
@@ -312,6 +375,44 @@
     addEventListener('scroll', () => { clearTimeout(measure._t); measure._t = setTimeout(measure, 120); }, { passive: true });
   })();
   (() => {
+    if (!fine.matches || !('IntersectionObserver' in window)) return;
+    const outside = (w) => [...w.querySelectorAll(':scope > img, :scope > video, :scope > .band__earth, :scope > .nugs, .travel__pic, .hold > picture > img')];
+    const flower = document.querySelector('.hero__pic picture');   // nearer than the sky, so it moves further
+    const seen = new Map();
+    const release = (els) => els.forEach((el) => { el.style.transform = ''; el.style.willChange = ''; });
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) seen.set(e.target, outside(e.target));
+        else if (seen.has(e.target)) { release(seen.get(e.target)); seen.delete(e.target); }
+      }
+    });
+    document.querySelectorAll('.room__window, .hold, .travel__b').forEach((w) => io.observe(w));
+    let raf = 0, x = 0, y = 0, tx = 0, ty = 0;
+    const tick = () => {
+      raf = 0;
+      x += (tx - x) * 0.1; y += (ty - y) * 0.1;
+      const at = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+      for (const els of seen.values()) for (const el of els) { el.style.willChange = 'transform'; el.style.transform = at; }
+      if (flower) flower.style.transform = `translate(${(x * 1.8).toFixed(2)}px, ${(y * 1.8).toFixed(2)}px)`;
+      if (Math.abs(tx - x) > 0.05 || Math.abs(ty - y) > 0.05) raf = requestAnimationFrame(tick);
+    };
+    document.addEventListener('pointermove', (e) => {
+      if (!motionOn()) { tx = 0; ty = 0; } else { tx = (e.clientX / innerWidth - 0.5) * 24; ty = (e.clientY / innerHeight - 0.5) * 14; }
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+  })();
+  (() => {
+    const fields = [...document.querySelectorAll('.nugs')];
+    if (!fields.length) return;
+    if (!('IntersectionObserver' in window)) { html.classList.add('nugs-on'); return; }
+    const seen = new Set();
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); }
+      html.classList.toggle('nugs-on', seen.size > 0);
+    });
+    fields.forEach((f) => io.observe(f));
+  })();
+  (() => {
     const svg = document.querySelector('.phase');
     const route = document.getElementById('phase-route');
     const you = document.getElementById('phase-you');
@@ -358,8 +459,8 @@
       chipRow.appendChild(b);
       return b;
     });
-    const update = () => {
-      const t = along.value / 1000;
+    const update = (tt) => {
+      const t = typeof tt === 'number' ? tt : along.value / 1000;
       const p = route.getPointAtLength(t * total);
       you.setAttribute('cx', p.x.toFixed(1)); you.setAttribute('cy', p.y.toFixed(1));
       if (halo) { halo.setAttribute('cx', p.x.toFixed(1)); halo.setAttribute('cy', p.y.toFixed(1)); }
@@ -367,22 +468,22 @@
       for (let i = 0; i < stops.length; i++) if (t >= stops[i] - 0.001) stage = i;
       stage = Math.min(stage, names.length - 1);
       const r = region(p.x, p.y);
-      if (t >= 0.999) { word.textContent = 'Gone as vapour'; line.textContent = 'Over 80% of the water has left as vapour. The flower goes into the jar.'; }
-      else { word.textContent = (legWords[stage] && legWords[stage][r]) || words[r]; line.textContent = (legLines[stage] && legLines[stage][r]) || lines[r]; }
+      if (t >= 0.999) { put(word, 'Gone as vapour'); put(line, 'Over 80% of the water has left as vapour. The flower goes into the jar.'); }
+      else { put(word, (legWords[stage] && legWords[stage][r]) || words[r]); put(line, (legLines[stage] && legLines[stage][r]) || lines[r]); }
       stages.forEach((li, i) => li.classList.toggle('is-on', i === stage));
       chips.forEach((b, i) => b.setAttribute('aria-pressed', i === stage ? 'true' : 'false'));
       const deck = document.getElementById('deck-stage');
-      if (deck) deck.textContent = `${String(stage + 1).padStart(2, '0')} ${names[stage]}`;
+      put(deck, `${String(stage + 1).padStart(2, '0')} ${names[stage]}`);
       along.setAttribute('aria-valuetext', `${names[stage]}: ${word.textContent.toLowerCase()}`);
     };
-    along.addEventListener('input', update);
+    along.addEventListener('input', () => update());
     update();
-    window.swPhase = { stops, set(t) { along.value = String(Math.min(1000, Math.round(t * 1000 / step) * step)); update(); svg.classList.add('is-drawn'); }, word: () => word.textContent };
+    window.swPhase = { stops, set(t) { along.value = String(Math.min(1000, Math.round(t * 1000 / step) * step)); update(t); svg.classList.add('is-drawn'); }, word: () => word.textContent };
   })();
   (() => {
     const hosts = [...document.querySelectorAll('[data-run], [data-poster]')];
     for (const host of hosts) {
-      const line = host.querySelector('.chamber');
+      const line = host.querySelector('.gangway');
       const rail = host.querySelector('[data-rail]');
       if (!line || !rail) continue;
       const names = (host.dataset.stations || '').split(',').map((s) => s.trim()).filter(Boolean);
@@ -391,7 +492,7 @@
       const track = host.querySelector('.run__track');
       const live = () => !!track && getComputedStyle(host).getPropertyValue('--live').trim() === '1';
       const pad = (i) => String(i + 1).padStart(2, '0');
-      const holds = [0.17, 0.37, 0.62, 0.83];
+      const stopEls = [...host.querySelectorAll('.run__stop')];
       let current = -1;
       const buttons = names.map((name, i) => {
         const b = document.createElement('button');
@@ -407,25 +508,37 @@
         current = i;
         stages.forEach((s, k) => s.classList.toggle('is-on', k === i));
         buttons.forEach((b, k) => b.setAttribute('aria-current', k === i ? 'true' : 'false'));
-        if (hud) hud.textContent = `Stage ${pad(i)} of 04${state ? ` · ${state}` : ''}`;
+        put(hud, `Stage ${pad(i)} of 04${state ? ` · ${state}` : ''}`);
         const deck = document.getElementById('deck-stage');
-        if (deck && names[i]) deck.textContent = `${pad(i)} ${names[i]}`;
+        if (names[i]) put(deck, `${pad(i)} ${names[i]}`);
       };
+      const aim = (i) => {
+        line.classList.remove('gangway--go-1', 'gangway--go-2', 'gangway--go-3', 'gangway--go-4');
+        line.classList.add(`gangway--go-${i + 1}`);
+      };
+      let wanted = -1;
       const go = (i) => {
         if (live()) {
-          const top = track.getBoundingClientRect().top + scrollY + holds[i] * (track.offsetHeight - innerHeight);
-          scrollTo({ top, behavior: motionOn() ? 'smooth' : 'auto' });
+          scrollTo({ top: stopEls[i].getBoundingClientRect().top + scrollY, behavior: motionOn() ? 'smooth' : 'auto' });
           return;
         }
-        line.classList.remove('chamber--go-1', 'chamber--go-2', 'chamber--go-3', 'chamber--go-4');
-        line.classList.add(`chamber--go-${i + 1}`);
         setOn(i);
+        if (!line.querySelector('.gangway__poster') || line.classList.contains('gangway--awake')) { aim(i); return; }
+        if (wanted < 0) {
+          const pics = [...line.querySelectorAll('.gangway__world img')];
+          pics.forEach((im) => { im.loading = 'eager'; });
+          Promise.race([Promise.all(pics.map((im) => im.decode().catch(() => {}))), new Promise((done) => { setTimeout(done, 1500); })]).then(() => {
+            line.classList.add('gangway--awake');
+            requestAnimationFrame(() => requestAnimationFrame(() => aim(wanted)));
+          });
+        }
+        wanted = i;
       };
       if (!live()) { buttons.forEach((b) => b.setAttribute('aria-current', 'false')); continue; }
       const readout = document.querySelector('.readout[aria-live]');
       if (readout) readout.setAttribute('aria-live', 'off');
       const stops = window.swPhase?.stops || [0, 0.33, 0.67, 1];
-      const map = [[0, 0], [0.24, 0], [0.44, stops[1]], [0.52, stops[1]], [0.58, stops[2]], [0.72, 1], [1, 1]];
+      const map = [[0, 0], [0.24, 0], [0.34, stops[1]], [0.46, stops[1]], [0.56, stops[2]], [0.7, 1], [1, 1]];
       const tOf = (p) => {
         for (let k = 1; k < map.length; k++) {
           if (p <= map[k][0]) { const [p0, t0] = map[k - 1], [p1, t1] = map[k]; return t0 + (t1 - t0) * ((p - p0) / (p1 - p0 || 1)); }
@@ -441,8 +554,8 @@
           const span = track.offsetHeight - innerHeight;
           if (r.bottom < 0 || r.top > innerHeight || span <= 0) return;
           const p = Math.min(1, Math.max(0, -r.top / span));
-          const i = p < 0.26 ? 0 : p < 0.48 ? 1 : p < 0.74 ? 2 : 3;
-          const t = Math.round(tOf(p) * 100) / 100;
+          const i = p < 0.29 ? 0 : p < 0.51 ? 1 : p < 0.75 ? 2 : 3;
+          const t = Math.round(tOf(p) * 2000) / 2000;
           if (window.swPhase && t !== lastT) { lastT = t; window.swPhase.set(t); }
           setOn(i, window.swPhase ? window.swPhase.word() : '');
         });
@@ -454,53 +567,116 @@
   })();
   (() => {
     const travels = [...document.querySelectorAll('main > .travel')];
-    if (!travels.length || !CSS.supports('animation-timeline: view()')) return;
+    const track = document.querySelector('.run__track');
+    const stops = track ? [...track.querySelectorAll('.run__stop')] : [];
+    if ((!travels.length && !stops.length) || !CSS.supports('animation-timeline: view()')) return;
     const pinnedMq = matchMedia('(prefers-reduced-motion: no-preference) and (min-height: 520px)');
     const live = () => pinnedMq.matches && !html.classList.contains('motion-off') && !html.classList.contains('gate-pending');
     const roomBefore = (t) => { let el = t.previousElementSibling; while (el && !el.classList.contains('room')) el = el.previousElementSibling; return el; };
     const roomAfter = (t) => { let el = t.nextElementSibling; while (el && !el.classList.contains('room')) el = el.nextElementSibling; return el; };
-    let riding = false, ridingIn = null, quiet = null, raf = 0, lastWheel = 0, lastTouch = 0, prevY = scrollY;
-    const inZone = (t, y, vh) => y > t.offsetTop - vh * 0.6 && y < t.offsetTop + t.offsetHeight;
+    const yOf = (el) => el.getBoundingClientRect().top + scrollY;
+    const restY = (el) => (el.classList.contains('run__stop') ? yOf(el) : yOf(el) - (parseFloat(getComputedStyle(el).scrollMarginTop) || 0) - (parseFloat(getComputedStyle(html).scrollPaddingTop) || 0));
+    let riding = false, ridingIn = null, quiet = null, raf = 0, prevY = scrollY, lastDir = 0, touching = 0;
+    let lastWheel = -Infinity, lastTouch = -Infinity, lastPress = -Infinity, lastWheelT = -Infinity, lastDy = 0, peak = 0, decay = 0, tail = false, lone = false;
+    const inZone = (t, y, vh) => y > yOf(t) - vh * 0.6 && y < yOf(t) + t.offsetHeight;
     const stop = () => { riding = false; ridingIn = null; if (raf) cancelAnimationFrame(raf); raf = 0; html.classList.remove('is-riding'); };
     const handBack = () => { if (riding) { quiet = ridingIn; stop(); } };
-    addEventListener('wheel', () => { lastWheel = performance.now(); handBack(); }, { passive: true });
-    addEventListener('touchstart', () => { lastTouch = performance.now(); handBack(); }, { passive: true });
+    let swallowing = false;
+    const swallow = (e) => { if (tail) e.preventDefault(); else { swallowing = false; removeEventListener('wheel', swallow); } };
+    addEventListener('wheel', (e) => {
+      const t = e.timeStamp, dy = e.deltaY, gap = t - lastWheelT;   // the event's own time: a busy thread delivers a stream late
+      tail = e.deltaMode === 0 && Math.abs(dy) < 50 && gap < (swallowing ? 400 : 120) && Math.sign(dy) === Math.sign(lastDy) && Math.abs(dy) <= Math.abs(lastDy) * 1.25 + 2;
+      decay = tail ? decay + 1 : 0;
+      lone = gap > 120;
+      peak = lone ? Math.abs(dy) : Math.max(peak, Math.abs(dy));
+      lastDy = dy; lastWheelT = t; lastWheel = t;
+      if (!tail) handBack();
+    }, { passive: true });
+    addEventListener('touchstart', (e) => { touching = e.touches.length; lastTouch = performance.now(); handBack(); }, { passive: true });
     addEventListener('touchmove', () => { lastTouch = performance.now(); }, { passive: true });
-    addEventListener('touchend', () => { lastTouch = performance.now(); }, { passive: true });
-    addEventListener('keydown', (e) => { if (/^(ArrowUp|ArrowDown|PageUp|PageDown|Home|End|Escape| )$/.test(e.key)) { lastWheel = performance.now(); handBack(); } });
-    addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.clientX > innerWidth - 24) handBack(); }, { passive: true });   // the scrollbar
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-    const ride = (t, to, ms) => {
+    const lift = (e) => { touching = e.touches.length; lastTouch = performance.now(); };
+    addEventListener('touchend', lift, { passive: true });
+    addEventListener('touchcancel', lift, { passive: true });
+    addEventListener('keydown', (e) => {
+      if (e.key === 'Home' || e.key === 'End' || ((e.ctrlKey || e.metaKey || e.altKey) && /^Arrow(Up|Down)$/.test(e.key))) { lastWheel = lastTouch = -Infinity; handBack(); return; }
+      if (/^(ArrowUp|ArrowDown|PageUp|PageDown|Escape| )$/.test(e.key)) { lastWheel = performance.now(); lastWheelT = -Infinity; handBack(); }
+    });
+    addEventListener('pointerdown', (e) => { lastPress = performance.now(); if (e.pointerType === 'mouse' && e.clientX > innerWidth - 24) handBack(); }, { passive: true });   // the scrollbar
+    addEventListener('focusin', handBack);   // a focus move is the visitor's own, and it scrolls: the ride must not write over it
+    document.addEventListener('click', (e) => { if (e.target.closest?.('a[href^="#"]')) { lastWheel = lastTouch = -Infinity; handBack(); } }, true);
+    const ease = (p) => p + p * p - p * p * p;   // leaves at the page's own speed, peaks a third over the average, settles at rest
+    const ride = (t, room) => {
       stop();
-      const from = scrollY, t0 = performance.now();
+      let from = scrollY, t0 = 0;
+      const lead = restY(room) - yOf(room);   // the page's height can change under a ride, so the aim is the deck, not a number
+      let to = yOf(room) + lead;
+      const ms = Math.min(3300, Math.max(900, 700 + Math.abs(to - from) * 0.75));
       riding = true; ridingIn = t;
-      window.swRideLast = { from, to, ms };   // read by tools/ride.mjs
+      window.swRideLast = { from, to, ms };   // read by tools/smooth.mjs and tools/ride.mjs
       html.classList.add('is-riding');
+      swallowing = true;
+      addEventListener('wheel', swallow, { passive: false });
       const step = (now) => {
         if (!riding) return;
+        if (!live()) { stop(); return; }   // motion switched off, or the screen no longer pins the travels
+        if (!t0) { t0 = now; from = scrollY; window.swRideLast.from = from; }   // from where the notch's own scroll has reached
+        to = yOf(room) + lead; window.swRideLast.to = to;
         const p = Math.min(1, (now - t0) / ms);
         scrollTo({ top: from + (to - from) * ease(p), behavior: 'instant' });
         prevY = scrollY;
-        if (p < 1) raf = requestAnimationFrame(step); else stop();
+        if (p < 1) { raf = requestAnimationFrame(step); return; }
+        stop();
+        lastWheel = lastTouch = -Infinity;
       };
       raf = requestAnimationFrame(step);
     };
-    const onScroll = () => {
-      const y = scrollY, dir = y > prevY ? 1 : y < prevY ? -1 : 0;
-      prevY = y;
-      if (riding || !dir || !live()) return;
+    const consider = (atRest) => {
+      if (riding || touching || !live()) return;
       const now = performance.now();
-      if (now - lastWheel > 400 && now - lastTouch > 1600) return;   // not the visitor's own scroll
-      const vh = innerHeight;
+      if (now - lastWheel > 400 && now - lastTouch > 4000) return;   // not the visitor's own scroll
+      if (!atRest) {
+        if (now - lastTouch < 4000) return;   // a fling: it finishes first, then scrollend brings us back here
+        const notch = lone && Math.abs(lastDy) >= 50, spent = decay >= 3 && Math.abs(lastDy) < 12 && Math.abs(lastDy) <= peak * 0.5;
+        if (!notch && !spent && now - lastWheelT < 80) return;   // a wheel stream under way: the hand keeps it
+      }
+      const y = scrollY, vh = innerHeight;
       if (quiet) { if (inZone(quiet, y, vh)) return; quiet = null; }
+      if (stops.length) {   // the tour: on to the next window in the direction of the push; past the last, the page goes on by hand
+        const top = yOf(track);
+        if (y > top - vh * 0.7 && y < top + track.offsetHeight - vh) {
+          const next = lastDir > 0 ? stops.find((s) => yOf(s) > y + 12) : stops.findLast((s) => yOf(s) < y - 12);
+          if (next) ride(track, next);
+          return;
+        }
+      }
       for (const t of travels) {
-        const top = t.offsetTop, bottom = top + t.offsetHeight;
-        const ms = 1300 + (t.offsetHeight / vh) * 420;
-        if (dir > 0 && y > top - vh * 0.6 && y < bottom - vh) { const next = roomAfter(t); if (next) ride(t, next.offsetTop, ms); return; }
-        if (dir < 0 && y < bottom - vh * 0.4 && y > top) { const prev = roomBefore(t); if (prev) ride(t, prev.offsetTop, ms); return; }
+        const top = yOf(t), bottom = top + t.offsetHeight;
+        if (lastDir > 0 && y > top - vh * 0.6 && y < bottom - vh) { const next = roomAfter(t); if (next) ride(t, next); return; }
+        if (lastDir < 0 && y < bottom - vh * 1.06 && y > top) { const prev = roomBefore(t); if (prev) ride(t, prev); return; }
       }
     };
-    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('scroll', () => {
+      const y = scrollY, dir = y > prevY ? 1 : y < prevY ? -1 : 0;
+      prevY = y;
+      if (!dir || riding) return;
+      lastDir = dir;
+      consider(false);
+    }, { passive: true });
+    const rescue = () => {
+      if (riding || touching || quiet || !live() || window.swHold) return;
+      const now = performance.now();
+      if (now - lastWheel < 1500 || now - lastTouch < 4000 || now - lastPress < 1500) return;
+      const y = scrollY;
+      for (const t of travels) {
+        const room = t.nextElementSibling;
+        if (!arrives(room)) continue;
+        const rest = restY(room);
+        if (y > rest - innerHeight && y < rest - 2) { scrollTo({ top: rest, behavior: 'instant' }); return; }
+      }
+    };
+    const atRest = () => { consider(true); rescue(); };
+    if ('onscrollend' in window) addEventListener('scrollend', atRest);
+    else { let idle = 0; addEventListener('scroll', () => { clearTimeout(idle); idle = setTimeout(atRest, 140); }, { passive: true }); }
   })();
   (() => {
     const clips = [...document.querySelectorAll('video[data-clip], video[data-sky]')];
@@ -509,14 +685,15 @@
     const held = new Set();
     let ready = false;   // no clip fetches a byte until the page has loaded and settled: the first picture comes first
     let readySky = false;   // the sky footage is the first window's largest paint: it starts at load, without the beat
+    const tall = matchMedia('(max-aspect-ratio: 1/1)');   // a tall screen sees the sky through a strip of windscreen: the picture stands in and 1.5 MB stays unfetched
     const sync = (v) => {
-      const ok = v.hasAttribute('data-sky') ? readySky : ready;
+      const ok = v.hasAttribute('data-sky') ? readySky && !tall.matches : ready;
       if (!ok || held.has(v) || !inView.has(v) || !motionOn()) { v.pause(); v.classList.remove('is-playing'); return; }
       v.play().then(() => v.classList.add('is-playing')).catch(() => {});
     };
     if ('IntersectionObserver' in window) {
       const watch = new IntersectionObserver((entries) => { for (const e of entries) { if (e.isIntersecting) inView.add(e.target); else inView.delete(e.target); sync(e.target); } }, { threshold: 0.2 });
-      clips.forEach((v) => watch.observe(v));
+      whenArrived(clips, (v) => watch.observe(v));   // a clip on a deck that arrives over its travel starts on the frame the stage was showing
     }
     const arm = () => { ready = true; clips.forEach(sync); };
     const armSky = () => { readySky = true; clips.forEach(sync); setTimeout(arm, 1200); };
@@ -637,23 +814,38 @@
       gsap.registerPlugin(ScrollTrigger, SplitText);
       await document.fonts.ready;
       const tweens = [];
-      targets.forEach((el) => {
-        if (el.getBoundingClientRect().top < innerHeight * 0.85) return;
-        el.classList.add('is-split');
-        SplitText.create(el, {
-          type: 'lines', mask: 'lines', aria: 'none', autoSplit: true,   
-          onSplit: (self) => { const t = gsap.from(self.lines, { yPercent: 105, duration: 0.6, stagger: 0.06, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 96%', once: true } }); tweens.push(t); return t; },
+      const queue = targets.slice();
+      let lastIn = 0;
+      for (const ev of ['wheel', 'touchstart', 'keydown']) addEventListener(ev, () => { lastIn = performance.now(); }, { passive: true });
+      const busy = () => html.classList.contains('is-riding') || performance.now() - lastIn < 500;
+      const slice = () => {
+        if (busy()) { idle(slice, { timeout: 800 }); return; }
+        const batch = queue.splice(0, 1);
+        const tops = batch.map((el) => el.getBoundingClientRect().top);
+        const rooms = batch.map((el, i) => { const room = el.closest('.travel + .room'); return arrives(room) && tops[i] - room.getBoundingClientRect().top < innerHeight * 0.85 ? room : null; });
+        batch.forEach((el, i) => {
+          if (tops[i] < innerHeight * 0.85) return;
+          el.classList.add('is-split');
+          SplitText.create(el, {
+            type: 'lines', mask: 'lines', aria: 'none', autoSplit: true,   
+            onSplit: (self) => { const t = gsap.from(self.lines, { yPercent: 105, duration: 0.6, stagger: 0.06, ease: 'expo.out', scrollTrigger: rooms[i] ? { trigger: rooms[i], start: 'top 10%', once: true } : { trigger: el, start: 'top 96%', once: true } }); tweens.push(t); return t; },
+          });
         });
-      });
-      ScrollTrigger.refresh();
+        if (queue.length) idle(slice, { timeout: 800 }); else ScrollTrigger.refresh();
+      };
+      slice();
       const finish = () => tweens.forEach((t) => { if (t.progress() < 1) t.progress(1); });
+      const settle = () => { if (motionOn()) return; queue.length = 0; tweens.forEach((t) => { t.scrollTrigger?.kill(); t.progress(1); }); };
+      new MutationObserver(settle).observe(html, { attributes: true, attributeFilter: ['class'] });
+      calm.addEventListener('change', settle);
       addEventListener('resize', () => { if (innerHeight > 1800) finish(); }, { passive: true });
       addEventListener('beforeprint', finish);
       if (innerHeight > 1800) finish();
     };
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 600));
     const later = () => setTimeout(() => idle(go, { timeout: 1500 }), 1200);
-    if (document.readyState === 'complete') later();
+    if (html.classList.contains('gate-pending')) addEventListener('sw-aboard', later, { once: true });
+    else if (document.readyState === 'complete') later();
     else addEventListener('load', later, { once: true });
   })();
 })();
