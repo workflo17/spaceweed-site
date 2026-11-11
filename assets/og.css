@@ -7,6 +7,9 @@
 .og__text { padding: 0 0 0 64px; display: grid; gap: 22px; }
 .og__mark { width: 280px; margin-left: -10px; margin-bottom: 8px; }
 .og__title { font-family: var(--font-text); font-weight: 300; font-stretch: 112%; font-size: 78px; line-height: 0.98; letter-spacing: -0.025em; max-width: 16ch; margin: 0; }
+.og__title--key { font-size: 32px; line-height: 1.12; max-width: none; }   /* the home headline as the page sets it (round two, 6 Nov 2026): the sentence small, the process name at twice the size */
+.og__title--key span, .og__title--key b { display: block; }
+.og__title--key b { font-weight: 300; font-size: 2em; line-height: 1.02; margin-left: -0.05em; }
 .og__line { font-size: 27px; line-height: 1.35; max-width: 24ch; color: var(--ink); }
 .og__legal { font-size: 17px; line-height: 1.35; max-width: 38ch; color: var(--muted); }
 .og__bud { width: 560px; height: 560px; mix-blend-mode: lighten; justify-self: end; margin-right: 0; }

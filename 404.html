@@ -7,7 +7,7 @@
 <meta name="description" content="That page isn't here.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#080C14">
+<meta name="theme-color" content="#04070C">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
 <link rel="canonical" href="https://workflo17.github.io/spaceweed-site/404.html">
 <meta property="og:type" content="website">
@@ -39,12 +39,11 @@
 
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
   <div class="gate__scrim" aria-hidden="true"></div>
-  <div class="gate__beam" aria-hidden="true"></div>
   <div class="gate__panel">
     <span class="plate__c"></span>
-    <p class="tag tag--ice gate__hail">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
+    <p class="tag tag--ice gate__hail">At the airlock · <span translate="no">Space&nbsp;Weed</span></p>
     <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
-    <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
+    <p class="gate__invite">This ship carries adults only.</p>
     <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
     <div class="gate__buttons">
       <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
@@ -56,14 +55,107 @@
       <button class="textlink gate__back" type="button" data-gate="back">Back to the question</button>
     </div>
   </div>
-  <p class="gate__status" aria-hidden="true"><span class="gate__led"></span><span data-gate-status>Transporter · standing by</span></p>
+  <p class="gate__status" aria-hidden="true">Earth from lunar orbit · NASA LRO</p>
 </div>
+
+<dialog class="comms" id="comms" aria-labelledby="comms-title">
+  <form class="form plate" data-mailto="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain">
+  <span class="plate__c"></span>
+  <div class="comms__bar"><p class="tag tag--ice">Mission Control</p><button class="textlink comms__close" type="button" data-comms-close>Close</button></div>
+  <h2 class="sub comms__title" id="comms-title" tabindex="-1">Contact Us.</h2>
+  <div class="form__pair">
+    <div class="form__row">
+      <label for="d-email">Email<span aria-hidden="true">*</span><span class="sr"> (required)</span></label>
+      <input id="d-email" name="email" type="email" autocomplete="email" spellcheck="false" required>
+    </div>
+    <div class="form__row">
+      <label for="d-phone">Phone</label>
+      <input id="d-phone" name="phone" type="tel" autocomplete="tel">
+    </div>
+  </div>
+  <div class="form__pair">
+    <div class="form__row">
+      <label for="d-first">First name</label>
+      <input id="d-first" name="first" type="text" autocomplete="given-name" spellcheck="false">
+    </div>
+    <div class="form__row">
+      <label for="d-last">Last name</label>
+      <input id="d-last" name="last" type="text" autocomplete="family-name" spellcheck="false">
+    </div>
+  </div>
+  <fieldset class="form__set">
+    <legend class="form__legend">How can we help?</legend>
+    <label class="form__opt" for="d-about-budtender"><input id="d-about-budtender" name="about" type="checkbox" value="Budtender or dispensary"><span>I’m a budtender or a dispensary!</span></label>
+    <label class="form__opt" for="d-about-licensing"><input id="d-about-licensing" name="about" type="checkbox" value="Licensing the process"><span>Interested in licensing Space Weed/CannaGenesis technology (i.e. grower or producer!)</span></label>
+  </fieldset>
+  <div class="form__row">
+    <label for="d-message">Something else? Send us a message and one of our Space Cadets will get back to you in an intergalactic minute!</label>
+    <textarea id="d-message" name="message" autocomplete="off"></textarea>
+  </div>
+  <button class="button" type="submit"><span class="button__in">Open an email to Mission Control</span></button>
+  <p class="small form__note">The button opens the message in your own mail app; nothing is sent from this page. If nothing opens, write to <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a>.</p>
+  <p class="small form__status" data-form-note role="status"></p>
+</form>
+</dialog>
+<dialog class="comms comms--dossier" id="dossier" aria-labelledby="dossier-title" aria-describedby="dossier-sub">
+  <div class="dossier plate">
+  <span class="plate__c"></span>
+  <div class="comms__bar">
+    <p class="tag tag--ice">Welcome aboard · File 001</p>
+    <button class="textlink comms__close" type="button" data-dossier-close>Close</button>
+  </div>
+  <form class="form dossier__form" data-signup="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" novalidate>
+    <div class="dossier__brief">
+      <span class="dossier__stamp" aria-hidden="true"><b class="dossier__st dossier__st--was">Classified</b><b class="dossier__st dossier__st--now">Declassified</b></span>
+      <h2 class="sub dossier__title" id="dossier-title" tabindex="-1">Join as a cadet.</h2>
+      <p class="dossier__sub" id="dossier-sub">Cadets get the classified files: science from the lab, and what is next on the ship. One email a month to start. Open to anyone 21&nbsp;or older.</p>
+      <p class="tag dossier__in">What is in the file</p>
+      <ul class="dossier__list">
+        <li class="redact"><span class="mono">Jar science</span> One fact about the process, explained plainly.</li>
+        <li class="redact"><span class="mono">From the lab</span> One detail, kept short.</li>
+        <li class="redact"><span class="mono">Space log</span> Notes from the ship, and what comes next.</li>
+        <li class="redact"><span class="mono">Strain log</span> One strain at a time.</li>
+      </ul>
+    </div>
+    <div class="dossier__fields">
+      <div class="form__row">
+        <label for="s-email">Email<span aria-hidden="true">*</span><span class="sr"> (required)</span></label>
+        <input id="s-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required aria-describedby="s-email-err">
+        <p class="form__err" id="s-email-err" hidden></p>
+      </div>
+      <div class="form__row">
+        <label for="s-first">First name <span class="dossier__aside">(optional)</span></label>
+        <input id="s-first" name="first" type="text" autocomplete="given-name" spellcheck="false">
+      </div>
+      <fieldset class="form__set" aria-describedby="s-about-err">
+        <legend class="form__legend">What brings you aboard? <span class="dossier__aside">Tick at least one.</span></legend>
+        <label class="form__opt" for="s-about-cadet"><input id="s-about-cadet" name="about" type="checkbox" value="Cadet"><span>I’m joining as a cadet</span></label>
+        <label class="form__opt" for="s-about-budtender"><input id="s-about-budtender" name="about" type="checkbox" value="Budtender or dispensary"><span>I’m a budtender or a dispensary!</span></label>
+        <label class="form__opt" for="s-about-licensing"><input id="s-about-licensing" name="about" type="checkbox" value="Licensing the process"><span>Interested in licensing the process (grower or producer)</span></label>
+        <p class="form__err" id="s-about-err" hidden></p>
+      </fieldset>
+      <div class="dossier__age">
+        <label class="form__opt" for="s-age"><input id="s-age" name="age" type="checkbox" value="21+" required autocomplete="off" aria-describedby="s-age-err"><span>I confirm I am 21&nbsp;or older.<span aria-hidden="true">*</span><span class="sr"> (required)</span></span></label>
+        <p class="form__err" id="s-age-err" hidden></p>
+      </div>
+      <button class="button" type="submit"><span class="button__in">Open an email to request access</span></button>
+      <p class="small form__status" data-signup-note role="status"></p>
+    </div>
+    <div class="dossier__foot">
+      <p class="small">Joining means <span translate="no">Space&nbsp;Weed</span> may email you at this address. Every email will have an unsubscribe link. <span aria-hidden="true">* Required.</span></p>
+      <p class="small form__note">On this mockup the button opens your own mail app with your request filled in. Nothing is sent from this page, and nobody is added to a list. If nothing opens, write to <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a>.</p>
+      <button class="textlink dossier__switch" type="button" data-dossier-switch>Prefer to write to us? Open Mission Control.</button>
+    </div>
+  </form>
+</div>
+</dialog>
+
 
 <div class="deck" aria-hidden="true">
   <span class="deck__item deck__item--name"><span translate="no">Space&nbsp;Weed</span> · <span id="deck-name">Lost in space</span></span>
   <span class="deck__item deck__item--where">Deck <span id="deck-where">01</span></span>
   <span class="deck__item">Voyage <span class="deck__num" id="deck-voyage">00</span>%</span>
-  <span class="deck__item deck__item--stage">Stage <span id="deck-stage">—</span></span>
+  <span class="deck__item deck__item--stage">Stage <span id="deck-stage">--</span></span>
   <span class="deck__item deck__item--utc">UTC <span id="deck-utc">--:--</span></span>
   <span class="deck__item deck__item--age">21+</span>
   <span class="deck__led"></span>
@@ -74,16 +166,17 @@
   <a class="mark" href="index.html"><picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="78px"><img src="assets/img/wordmark-white-300.png" width="600" height="370" alt="Space Weed, home"></picture></a>
   <nav class="links" id="nav" popover aria-label="Main">
     <button class="menu-close" type="button" commandfor="nav" command="hide-popover">Close</button>
-    <a href="process.html" >How it works</a>
+    <a href="process.html" >Learn</a>
     <a href="products.html" >Products</a>
     <a href="partner.html" >Partner</a>
-    <a href="contact.html" >Mission Control</a>
+    <a href="contact.html"  data-comms>Mission Control</a>
+    <a class="links__shop" href="https://shopspaceweed.com/">Shop<span class="sr"> (a separate site)</span></a>
     <button class="motion-btn js-only" type="button" aria-pressed="true">Motion: on</button>
   </nav>
   <div class="top__right">
     <span class="top__age" aria-hidden="true">21+</span>
     <button class="motion-btn js-only" type="button" aria-pressed="true">Motion: on</button>
-    <a class="button button--quiet top__action" href="find.html" ><span class="button__in">Where to find it</span></a>
+    <a class="button button--quiet top__action" href="https://shopspaceweed.com/"><span class="button__in">Shop<span class="sr"> (a separate site)</span></span></a>
     <button class="menu-btn" type="button" commandfor="nav" command="toggle-popover" aria-controls="nav" aria-expanded="false">Menu</button>
   </div>
 </div>
@@ -106,8 +199,7 @@
     <p>It may have moved, or the address has a typo in it. These links go to the pages that are here.</p>
     <p class="age">For adults 21+.</p>
     <a class="button" href="index.html"><span class="button__in">Home</span></a>
-    <a class="textlink" href="process.html">How it works</a>
-    <a class="textlink" href="find.html">Where to find it</a>
+    <a class="textlink" href="process.html" aria-label="Learn more about how Flash Frozen Curing works">Learn more</a>
   </div>
   <p class="intro__skycredit small">The sky: the Pillars of Creation, photographed by the James Webb Space Telescope in 2022. NASA, ESA, CSA, STScI.</p>
 </section>
@@ -122,19 +214,20 @@
       <p class="foot__rule">For use only by adults 21&nbsp;years of&nbsp;age and older. Keep out of reach of&nbsp;children.</p>
       <p>Flash&nbsp;Frozen&nbsp;Cured is CannaGenesis’s process. <span translate="no">Space&nbsp;Weed USA</span>, est. 2015.</p>
       <p><a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></p>
-      <p class="small">A proposal mockup, October 2026, not the live site. Some statements on it are waiting for the client’s confirmation.</p>
+      <p class="small">A proposal mockup, November 2026, not the live site. Some statements on it are waiting for the client’s confirmation.</p>
     </div>
     <ul class="foot__links">
-      <li><a href="find.html">Where to find it</a></li>
-      <li><a href="process.html">How it works</a></li>
+      <li><a href="process.html">Learn</a></li>
       <li><a href="products.html">Products</a></li>
       <li><a href="partner.html">Partner</a></li>
-      <li><a href="contact.html">Mission Control</a></li>
+      <li><a href="contact.html" data-comms>Mission Control</a></li>
+      <li><a href="https://shopspaceweed.com/">Shop<span class="sr"> (a separate site)</span></a></li>
+      <li><a href="contact.html" data-dossier-open>Join the file (21+)</a></li>
       <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="https://www.cannagenesis.com/">CannaGenesis</a></li>
+      <li><a href="https://www.cannagenesis.com/">CannaGenesis<span class="sr"> (a separate site)</span></a></li>
     </ul>
     <div class="foot__credits">
-      <p class="foot__agency small">Ship interiors made with AI. Space pictures: NASA, ESA/Webb, ESO. Not affiliated with or endorsed by any space agency.</p>
+      <p class="foot__agency small">Ship pictures made with AI. Space pictures: NASA, ESA/Webb, ESO. Not affiliated with or endorsed by any space agency.</p>
       <p class="foot__credit small">“Pillars of Creation”: <a href="https://esawebb.org/images/weic2216b/">NASA, ESA, CSA, STScI</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The Milky Way: <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Both cropped and dimmed.</p>
     </div>
   </div>

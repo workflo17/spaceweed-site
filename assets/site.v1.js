@@ -8,6 +8,7 @@
   const onLaunch = (fn) => { if (launch.fired) fn(); else launch.listeners.push(fn); };
   const put = (el, text) => { if (el && el.textContent !== text) el.textContent = text; };
   const fireLaunch = () => { if (launch.fired) return; launch.fired = true; launch.listeners.forEach((fn) => fn()); launch.listeners = []; };
+  window.swGate = { pending: false, admit: () => false };   // replaced below while a gate is up; safe to call on any page at any time
   (() => {
     const gate = document.getElementById('gate');
     if (!gate) { html.classList.remove('gate-pending'); fireLaunch(); return; }   // a copy built without the gate must not stay locked
@@ -34,28 +35,45 @@
     const buttons = gate.querySelector('.gate__buttons');
     const denied = gate.querySelector('.gate__denied');
     behind.forEach((el) => { el.inert = true; });
+    const panel = gate.querySelector('.gate__panel');
+    const foot = () => { if (html.classList.contains('gate-pending')) gate.style.setProperty('--gate-foot', `${panel.offsetTop + panel.offsetHeight}px`); };
+    foot();
+    addEventListener('resize', foot, { passive: true });
+    document.fonts?.ready.then(foot);
     gate.querySelector('[data-gate="yes"]')?.focus();
-    let boarding = false;   // the first Yes is the answer: the keyboard can still reach these buttons while the beam runs
+    let boarding = false;   // the first Yes is the answer: the keyboard can still reach these buttons while the leaves close
+    const wake = () => {
+      behind.forEach((el) => { el.inert = false; });
+      gate.setAttribute('aria-hidden', 'true');
+      document.getElementById('main')?.focus({ preventScroll: true });
+    };
+    const admit = ({ entrance = false } = {}) => {
+      if (boarding) return false;
+      boarding = true;
+      write();
+      wake();
+      if (!entrance) html.classList.add('arrive-still');
+      html.classList.remove('gate-pending', 'gate-opening', 'gate-hold', 'gate-arriving');
+      fireLaunch();
+      dispatchEvent(new Event('sw-aboard'));
+      window.swGate.pending = false;
+      return true;
+    };
+    window.swGate = { pending: true, admit };
     gate.addEventListener('click', (e) => {
       const b = e.target.closest('[data-gate]');
       if (!b || boarding) return;
       if (b.dataset.gate === 'yes') {
         boarding = true;
         write();
-        const wake = () => {
-          behind.forEach((el) => { el.inert = false; });
-          gate.setAttribute('aria-hidden', 'true');
-          document.getElementById('main')?.focus({ preventScroll: true });
-        };
+        window.swGate.pending = false;
         if (motionOn()) {
-          const status = gate.querySelector('[data-gate-status]');
-          if (status) status.textContent = 'Transporter · energising';
           html.classList.add('gate-opening', 'gate-hold');
-          setTimeout(() => html.classList.add('gate-arriving'), 1100);
-          setTimeout(wake, 1160);   // the page's full style and layout, while the closed leaves hide it and nothing moves
-          setTimeout(() => { html.classList.remove('gate-pending', 'gate-opening'); fireLaunch(); }, 1400);
-          setTimeout(() => { html.classList.remove('gate-hold'); dispatchEvent(new Event('sw-aboard')); }, 1900);
-          setTimeout(() => html.classList.remove('gate-arriving'), 2900);
+          setTimeout(() => html.classList.add('gate-arriving'), 200);
+          setTimeout(wake, 760);   // the page's full style and layout, while the closed leaves hide it and nothing moves
+          setTimeout(() => { html.classList.remove('gate-pending', 'gate-opening'); fireLaunch(); }, 820);
+          setTimeout(() => { html.classList.remove('gate-hold'); dispatchEvent(new Event('sw-aboard')); }, 1400);
+          setTimeout(() => html.classList.remove('gate-arriving'), 2100);
         } else {
           wake();
           html.classList.remove('gate-pending');
@@ -227,20 +245,24 @@
     document.documentElement.addEventListener('mouseleave', () => { on = false; r.classList.remove('is-on'); });
   })();
   (() => {
-    const hero = document.querySelector('.room--bridge'), first = document.querySelector('main > .travel--walk');
-    if (!hero || !first) return;
-    const crew = document.querySelector('.room--crew'), copy = first.querySelector('.travel__a');
-    const pieces = [[hero.querySelector(':scope > .room__window'), copy.querySelector('.travel__pic')], [hero.querySelector(':scope > .shell'), copy.querySelector('.shell')], [hero.querySelector('.hero__pic'), copy.querySelector('.pass__flower')]];
+    const hero = document.querySelector('.room--bridge'), crew = document.querySelector('.room--crew');
+    const after = (el, cls) => (el && el.nextElementSibling && el.nextElementSibling.classList.contains(cls) ? el.nextElementSibling : null);
+    const first = after(hero, 'travel--walk'), tracked = !!after(crew, 'travel--track');
+    if (!first && !crew) return;
+    const copy = first ? first.querySelector('.travel__a') : null;
+    const pieces = copy ? [[hero.querySelector(':scope > .room__window'), copy.querySelector('.travel__pic')], [hero.querySelector(':scope > .shell'), copy.querySelector('.shell')], [hero.querySelector('.hero__pic'), copy.querySelector('.pass__flower')]].filter(([from, to]) => from && to) : [];
     const place = () => {
-      const top = hero.getBoundingClientRect().top + scrollY, run = first.getBoundingClientRect().top + scrollY;
+      const top = first ? hero.getBoundingClientRect().top + scrollY : 0, run = first ? first.getBoundingClientRect().top + scrollY : 0;
       const boxes = pieces.map(([from]) => ({ left: `${from.offsetLeft}px`, top: `${top + from.offsetTop}px`, width: `${from.offsetWidth}px`, height: `${from.offsetHeight}px` }));
-      const hang = top + pieces[0][0].offsetTop;   // the hull piece hangs from the window, and the window starts where the deck says
-      const crewRun = crew ? Math.max(0, crew.offsetHeight - document.documentElement.clientHeight) : 0, crewTop = crew ? crew.querySelector('.crew').offsetTop : 0;
-      html.style.setProperty('--hero-run', `${run}px`);
+      const hang = pieces.length ? top + pieces[0][0].offsetTop : 0;   // the hull piece hangs from the window, and the window starts where the deck says
+      const wall = crew ? crew.querySelector('.crew') : null;
+      const crewRun = tracked ? Math.max(0, crew.offsetHeight - document.documentElement.clientHeight) : 0, crewTop = wall ? wall.offsetTop : 0;
+      if (first) html.style.setProperty('--hero-run', `${run}px`);
       html.style.setProperty('--crew-run', `${crewRun}px`);
       html.style.setProperty('--crew-top', `${crewTop}px`);   // a phone's deck has padding above the wall
       pieces.forEach(([, to], i) => Object.assign(to.style, boxes[i]));
-      copy.querySelector('.fg').style.marginTop = `${hang}px`;
+      const fg = copy ? copy.querySelector('.fg') : null;
+      if (fg) fg.style.marginTop = `${hang}px`;
     };
     place();
     addEventListener('resize', place, { passive: true });
@@ -289,7 +311,8 @@
     if (innerHeight > 1800) all();
   })();
   (() => {
-    if (!motionOn() || !CSS.supports('selector(html:active-view-transition-type(door))')) return;
+    const gated = html.classList.contains('gate-pending');
+    if (!motionOn() || !(gated || CSS.supports('selector(html:active-view-transition-type(door))'))) return;
     const warm = () => {
       const narrow = matchMedia('(max-width: 700px)').matches;
       [narrow ? 'assets/img/airlock-leaves-tall-768.webp' : 'assets/img/airlock-leaves-1280.webp', 'assets/img/port-glass-320.webp', 'assets/img/frost-640.webp']
@@ -297,7 +320,7 @@
     };
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 300));
     const later = () => setTimeout(() => idle(warm, { timeout: 3000 }), 1400);
-    if (html.classList.contains('gate-pending')) warm();   // the gate's arrival is through these leaves, within seconds
+    if (gated) warm();   // the gate's arrival is through these leaves, within seconds
     else if (document.readyState === 'complete') later();
     else addEventListener('load', later, { once: true });
   })();
@@ -364,7 +387,7 @@
   (() => {
     if (!fine.matches) return;
     const hero = document.querySelector('.hero__pic');
-    const buttons = [...document.querySelectorAll('.button')].map((b) => {
+    const buttons = [...document.querySelectorAll('.button')].filter((b) => !b.closest('dialog')).map((b) => {   // a dialog's button has no box until it opens
       const inner = b.querySelector('.button__in');
       return { b, inner, x: 0, y: 0, tx: 0, ty: 0, rect: null };
     });
@@ -406,7 +429,7 @@
   })();
   (() => {
     if (!fine.matches || !('IntersectionObserver' in window)) return;
-    const outside = (w) => [...w.querySelectorAll(':scope > img, :scope > video, :scope > .band__earth, :scope > .nugs, .travel__pic, .hold > picture > img')];
+    const outside = (w) => [...w.querySelectorAll(':scope > img, :scope > video, :scope > .nugs, .travel__pic, .hold > picture > img')];
     const flower = document.querySelector('.hero__pic picture');   // nearer than the sky, so it moves further
     const seen = new Map();
     const release = (els) => els.forEach((el) => { el.style.transform = ''; el.style.willChange = ''; });
@@ -622,8 +645,17 @@
     const stops = track ? [...track.querySelectorAll('.run__stop')] : [];
     const plates = track ? [...track.querySelectorAll('.run__plate')] : [];
     if ((!travels.length && !stops.length) || !CSS.supports('animation-timeline: view()')) return;
+    let isWalking = false;
+    const readWalking = () => { isWalking = !!track && getComputedStyle(track.closest('.run')).getPropertyValue('--live').trim() === '1'; };
+    const walking = () => isWalking;
+    readWalking();
+    if (track) {
+      new MutationObserver(readWalking).observe(html, { attributes: true, attributeFilter: ['class'] });
+      addEventListener('resize', readWalking, { passive: true });
+      calm.addEventListener('change', readWalking);
+    }
     const pinnedMq = matchMedia('(prefers-reduced-motion: no-preference) and (min-height: 520px)');
-    const live = () => pinnedMq.matches && !html.classList.contains('motion-off') && !html.classList.contains('gate-pending');
+    const live = () => pinnedMq.matches && !html.classList.contains('motion-off') && !html.classList.contains('gate-pending') && !html.classList.contains('comms-open');   // a ride never starts under the contact dialog
     const roomBefore = (t) => { let el = t.previousElementSibling; while (el && !el.classList.contains('room')) el = el.previousElementSibling; return el; };
     const roomAfter = (t) => { let el = t.nextElementSibling; while (el && !el.classList.contains('room')) el = el.nextElementSibling; return el; };
     const yOf = (el) => el.getBoundingClientRect().top + scrollY;
@@ -659,6 +691,9 @@
     document.addEventListener('click', (e) => { if (e.target.closest?.('a[href^="#"]')) { lastWheel = lastTouch = -Infinity; handBack(); } }, true);
     const ease = (p) => p + p * p - p * p * p;   // leaves at the page's own speed, peaks a third over the average, settles at rest
     const reading = (dir) => plates.some((p) => { const r = p.getBoundingClientRect(), vh = innerHeight; return r.height > vh - 70 && r.top < vh * 0.5 && (dir > 0 ? r.bottom > vh * 0.72 : r.top < 40 && r.bottom > vh * 0.5); });
+    let above = track ? track.closest('.run')?.previousElementSibling : null;
+    while (above && above.tagName !== 'SECTION') above = above.previousElementSibling;
+    const held = () => !!above && above.hasAttribute('data-read') && above.getBoundingClientRect().bottom > innerHeight * 0.25;
     const ride = (t, room) => {
       stop();
       let from = scrollY, t0 = 0;
@@ -695,10 +730,11 @@
       }
       const y = scrollY, vh = innerHeight;
       if (quiet) { if (inZone(quiet, y, vh)) return; quiet = null; }
-      if (stops.length) {   // the tour: on to the next window in the direction of the push; past the last, the page goes on by hand
+      if (stops.length && walking()) {   // the tour: on to the next window in the direction of the push; past the last, the page goes on by hand
         const top = yOf(track);
         if (y > top - vh * 0.7 && y < top + track.offsetHeight - vh) {
           if (reading(lastDir)) return;   // a plate taller than the screen stays in the hand until the reader has reached its end
+          if (lastDir > 0 && held()) return;   // so does the card or list just above the walk (data-read)
           const next = lastDir > 0 ? stops.find((s) => yOf(s) > y + 12) : stops.findLast((s) => yOf(s) < y - 12);
           if (next) ride(track, next);
           return;
@@ -722,7 +758,7 @@
       const now = performance.now();
       if (now - lastWheel < 1500 || now - lastTouch < 4000 || now - lastPress < 1500) return;
       const y = scrollY;
-      if (plates.length && y > yOf(track) && y < yOf(track) + track.offsetHeight - innerHeight && !reading(1) && !reading(-1) && !document.activeElement?.closest?.('.run__plate')) {
+      if (plates.length && walking() && y > yOf(track) && y < yOf(track) + track.offsetHeight - innerHeight && !reading(1) && !reading(-1) && !document.activeElement?.closest?.('.run__plate')) {
         const near = [track, ...stops].reduce((a, b) => (Math.abs(yOf(b) - y) < Math.abs(yOf(a) - y) ? b : a));
         if (Math.abs(yOf(near) - y) > 2) scrollTo({ top: yOf(near), behavior: 'instant' });
         return;
@@ -742,13 +778,14 @@
     const clips = [...document.querySelectorAll('video[data-clip], video[data-sky]')];
     if (!clips.length) return;
     const inView = new Set();
-    const held = new Set();
+    const held = new Set();   // clips the visitor paused, with motion on
+    const asked = new Set();   // clips the visitor started with motion off: they play while in view until the next press
     let ready = false;   // no clip fetches a byte until the page has loaded and settled: the first picture comes first
     let readySky = false;   // the sky footage is the first window's largest paint: it starts at load, without the beat
     const tall = matchMedia('(max-aspect-ratio: 1/1)');   // a tall screen sees the sky through a strip of windscreen: the picture stands in and 1.5 MB stays unfetched
     const sync = (v) => {
       const ok = v.hasAttribute('data-sky') ? readySky && !tall.matches : ready;
-      if (!ok || held.has(v) || !inView.has(v) || !motionOn()) { v.pause(); v.classList.remove('is-playing'); return; }
+      if (!ok || held.has(v) || !inView.has(v) || !(motionOn() || asked.has(v))) { v.pause(); v.classList.remove('is-playing'); return; }
       v.play().then(() => v.classList.add('is-playing')).catch(() => {});
     };
     if ('IntersectionObserver' in window) {
@@ -761,19 +798,21 @@
     if (slow) {  }
     else if (document.readyState === 'complete') armSky();
     else addEventListener('load', armSky, { once: true });
+    const labels = [];   // each toggle's label writer: the Motion switch changes what the label should say
     clips.forEach((v) => {
       const toggle = v.closest('figure, section')?.querySelector('[data-clip-toggle]');
       if (!toggle) return;
-      const show = () => { const off = held.has(v) || !motionOn(); toggle.setAttribute('aria-pressed', off ? 'true' : 'false'); toggle.textContent = off ? 'Play the clip' : 'Pause the clip'; };
+      const show = () => { const on = motionOn() ? !held.has(v) : asked.has(v); put(toggle, on ? 'Pause the clip' : 'Play the clip'); };
+      labels.push(show);
       toggle.hidden = false; show();
       toggle.addEventListener('click', () => {
-        if (!motionOn() && !held.has(v)) { held.add(v); }
-        if (held.has(v)) { held.delete(v); if (!motionOn()) { v.play().then(() => v.classList.add('is-playing')).catch(() => {}); toggle.setAttribute('aria-pressed', 'false'); toggle.textContent = 'Pause the clip'; return; } }
-        else held.add(v);
-        show(); sync(v);
+        if (motionOn()) { if (held.has(v)) held.delete(v); else held.add(v); show(); sync(v); return; }
+        if (asked.has(v)) { asked.delete(v); v.pause(); v.classList.remove('is-playing'); }
+        else { asked.add(v); v.play().then(() => v.classList.add('is-playing')).catch(() => {}); }
+        show();
       });
     });
-    const resync = () => clips.forEach(sync);
+    const resync = () => { clips.forEach(sync); labels.forEach((f) => f()); };
     calm.addEventListener('change', resync);
     new MutationObserver(resync).observe(html, { attributes: true, attributeFilter: ['class'] });
   })();
@@ -793,76 +832,246 @@
     });
   })();
   (() => {
-    const form = document.querySelector('.form[data-mailto]:not([data-compose])');
-    if (!form) return;
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
-      const name = (data.get('name') || '').toString().trim();
-      const about = (data.get('about') || '').toString().trim();
-      const message = (data.get('message') || '').toString().trim();
-      const subject = about ? `Space Weed: ${about}` : 'Space Weed';
-      const body = `${message}\n\n${name ? `From ${name}` : ''}`.trim();
-      location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      const note = form.querySelector('[data-form-note]');
-      if (note) note.textContent = 'Your mail app should have opened with the message filled in. If it did not, write to info@spaceweedusa.com.';
+    document.querySelectorAll('.form[data-mailto]').forEach((form) => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const val = (k) => (data.get(k) || '').toString().trim();
+        const name = [val('first'), val('last')].filter(Boolean).join(' ');
+        const email = val('email');
+        const phone = val('phone');
+        const message = val('message');
+        const about = data.getAll('about').map((v) => v.toString().trim()).filter(Boolean).join(', ');
+        const subject = about ? `Space Weed: ${about}` : 'Space Weed';
+        const who = [name && `Name: ${name}`, email && `Email: ${email}`, phone && `Phone: ${phone}`].filter(Boolean).join('\n');
+        const body = [message, who].filter(Boolean).join('\n\n').replace(/\r?\n/g, '\r\n');   // a mailto body breaks lines with CRLF (RFC 6068); some mail apps run bare line feeds together
+        location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const note = form.querySelector('[data-form-note]');
+        if (note) note.textContent = 'Your mail app should have opened with the message filled in. If it did not, write to info@spaceweedusa.com.';
+      });
     });
   })();
   (() => {
-    const form = document.querySelector('form[data-compose]');
-    if (!form) return;
-    const store = form.querySelector('#c-store');
-    const city = form.querySelector('#c-city');
-    const entry = form.querySelector('[data-entry]');
-    const note = form.querySelector('[data-compose-note]');
-    const copy = form.querySelector('[data-copy]');
-    if (!store || !city || !entry || !note) return;
-    const fills = { store: [...form.querySelectorAll('[data-fill="store"]')], city: [...form.querySelectorAll('[data-fill="city"]')] };
-    const blank = { store: 'your store’s name', city: 'your city' };
-    const clean = (v) => v.replace(/\s+/g, ' ').trim();
-    const render = () => {
-      const s = clean(store.value), c = clean(city.value);
-      fills.store.forEach((el) => { el.textContent = s || blank.store; el.classList.toggle('is-empty', !s); });
-      fills.city.forEach((el) => { el.textContent = c || blank.city; el.classList.toggle('is-empty', !c); });
-      entry.textContent = s ? (c ? `${s}, ${c}` : s) : 'Nothing written yet';
-      form.classList.toggle('is-ready', !!s);   // the little hatch shuts once an entry is written; the caption says it is only written here
+    const dlg = document.getElementById('comms');
+    const openers = [...document.querySelectorAll('a[data-comms]')];
+    if (!dlg || typeof dlg.showModal !== 'function' || !openers.length) return;
+    const own = document.querySelector('main .form[data-mailto]');   // the page's own copy of the form, at its foot (Partner, Contact)
+    const nav = document.getElementById('nav');
+    const menuBtn = document.querySelector('.menu-btn');
+    const note = dlg.querySelector('[data-form-note]');
+    const menuOpen = () => { try { return !!nav && nav.matches(':popover-open'); } catch { return false; } };
+    let opener = null;
+    let topAtOpen = 0;   // where the page stood when the dialog opened
+    const open = (from) => {
+      if (dlg.open) return;
+      opener = from;
+      if (menuOpen()) { opener = menuBtn; nav.hidePopover(); }   // a link in the phone menu has no box once the menu closes: focus returns to the Menu button
+      if (note) note.textContent = '';
+      const barW = innerWidth - html.clientWidth;   // the width of the classic scrollbar on screen now (0 where scrollbars overlay), read at every open and kept nowhere
+      topAtOpen = scrollY;
+      if (barW > 0) html.style.setProperty('--comms-sbw', barW + 'px');   // the lock takes the scrollbar away: the page is padded by its width and the fixed layers keep clear of the edge (site.css), so nothing moves and the viewport units keep their value; --sbw is the gate's and is not touched
+      html.classList.toggle('comms-bar', barW > 0);
+      html.classList.add('comms-open');
+      dlg.showModal();
+      (fine.matches ? dlg.querySelector('input') : dlg.querySelector('.comms__title'))?.focus();   // a phone keeps its keyboard down until a field is touched
     };
-    const letter = () => {
-      const s = clean(store.value), c = clean(city.value);
-      const lines = ['Hello Space Weed,', '', 'Here is a store for your list.', '', `Store: ${s}`];
-      if (c) lines.push(`City: ${c}`);
-      lines.push('', 'Thank you.');
-      return lines.join('\r\n');
-    };
-    form.addEventListener('input', render);
-    render();
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-      location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent('A store for the Space Weed list')}&body=${encodeURIComponent(letter())}`;
-      form.classList.add('is-filed');
-      note.textContent = 'Your mail app should have opened with the message filled in. Nothing was sent from this page. If it did not open, write to info@spaceweedusa.com.';
+    dlg.addEventListener('close', () => {
+      html.classList.remove('comms-open', 'comms-bar');
+      html.style.removeProperty('--comms-sbw');
+      if (Math.abs(scrollY - topAtOpen) > 0.5) scrollTo({ top: topAtOpen, behavior: 'instant' });   // the scrollbar's return makes the browser lay the page out once without it, and a page resting at its foot is held to that shorter height: it goes back to where it was
+      (opener && opener.getClientRects().length ? opener : document.getElementById('main'))?.focus({ preventScroll: true });
+      opener = null;
     });
-    if (copy) {
-      copy.hidden = false;
-      copy.addEventListener('click', async () => {
-        if (!form.reportValidity()) return;
-        const text = `To: info@spaceweedusa.com\r\nSubject: A store for the Space Weed list\r\n\r\n${letter()}`;
-        try {
-          await navigator.clipboard.writeText(text);
-          form.classList.add('is-filed');
-          note.textContent = 'Copied. Paste it into an email to info@spaceweedusa.com. Nothing was sent from this page.';
-        } catch {
-          const box = form.querySelector('.compose__letter');
-          if (box && getSelection) getSelection().selectAllChildren(box);
-          note.textContent = 'Copying was blocked, so the message is selected instead: press Ctrl+C, or Cmd+C on a Mac.';
+    const outside = (e) => { const r = dlg.getBoundingClientRect(); return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom; };
+    let pressedOut = false;
+    dlg.addEventListener('pointerdown', (e) => { pressedOut = outside(e); });
+    dlg.addEventListener('click', (e) => {
+      if (e.target.closest('[data-comms-close]') || (pressedOut && outside(e))) dlg.close();
+      pressedOut = false;
+    });
+    for (const a of openers) {
+      if (!own) a.setAttribute('aria-haspopup', 'dialog');
+      a.addEventListener('click', (e) => {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;   // a new tab asked for stays a new tab
+        if (html.classList.contains('gate-arriving') || html.classList.contains('vt')) return;   // the airlock's leaves are still parting, or a door between pages is still closing (a modal would paint over either): the link goes to the contact page
+        e.preventDefault();
+        if (own) {   // this page carries the form: take the visitor to it, not to a second copy
+          if (menuOpen()) nav.hidePopover();
+          const head = document.getElementById(own.closest('section')?.getAttribute('aria-labelledby') || '');   // the form's section heading (tabindex -1 in the page)
+          (head || own).scrollIntoView({ block: 'start', behavior: motionOn() ? 'smooth' : 'instant' });   // the top of the section, not the middle of a form taller than a phone
+          (fine.matches ? own.querySelector('input') : head)?.focus({ preventScroll: true });   // a phone keeps its keyboard down until a field is touched
+          return;
         }
+        open(a);
       });
+    }
+    if (dlg.hasAttribute('data-comms-auto')) {
+      let seen = false;
+      try { seen = sessionStorage.getItem('sw-comms') === '1'; } catch {  }
+      const nav0 = performance.getEntriesByType?.('navigation')?.[0];
+      if (nav0 && nav0.type === 'reload') seen = false;   // the old site showed it again on a reload
+      const roomy = matchMedia('(min-width: 700px) and (min-height: 640px)');   // a phone's first screen is not covered
+      const arm = () => setTimeout(() => {
+        if (dlg.open || !roomy.matches || html.classList.contains('vt') || html.classList.contains('is-riding') || menuOpen()) return;
+        try { sessionStorage.setItem('sw-comms', '1'); } catch {  }
+        open(null);
+      }, 2000);
+      if (!seen) {
+        if (html.classList.contains('gate-pending')) addEventListener('sw-aboard', arm, { once: true });
+        else if (document.readyState === 'complete') arm();
+        else addEventListener('load', arm, { once: true });
+      }
     }
   })();
   (() => {
+    const dlg = document.getElementById('dossier');
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+    const tab = document.getElementById('dossiertab');
+    const nav = document.getElementById('nav');
+    const menuBtn = document.querySelector('.menu-btn');
+    const menuOpen = () => { try { return !!nav && nav.matches(':popover-open'); } catch { return false; } };
+    const KEY = 'sw-dossier';
+    const DAY = 864e5;
+    const span = (state) => (state === 'joined' ? 365 : 30) * DAY;
+    const read = () => { try { const [state = '', at = '0'] = (localStorage.getItem(KEY) || '').split(':'); return { state, at: Number(at) || 0 }; } catch { return null; } };
+    const fresh = (n) => !!n && !!n.state && Date.now() - n.at < span(n.state);
+    const note = (state) => {
+      const cur = read();
+      if (state !== 'joined' && cur && cur.state === 'joined' && fresh(cur)) return;   // a joined note stands for its year
+      try { localStorage.setItem(KEY, `${state}:${Date.now()}`); } catch {  }
+    };
+    const quiet = () => { const n = read(); return !n || fresh(n); };   // no storage counts as quiet: "not again" could not be kept
+    const showTab = () => { if (!tab) return; tab.hidden = false; html.classList.add('dossier-tab'); };
+    const hideTab = () => { if (!tab || tab.hidden) return; tab.hidden = true; html.classList.remove('dossier-tab'); };
+    let opener = null;
+    let topAtOpen = 0;
+    const open = (from, byItself) => {
+      if (dlg.open) return;
+      opener = from;
+      if (menuOpen()) { opener = menuBtn; nav.hidePopover(); }
+      const barW = innerWidth - html.clientWidth;
+      topAtOpen = scrollY;
+      if (barW > 0) html.style.setProperty('--comms-sbw', barW + 'px');
+      html.classList.toggle('comms-bar', barW > 0);
+      html.classList.add('comms-open');
+      hideTab();
+      dlg.showModal();
+      ((byItself || !fine.matches) ? dlg.querySelector('#dossier-title') : dlg.querySelector('#s-email'))?.focus({ preventScroll: true });
+    };
+    dlg.addEventListener('close', () => {
+      html.classList.remove('comms-open', 'comms-bar');
+      html.style.removeProperty('--comms-sbw');
+      if (Math.abs(scrollY - topAtOpen) > 0.5) scrollTo({ top: topAtOpen, behavior: 'instant' });
+      (opener && opener.getClientRects().length ? opener : document.getElementById('main'))?.focus({ preventScroll: true });
+      opener = null;
+      note('closed');
+    });
+    const outside = (e) => { const r = dlg.getBoundingClientRect(); return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom; };
+    let pressedOut = false;
+    dlg.addEventListener('pointerdown', (e) => { pressedOut = outside(e); });
+    dlg.addEventListener('click', (e) => {
+      if (e.target.closest('[data-dossier-close]') || (pressedOut && outside(e))) dlg.close();
+      pressedOut = false;
+    });
+    dlg.querySelector('[data-dossier-switch]')?.addEventListener('click', () => {
+      dlg.addEventListener('close', () => document.querySelector('.foot__links a[data-comms]')?.click(), { once: true });
+      dlg.close();
+    });
+    for (const a of document.querySelectorAll('[data-dossier-open]')) {
+      a.setAttribute('aria-haspopup', 'dialog');
+      a.addEventListener('click', (e) => {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (html.classList.contains('gate-arriving') || html.classList.contains('vt')) return;   // as 9a: the footer link goes to the contact page
+        e.preventDefault();
+        open(a, false);
+      });
+    }
+    tab?.querySelector('.dossiertab__close')?.addEventListener('click', () => { hideTab(); note('closed'); document.getElementById('main')?.focus({ preventScroll: true }); });
+    const form = dlg.querySelector('form[data-signup]');
+    if (form) {
+      const status = form.querySelector('[data-signup-note]');
+      const label = form.querySelector('button[type="submit"] .button__in');
+      const email = form.querySelector('#s-email');
+      const boxes = [...form.querySelectorAll('input[name="about"]')];
+      const age = form.querySelector('#s-age');
+      const err = { email: form.querySelector('#s-email-err'), about: form.querySelector('#s-about-err'), age: form.querySelector('#s-age-err') };
+      const RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      let tried = false;
+      const check = () => {
+        const bad = {};
+        const v = email.value.trim();
+        if (!v) bad.email = 'Enter your email address.';
+        else if (!RX.test(v)) bad.email = 'That address looks incomplete. Check for the @ and the part after it.';
+        if (!boxes.some((b) => b.checked)) bad.about = 'Pick at least one, or join as a cadet.';
+        if (!age.checked) bad.age = 'Tick the box to confirm you are 21 or older.';
+        for (const k of Object.keys(err)) { err[k].textContent = bad[k] || ''; err[k].hidden = !bad[k]; }
+        const flag = (el, on) => { if (on) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid'); };
+        flag(email, !!bad.email); boxes.forEach((b) => flag(b, !!bad.about)); flag(age, !!bad.age);
+        const n = Object.keys(bad).length;
+        status.textContent = n ? `${n} ${n === 1 ? 'field needs' : 'fields need'} attention.` : '';
+        return bad;
+      };
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        tried = true;
+        const bad = check();
+        if (bad.email) { email.focus(); return; }
+        if (bad.about) { boxes[0].focus(); return; }
+        if (bad.age) { age.focus(); return; }
+        const about = boxes.filter((b) => b.checked).map((b) => b.value);
+        const first = (form.querySelector('#s-first')?.value || '').trim();
+        const subject = `Space Weed signup: ${about.join(', ')}`;
+        const body = ['Please add me to the Space Weed list.', '', 'I confirm I am 21 or older.', `Email: ${email.value.trim()}`, first ? `First name: ${first}` : null, `Options: ${about.join('; ')}`, '',
+          'Sent from the signup window on the site mockup. Nothing is added to a list until the launch site is live.'].filter((l) => l !== null).join('\r\n');   // CRLF, as section 9 (RFC 6068)
+        location.href = `mailto:${form.dataset.signup}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        status.textContent = 'Your mail app should have opened with your request filled in. Nothing has been sent yet: send it from there to join. If nothing opened, write to info@spaceweedusa.com with the subject Space Weed signup.';
+        if (label) label.textContent = 'Open it again';
+        note('joined');
+        hideTab();
+      });
+      form.addEventListener('input', () => { if (tried) check(); });
+      form.addEventListener('change', () => { if (tried) check(); });
+    }
+    if (!dlg.hasAttribute('data-dossier-auto') || quiet()) return;
+    const roomy = matchMedia('(min-width: 900px) and (min-height: 640px) and (hover: hover) and (pointer: fine)');
+    const busy = () => ['gate-pending', 'gate-hold', 'gate-opening', 'gate-arriving', 'vt', 'is-riding'].some((c) => html.classList.contains(c))
+      || menuOpen() || !!document.querySelector('dialog[open]') || !!document.activeElement?.matches?.('input, select, textarea');
+    const keep = () => { note('shown'); const n = read(); return !!n && n.state === 'shown'; };   // the note must take, or the promise of "not again" could not be kept
+    let frozen = false;   // a page brought back from the back-forward cache does not arm again
+    let timer = 0;
+    let tries = 0;
+    let since = 0;
+    const tryOpen = () => {
+      timer = 0;
+      if (frozen || dlg.open || quiet() || !roomy.matches) return;
+      if (document.visibilityState !== 'visible') {
+        document.addEventListener('visibilitychange', function wait() { if (document.visibilityState !== 'visible') return; document.removeEventListener('visibilitychange', wait); timer = setTimeout(tryOpen, 2000); });
+        return;
+      }
+      if (busy()) { if (tries++ < 4) timer = setTimeout(tryOpen, 1000); return; }
+      if (keep()) open(null, true);
+    };
+    const tryTab = () => {
+      if (frozen || !tab || roomy.matches || dlg.open || quiet()) return true;   // true: nothing more to watch for
+      if (performance.now() - since < 8000 || scrollY < innerHeight || busy()) return false;
+      if (keep()) showTab();
+      return true;
+    };
+    const watchTab = () => {
+      since = performance.now();
+      const onScroll = () => { if (tryTab()) removeEventListener('scroll', onScroll); };
+      addEventListener('scroll', onScroll, { passive: true });
+      setTimeout(onScroll, 8050);   // a visitor who scrolled a screen before the 8 s and then stopped
+    };
+    const arm = () => { if (frozen) return; timer = setTimeout(tryOpen, 4000); watchTab(); };
+    if (html.classList.contains('gate-pending')) addEventListener('sw-aboard', arm, { once: true });
+    else if (document.readyState === 'complete') arm();
+    else addEventListener('load', arm, { once: true });
+    addEventListener('pageshow', (e) => { if (e.persisted) { frozen = true; clearTimeout(timer); } });
+  })();
+  (() => {
     if (!motionOn() || !('IntersectionObserver' in window)) return;
-    const targets = [...document.querySelectorAll('main .head, main .statement')].filter((el) => !el.closest('.hero') && !el.closest('.intro') && el.getBoundingClientRect().top > innerHeight * 0.9);
+    const targets = [...document.querySelectorAll('main .head, main .statement')].filter((el) => !el.hasAttribute('data-whole') && !el.closest('.hero') && !el.closest('.intro') && el.getBoundingClientRect().top > innerHeight * 0.9);
     if (!targets.length) return;
     const load = (src) => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
     const go = async () => {

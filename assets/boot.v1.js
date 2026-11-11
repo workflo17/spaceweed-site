@@ -11,16 +11,29 @@ document.documentElement.classList.add('js');
   var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
   var reload = nav ? nav.type === 'reload' : !!(performance.navigation && performance.navigation.type === 1);
   if (reload || ok + 30 * 864e5 < Date.now()) html.classList.add('gate-pending');
+  /* the gate holds the scroll, and the scrollbar that comes back when it lifts must not move the page: the page behind it is padded by
+     that scrollbar's width (--sbw, read here from a box that always has one, before the first paint), so it is laid out as wide as it
+     will be then, while the gate and its airlock, which are fixed, cover the window's whole width. No scrollbar to speak of (a phone,
+     an overlay) reads 0 and sets nothing. */
+  if (html.classList.contains('gate-pending')) {
+    var probe = document.createElement('div');
+    probe.style.position = 'absolute'; probe.style.top = '-9999px'; probe.style.width = '100px'; probe.style.height = '100px'; probe.style.overflow = 'scroll';
+    html.appendChild(probe);
+    var sbw = probe.offsetWidth - probe.clientWidth;
+    html.removeChild(probe);
+    if (sbw > 0) html.style.setProperty('--sbw', sbw + 'px');
+  }
   /* motion: off when the visitor said so, or when the system asks for reduced motion and they have not said otherwise */
   var choice = null;
   try { choice = localStorage.getItem('sw-motion'); } catch (e) { choice = null; }
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (choice === 'off' || (choice === null && reduce)) html.classList.add('motion-off');
 
-  /* ---- the doors between pages. Which door depends on how you leave: through a door tile, the tile grows into the
-     next page (hatch); back to the flight deck, the page opens from the link you pressed (iris); any other way from
-     deck to deck, the airlock leaves close and open (door). The old page decides and leaves the choice in session
-     storage for the new one, which sets the transition's type; with motion off both pages skip it. ---- */
+  /* ---- the door between pages. One door since 10 Nov 2026: whichever link you leave by, the airlock's leaves close and
+     open (door), the same leaves the age gate uses. Until then a door tile grew into the next page (hatch) and the way
+     back to the flight deck opened from the link you pressed (iris); both are still in the stylesheet, and the one line
+     marked below chooses among them again. The old page leaves the choice and where you pressed in session storage for
+     the new one, which sets the transition's type; with motion off both pages skip it. ---- */
   var lastLink = '', lastDoor = null, lastX = -1, lastY = -1;
   addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]');
@@ -40,9 +53,9 @@ document.documentElement.classList.add('js');
     var toUrl = e.activation && e.activation.entry ? e.activation.entry.url : lastLink;
     if (!toUrl) return;
     var to = new URL(toUrl, location.href);
-    /* a door tile grows into the next page's first room, unless the link lands further down that page (a hash), where the
-       room would be off screen: that goes through the airlock */
-    var kind = lastDoor && !isHome(to) && !to.hash ? 'hatch' : isHome(to) ? 'iris' : 'door';
+    /* one door for every way between pages. The three-way choice it replaced, to put back in this line's place:
+       lastDoor && !isHome(to) && !to.hash ? 'hatch' : isHome(to) ? 'iris' : 'door'   (and 'iris' for home in pagereveal below) */
+    var kind = 'door';
     try { sessionStorage.setItem('sw-vt', lastX + ',' + lastY + ',' + kind); } catch (err) { /* then the new page decides alone */ }
     if (kind === 'hatch') {
       var tile = lastDoor.querySelector('.door__frame') || document.querySelector('a.door[href$="' + slug(to) + '"] .door__frame');
@@ -64,7 +77,7 @@ document.documentElement.classList.add('js');
     try { note = sessionStorage.getItem('sw-vt') || ''; sessionStorage.removeItem('sw-vt'); } catch (err) { note = ''; }
     var parts = note.split(',');
     var kind = parts[2];
-    if (kind !== 'hatch' && kind !== 'iris' && kind !== 'door') kind = isHome(new URL(location.href)) ? 'iris' : 'door';
+    if (kind !== 'hatch' && kind !== 'iris' && kind !== 'door') kind = 'door';   /* no note from the old page (a typed address, another site): the one door */
     vt.types.add(kind);
     html.classList.add('vt');
     html.classList.add('vt-new');
