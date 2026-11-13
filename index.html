@@ -2,448 +2,135 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Space Weed | Flash Frozen Cured Cannabis Flower</title>
-<meta name="description" content="Frozen within an hour of harvest, then dried under vacuum, so a gram fills the jar like two. 21+.">
+<meta name="description" content="Frozen within an hour of harvest, then dried under vacuum, so a gram fills the jar like two. Space Weed flower, at licensed dispensaries. 21+.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#04070C">
+<meta name="format-detection" content="telephone=no">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
-<link rel="canonical" href="https://workflo17.github.io/spaceweed-site/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Space Weed | Flash Frozen Cured Cannabis Flower">
-<meta property="og:description" content="Frozen within an hour of harvest, then dried under vacuum, so a gram fills the jar like two. 21+.">
+<meta property="og:description" content="Frozen within an hour of harvest, then dried under vacuum, so a gram fills the jar like two. Space Weed flower, at licensed dispensaries. 21+.">
 <meta property="og:image" content="https://workflo17.github.io/spaceweed-site/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/archivo.v2.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/clip/aurora-poster-960.jpg" imagesrcset="assets/clip/aurora-poster-960.jpg 960w, assets/clip/aurora-poster.jpg 1920w" imagesizes="100vw" fetchpriority="high"><link rel="preload" as="image" href="assets/img/bud-macro-cut-800.webp" imagesrcset="assets/img/bud-macro-cut-600.webp 600w, assets/img/bud-macro-cut-800.webp 800w, assets/img/bud-macro-cut-1080.webp 1080w" imagesizes="(min-width: 960px) 52vw, 74vw" type="image/webp">
-<link rel="preload" as="image" href="assets/img/shell-flight-tall-900.webp" media="(max-aspect-ratio: 1/1)" type="image/webp" fetchpriority="high">
-<link rel="preload" as="image" href="assets/img/shell-flight-1280.webp" media="(min-aspect-ratio: 1/1) and (max-width: 1280px)" type="image/webp" fetchpriority="high">
-<link rel="preload" as="image" href="assets/img/shell-flight-1920.webp" media="(min-aspect-ratio: 1/1) and (min-width: 1281px)" type="image/webp" fetchpriority="high">
-<link rel="expect" href="#vt-ready" blocking="render">
-<link rel="stylesheet" href="assets/site.v1.css">
-<link rel="stylesheet" href="assets/ship.v1.css">
-<link rel="stylesheet" href="assets/line.v1.css">
+<link rel="stylesheet" href="assets/board.v1.css">
+<link rel="stylesheet" href="assets/board-room.v1.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<script src="assets/boot.v1.js"></script>
+<script src="assets/board-boot.v1.js"></script>
 </head>
-<body class="page-home">
-
-
-<div class="grain" aria-hidden="true"></div>
-<div class="progress" aria-hidden="true"></div>
-<div class="hud" aria-hidden="true"><span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span><span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span></div>
-<div class="airlock" aria-hidden="true"><i class="airlock__l"><span class="airlock__frost"></span><span class="airlock__tag">Airlock · cycling</span></i><i class="airlock__r"><span class="airlock__frost"></span><span class="airlock__tag">21+</span></i></div>
-
+<body class="page-room">
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-q" aria-describedby="gate-legal">
-  <div class="gate__scrim" aria-hidden="true"></div>
+  <div class="space" aria-hidden="true">
+    <canvas class="space__stars"></canvas>
+    <div class="space__twinkles"></div>
+    <div class="space__comets"></div>
+    <div class="space__ship"><img src="assets/board/ship-cut.webp" width="1086" height="418" alt="" decoding="async" draggable="false"></div>
+    <div class="space__beam"></div>
+    <div class="space__astro"><img class="space__loop" src="assets/board/astro-still.webp" data-loop="assets/board/astro-float.webp" width="241" height="394" alt="" fetchpriority="high" draggable="false"></div>
+    <div class="space__flash"></div>
+  </div>
+  <div class="gate__shade" aria-hidden="true"></div>
   <div class="gate__panel">
-    <span class="plate__c"></span>
-    <p class="tag tag--ice gate__hail">At the airlock · <span translate="no">Space&nbsp;Weed</span></p>
-    <picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px"><img class="gate__mark" src="assets/img/wordmark-white-300.png" alt="Space Weed" width="600" height="370"></picture>
-    <p class="gate__invite">This ship carries adults only.</p>
-    <h2 class="gate__q" id="gate-q">Have you existed on this Earth for 21+ years?</h2>
-    <div class="gate__buttons">
-      <button class="button" type="button" data-gate="yes"><span class="button__in">Yes, I’m 21&nbsp;or older</span></button>
-      <button class="button button--quiet" type="button" data-gate="no"><span class="button__in">No</span></button>
-    </div>
-    <p class="gate__legal" id="gate-legal">For use only by adults 21&nbsp;years of age and older. Keep out of reach of children.</p>
-    <div class="gate__denied" hidden>
-      <p>You must be 21&nbsp;or older to visit this site.</p>
-      <button class="textlink gate__back" type="button" data-gate="back">Back to the question</button>
-    </div>
-  </div>
-  <p class="gate__status" aria-hidden="true">Earth from lunar orbit · NASA LRO</p>
-</div>
-
-<dialog class="comms" id="comms" aria-labelledby="comms-title">
-  <form class="form plate" data-mailto="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain">
-  <span class="plate__c"></span>
-  <div class="comms__bar"><p class="tag tag--ice">Mission Control</p><button class="textlink comms__close" type="button" data-comms-close>Close</button></div>
-  <h2 class="sub comms__title" id="comms-title" tabindex="-1">Contact Us.</h2>
-  <div class="form__pair">
-    <div class="form__row">
-      <label for="d-email">Email<span aria-hidden="true">*</span><span class="sr"> (required)</span></label>
-      <input id="d-email" name="email" type="email" autocomplete="email" spellcheck="false" required>
-    </div>
-    <div class="form__row">
-      <label for="d-phone">Phone</label>
-      <input id="d-phone" name="phone" type="tel" autocomplete="tel">
-    </div>
-  </div>
-  <div class="form__pair">
-    <div class="form__row">
-      <label for="d-first">First name</label>
-      <input id="d-first" name="first" type="text" autocomplete="given-name" spellcheck="false">
-    </div>
-    <div class="form__row">
-      <label for="d-last">Last name</label>
-      <input id="d-last" name="last" type="text" autocomplete="family-name" spellcheck="false">
-    </div>
-  </div>
-  <fieldset class="form__set">
-    <legend class="form__legend">How can we help?</legend>
-    <label class="form__opt" for="d-about-budtender"><input id="d-about-budtender" name="about" type="checkbox" value="Budtender or dispensary"><span>I’m a budtender or a dispensary!</span></label>
-    <label class="form__opt" for="d-about-licensing"><input id="d-about-licensing" name="about" type="checkbox" value="Licensing the process"><span>Interested in licensing Space Weed/CannaGenesis technology (i.e. grower or producer!)</span></label>
-  </fieldset>
-  <div class="form__row">
-    <label for="d-message">Something else? Send us a message and one of our Space Cadets will get back to you in an intergalactic minute!</label>
-    <textarea id="d-message" name="message" autocomplete="off"></textarea>
-  </div>
-  <button class="button" type="submit"><span class="button__in">Open an email to Mission Control</span></button>
-  <p class="small form__note">The button opens the message in your own mail app; nothing is sent from this page. If nothing opens, write to <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a>.</p>
-  <p class="small form__status" data-form-note role="status"></p>
-</form>
-</dialog>
-<dialog class="comms comms--dossier" id="dossier" aria-labelledby="dossier-title" aria-describedby="dossier-sub" data-dossier-auto>
-  <div class="dossier plate">
-  <span class="plate__c"></span>
-  <div class="comms__bar">
-    <p class="tag tag--ice">Welcome aboard · File 001</p>
-    <button class="textlink comms__close" type="button" data-dossier-close>Close</button>
-  </div>
-  <form class="form dossier__form" data-signup="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" novalidate>
-    <div class="dossier__brief">
-      <span class="dossier__stamp" aria-hidden="true"><b class="dossier__st dossier__st--was">Classified</b><b class="dossier__st dossier__st--now">Declassified</b></span>
-      <h2 class="sub dossier__title" id="dossier-title" tabindex="-1">Join as a cadet.</h2>
-      <p class="dossier__sub" id="dossier-sub">Cadets get the classified files: science from the lab, and what is next on the ship. One email a month to start. Open to anyone 21&nbsp;or older.</p>
-      <p class="tag dossier__in">What is in the file</p>
-      <ul class="dossier__list">
-        <li class="redact"><span class="mono">Jar science</span> One fact about the process, explained plainly.</li>
-        <li class="redact"><span class="mono">From the lab</span> One detail, kept short.</li>
-        <li class="redact"><span class="mono">Space log</span> Notes from the ship, and what comes next.</li>
-        <li class="redact"><span class="mono">Strain log</span> One strain at a time.</li>
-      </ul>
-    </div>
-    <div class="dossier__fields">
-      <div class="form__row">
-        <label for="s-email">Email<span aria-hidden="true">*</span><span class="sr"> (required)</span></label>
-        <input id="s-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required aria-describedby="s-email-err">
-        <p class="form__err" id="s-email-err" hidden></p>
+    <div class="gate__ask">
+      <div class="gate__top">
+        <p class="tag tag--ice">Incoming hail · <span translate="no">Space&nbsp;Weed</span></p>
+        <img class="gate__mark" src="assets/img/wordmark-white-300.webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="144px" width="600" height="370" alt="Space Weed">
       </div>
-      <div class="form__row">
-        <label for="s-first">First name <span class="dossier__aside">(optional)</span></label>
-        <input id="s-first" name="first" type="text" autocomplete="given-name" spellcheck="false">
-      </div>
-      <fieldset class="form__set" aria-describedby="s-about-err">
-        <legend class="form__legend">What brings you aboard? <span class="dossier__aside">Tick at least one.</span></legend>
-        <label class="form__opt" for="s-about-cadet"><input id="s-about-cadet" name="about" type="checkbox" value="Cadet"><span>I’m joining as a cadet</span></label>
-        <label class="form__opt" for="s-about-budtender"><input id="s-about-budtender" name="about" type="checkbox" value="Budtender or dispensary"><span>I’m a budtender or a dispensary!</span></label>
-        <label class="form__opt" for="s-about-licensing"><input id="s-about-licensing" name="about" type="checkbox" value="Licensing the process"><span>Interested in licensing the process (grower or producer)</span></label>
-        <p class="form__err" id="s-about-err" hidden></p>
-      </fieldset>
-      <div class="dossier__age">
-        <label class="form__opt" for="s-age"><input id="s-age" name="age" type="checkbox" value="21+" required autocomplete="off" aria-describedby="s-age-err"><span>I confirm I am 21&nbsp;or older.<span aria-hidden="true">*</span><span class="sr"> (required)</span></span></label>
-        <p class="form__err" id="s-age-err" hidden></p>
-      </div>
-      <button class="button" type="submit"><span class="button__in">Open an email to request access</span></button>
-      <p class="small form__status" data-signup-note role="status"></p>
+      <p class="gate__invite">Permission to come aboard? This ship carries adults only.</p>
+      <h2 class="gate__q" id="gate-q" tabindex="-1">Have you existed on this Earth for 21+ years?</h2>
     </div>
-    <div class="dossier__foot">
-      <p class="small">Joining means <span translate="no">Space&nbsp;Weed</span> may email you at this address. Every email will have an unsubscribe link. <span aria-hidden="true">* Required.</span></p>
-      <p class="small form__note">On this mockup the button opens your own mail app with your request filled in. Nothing is sent from this page, and nobody is added to a list. If nothing opens, write to <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a>.</p>
-      <button class="textlink dossier__switch" type="button" data-dossier-switch>Prefer to write to us? Open Mission Control.</button>
+    <div class="gate__act">
+      <div class="gate__buttons">
+        <button class="button" type="button" data-gate="yes">Yes, I’m 21&nbsp;or older</button>
+        <button class="button button--quiet" type="button" data-gate="no">No</button>
+      </div>
+      <div class="gate__denied" hidden>
+        <p tabindex="-1">You must be 21&nbsp;or older to visit this site.</p>
+        <button class="textlink" type="button" data-gate="back">Back to the question</button>
+      </div>
+      <p class="gate__legal" id="gate-legal">For use only by adults 21&nbsp;years of age and older. Keep out of reach of children.</p>
     </div>
-  </form>
-</div>
-</dialog>
-<aside class="dossiertab plate" id="dossiertab" aria-label="Ship’s file" hidden><span class="plate__c"></span><button class="dossiertab__open" type="button" data-dossier-open><span class="dossiertab__chip">File 001</span> Join as a cadet</button><button class="dossiertab__close" type="button" aria-label="Close the file notice">Close</button></aside>
-
-<div class="deck" aria-hidden="true">
-  <span class="deck__item deck__item--name"><span translate="no">Space&nbsp;Weed</span> · <span id="deck-name">Flight deck</span></span>
-  <span class="deck__item deck__item--where">Deck <span id="deck-where">01</span></span>
-  <span class="deck__item">Voyage <span class="deck__num" id="deck-voyage">00</span>%</span>
-  <span class="deck__item deck__item--stage">Stage <span id="deck-stage">--</span></span>
-  <span class="deck__item deck__item--utc">UTC <span id="deck-utc">--:--</span></span>
-  <span class="deck__item deck__item--age">21+</span>
-  <span class="deck__led"></span>
+  </div>
 </div>
 <header class="hdr">
-<div class="top">
   <a class="skip" href="#main">Skip to content</a>
-  <a class="mark" href="index.html"><picture><source type="image/webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="78px"><img src="assets/img/wordmark-white-300.png" width="600" height="370" alt="Space Weed, home"></picture></a>
-  <nav class="links" id="nav" popover aria-label="Main">
-    <button class="menu-close" type="button" commandfor="nav" command="hide-popover">Close</button>
-    <a href="process.html" >Learn</a>
-    <a href="products.html" >Products</a>
-    <a href="partner.html" >Partner</a>
-    <a href="contact.html"  data-comms>Mission Control</a>
-    <a class="links__shop" href="https://shopspaceweed.com/">Shop<span class="sr"> (a separate site)</span></a>
-    <button class="motion-btn js-only" type="button" aria-pressed="true">Motion: on</button>
-  </nav>
-  <div class="top__right">
-    <span class="top__age" aria-hidden="true">21+</span>
-    <button class="motion-btn js-only" type="button" aria-pressed="true">Motion: on</button>
-    <a class="button button--quiet top__action" href="https://shopspaceweed.com/"><span class="button__in">Shop<span class="sr"> (a separate site)</span></span></a>
-    <button class="menu-btn" type="button" commandfor="nav" command="toggle-popover" aria-controls="nav" aria-expanded="false">Menu</button>
+  <a class="mark" href="index.html" aria-current="page"><img src="assets/img/wordmark-white-300.webp" srcset="assets/img/wordmark-white-300.webp 300w, assets/img/wordmark-white-600.webp 600w" sizes="84px" width="600" height="370" alt="Space Weed, home"></a>
+  <div class="hdr__right">
+    <a class="hdr__merch" href="https://shopspaceweed.com/">Shop<span class="vh"> (a separate site)</span></a>
+    <button class="age" type="button" data-again aria-label="21+ · show the age check again">21+</button>
   </div>
-</div>
 </header>
-<div class="reticle" aria-hidden="true"></div>
-<nav class="scope" id="scope" aria-label="Page map"></nav>
-
 <main id="main" tabindex="-1">
-<noscript><p class="age wrap noscript-age">This site is for adults 21&nbsp;years of age and older. Keep out of reach of children.</p></noscript>
-
-<section class="room room--bridge hero" id="bridge" data-deck="Flight deck" aria-labelledby="hero-title">
-  <div class="room__window hero__sky" aria-hidden="true">
-    <img src="assets/clip/aurora-poster-960.jpg" srcset="assets/clip/aurora-poster-960.jpg 960w, assets/clip/aurora-poster.jpg 1920w" sizes="100vw" width="1920" height="1080" alt="" fetchpriority="high" decoding="async">
-    <video data-sky muted loop playsinline preload="none" poster="assets/clip/aurora-poster-960.jpg" width="1920" height="1080" tabindex="-1">
-      <source src="assets/clip/aurora.webm" type="video/webm">
-      <source src="assets/clip/aurora.mp4" type="video/mp4">
-    </video>
-    <span class="fg fg--wing"><picture><source type="image/webp" srcset="assets/img/fg-wing-640.webp 640w, assets/img/fg-wing-914.webp 914w" sizes="(min-width: 600px) 60vw, 80vw"><img src="assets/img/fg-wing-914.png" srcset="assets/img/fg-wing-640.png 640w, assets/img/fg-wing-914.png 914w" sizes="(min-width: 600px) 60vw, 80vw" width="914" height="550" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-  </div>
-  <p class="room__label" aria-hidden="true">Window 01 · forward · aurora australis from the ISS, 17 Aug 2022 · NASA</p>
-  <figure class="hero__pic">
-    <picture>
-      <source type="image/webp" srcset="assets/img/bud-macro-cut-600.webp 600w, assets/img/bud-macro-cut-800.webp 800w, assets/img/bud-macro-cut-1080.webp 1080w" sizes="(min-width: 960px) 52vw, 74vw">
-      <img src="assets/img/bud-macro-cut-1080.png" srcset="assets/img/bud-macro-cut-600.png 600w, assets/img/bud-macro-cut-800.png 800w, assets/img/bud-macro-cut-1080.png 1080w" sizes="(min-width: 960px) 52vw, 74vw" width="1080" height="1080" alt="One Space Weed bud in close-up: pale green, covered in fine hairs, purple at the leaf tips, in front of the aurora.">
-    </picture>
-    <span class="lock" aria-hidden="true"><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><i class="lock__c"></i><span class="lock__tag tag tag--ice">Object · <span translate="no">Space&nbsp;Weed</span> flower · Flash&nbsp;Frozen&nbsp;Cured</span></span>
-  </figure>
-  <i class="shell shell--flight" aria-hidden="true"></i>
-  <div class="hero__text room__content plate">
-    <span class="plate__c"></span>
-    <p class="tag tag--ice hero__tag" data-type>Flight deck · welcome aboard</p>
-    <h1 class="display hero__title" id="hero-title"><span class="line line--1 hero__aside"><span><span translate="no">Space&nbsp;Weed</span> is different because it’s</span></span> <span class="line line--2 hero__key"><span>Flash&nbsp;Frozen&nbsp;Cured</span></span> <span class="line line--3 hero__aside"><span>to preserve cannabis in its freshest state.</span></span></h1>
-    <p class="lead hero__lede">We freeze flower within an hour of harvest and dry it under vacuum, so a gram fills the jar like two.</p>
-    <p class="age hero__age">For adults 21+.</p>
-    <div class="actions">
-      <a class="button" href="https://shopspaceweed.com/"><span class="button__in">Shop<span class="sr"> (a separate site)</span></span></a>
-      <a class="textlink" href="#learn">Walk the ship</a>
+<section class="room" aria-labelledby="room-title">
+  <div class="room__view">
+    <div class="room__stage">
+      <img class="room__img" src="assets/board/room-wide-1600.webp" srcset="assets/board/room-wide-1100.webp 1100w, assets/board/room-wide-1600.webp 1600w, assets/board/room-wide-2400.webp 2400w" sizes="(max-width: 999px) 1440px, (max-aspect-ratio: 6/5) 1440px, 100vw" width="2400" height="1340" alt="" draggable="false">
+      <div class="bud" aria-hidden="true"><img src="assets/board/bud-room-360.webp" srcset="assets/board/bud-room-360.webp 360w, assets/board/bud-room-720.webp 720w" sizes="(max-width: 999px) 140px, 9vw" width="720" height="720" alt="" decoding="async" draggable="false"></div>
+      <nav class="doors" aria-label="Doors">
+        <a class="door door--1" href="process.html" draggable="false"><span class="door__hit" aria-hidden="true"></span><span class="door__sign">Learn</span></a>
+        <a class="door door--2" href="products.html" draggable="false"><span class="door__hit" aria-hidden="true"></span><span class="door__sign">Products</span></a>
+        <a class="door door--3" href="partner.html" draggable="false"><span class="door__hit" aria-hidden="true"></span><span class="door__sign">Partner</span></a>
+        <a class="door door--4 door--amber" href="classified.html" draggable="false"><span class="door__hit" aria-hidden="true"></span><span class="door__sign">Classified</span></a>
+        <a class="door door--5" href="blog.html" draggable="false"><span class="door__hit" aria-hidden="true"></span><span class="door__sign">Blog</span></a>
+        <a class="door door--6" href="contact.html" draggable="false"><span class="door__hit" aria-hidden="true"></span><span class="door__sign">Mission Control</span></a>
+      </nav>
     </div>
   </div>
-</section>
-<i id="vt-ready" hidden></i>
-
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 02</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Learn</span></div>
-<section class="room room--engine" id="learn" data-deck="Learn" aria-labelledby="learn-title">
-  <div class="room__window" aria-hidden="true">
-    <img src="assets/img/milky-way-1200.webp" srcset="assets/img/milky-tall-760.webp 760w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" sizes="100vw" width="2400" height="1200" alt="" loading="lazy" decoding="async">
-    <span class="nugs"><img class="nug nug--8" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="4vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--7" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="5vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--6" src="assets/img/nug-c-480.webp" srcset="assets/img/nug-c-280.webp 280w, assets/img/nug-c-480.webp 480w, assets/img/nug-c-900.webp 696w" sizes="12vw" alt="" width="696" height="553" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--5" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="12vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--4" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="(max-aspect-ratio: 1/1) 16vw, 9vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--3" src="assets/img/nug-c-480.webp" srcset="assets/img/nug-c-280.webp 280w, assets/img/nug-c-480.webp 480w, assets/img/nug-c-900.webp 696w" sizes="(max-aspect-ratio: 1/1) 26vw, 15vw" alt="" width="696" height="553" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--2" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="(max-aspect-ratio: 1/1) 26vw, 15vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--1" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="(max-aspect-ratio: 1/1) 40vw, 23vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"></span>
-    <i class="shell shell--engine"></i>
-  </div>
-  <p class="room__label" aria-hidden="true">Window 02 · <span translate="no">Space&nbsp;Weed</span> adrift in the Milky Way · ESO/S. Brunier</p>
-  <div class="room__content engine">
-    <div class="engine__text" data-reveal>
-      <p class="tag tag--ice" data-type>Learn · the science behind <span translate="no">Space&nbsp;Weed</span></p>
-      <h2 class="head" id="learn-title" data-whole>What is Flash&nbsp;Frozen&nbsp;Cured?</h2>
-      <p class="lead">Flash&nbsp;Frozen&nbsp;Curing is a patented scientific method whereby fresh cannabis is flash frozen and then dried under vacuum using temperature, time, and pressure.</p>
-    </div>
-    <div class="engine__cards">
-      <p class="tag" data-type>Five things to know</p>
-      <ul class="benefits__list">
-  <li class="benefit" data-reveal>
-    <div class="plate benefit__plate">
-      <span class="plate__c"></span>
-      <h3 class="tag tag--ice">Fresher</h3>
-      <p class="sub">Just picked off the plant</p>
-      <p><span translate="no">Space&nbsp;Weed</span> is Flash&nbsp;Frozen&nbsp;Cured to preserve cannabis in its freshest state. <span translate="no">Space&nbsp;Weed</span> maintains its “just picked off the plant” qualities. This means bigger and greener buds.</p>
-    </div>
-  </li>
-  <li class="benefit" data-reveal>
-    <div class="plate benefit__plate">
-      <span class="plate__c"></span>
-      <h3 class="tag tag--ice">Cleaner</h3>
-      <p class="sub">Temperature, time and pressure</p>
-      <p>Flash&nbsp;Frozen&nbsp;Curing uses temperature, time and pressure.</p>
-    </div>
-  </li>
-  <li class="benefit" data-reveal>
-    <div class="plate benefit__plate">
-      <span class="plate__c"></span>
-      <h3 class="tag tag--ice">Smoother</h3>
-      <p class="sub">Moisture removed</p>
-      <p><span translate="no">Space&nbsp;Weed</span> burns smoother since the moisture is removed during Flash&nbsp;Frozen&nbsp;Curing.</p>
-    </div>
-  </li>
-  <li class="benefit" data-reveal>
-    <div class="plate benefit__plate">
-      <span class="plate__c"></span>
-      <h3 class="tag tag--ice">Softer</h3>
-      <p class="sub">No grinder needed</p>
-      <p><span translate="no">Space&nbsp;Weed</span> has a uniquely soft texture which makes it super easy and fun to break apart.</p>
-    </div>
-  </li>
-  <li class="benefit" data-reveal>
-    <div class="plate benefit__plate">
-      <span class="plate__c"></span>
-      <h3 class="tag tag--ice">More weed</h3>
-      <p class="sub">Less H<sub>2</sub>O content</p>
-      <p>Flash&nbsp;Frozen&nbsp;Curing removes excess moisture from the bud. Since water is so heavy, <span translate="no">Space&nbsp;Weed</span> has twice the volume of normal weed.</p>
-    </div>
-  </li>
-</ul>
-      <a class="door door--inline engine__door" href="process.html"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span></span><span class="door__name tag tag--ice">Enter · Learn</span></a>
-    </div>
+  <p class="pan-hint" aria-hidden="true"><svg width="18" height="12" viewBox="0 0 18 12" focusable="false"><path d="M1 6h16M5 2 1 6l4 4M13 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Swipe to look around</p>
+  <div class="deck">
+    <p class="tag tag--ice">Flight deck · welcome aboard</p>
+    <h1 class="display" id="room-title"><span class="room-title__small">Space Weed is different because it’s</span> <span class="room-title__big">Flash&nbsp;Frozen&nbsp;Cured</span> <span class="room-title__small">to preserve cannabis in its freshest state.</span></h1>
+    <noscript><p class="noscript-age">This site is for adults 21&nbsp;years of age and older. Keep out of reach of children.</p></noscript>
+    <nav class="doorlist" aria-label="Doors">
+      <ol>
+        <li><a href="process.html"><span class="mono">01</span><span>Learn</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="products.html"><span class="mono">02</span><span>Products</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="partner.html"><span class="mono">03</span><span>Partner</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="classified.html" class="is-amber"><span class="mono">04</span><span>Classified</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="blog.html"><span class="mono">05</span><span>Blog</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="contact.html"><span class="mono">06</span><span>Mission Control</span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+        <li><a href="https://shopspaceweed.com/"><span class="mono">07</span><span>Shop<span class="vh"> (a separate site)</span></span><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></li>
+      </ol>
+    </nav>
   </div>
 </section>
-
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 03</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Products</span></div>
-<section class="room room--cargo" id="cargo" data-deck="Products" aria-labelledby="proof-title">
-  <div class="room__window" aria-hidden="true">
-    <img src="assets/img/milky-way-1200.webp" srcset="assets/img/milky-tall-760.webp 760w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" sizes="100vw" width="2400" height="1200" alt="" loading="lazy" decoding="async">
-    <span class="nugs"><img class="nug nug--8" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="4vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--7" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="5vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--6" src="assets/img/nug-c-480.webp" srcset="assets/img/nug-c-280.webp 280w, assets/img/nug-c-480.webp 480w, assets/img/nug-c-900.webp 696w" sizes="12vw" alt="" width="696" height="553" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--5" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="12vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--4" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="(max-aspect-ratio: 1/1) 16vw, 9vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--3" src="assets/img/nug-c-480.webp" srcset="assets/img/nug-c-280.webp 280w, assets/img/nug-c-480.webp 480w, assets/img/nug-c-900.webp 696w" sizes="(max-aspect-ratio: 1/1) 26vw, 15vw" alt="" width="696" height="553" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--2" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="(max-aspect-ratio: 1/1) 26vw, 15vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--1" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="(max-aspect-ratio: 1/1) 40vw, 23vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"></span>
-    <i class="shell shell--cargo"></i>
-  </div>
-  <p class="room__label" aria-hidden="true">Window 03 · <span translate="no">Space&nbsp;Weed</span> adrift in the Milky Way · ESO/S. Brunier</p>
-  <div class="room__content cargo">
-    <div class="cargo__proof plate" data-reveal>
-      <span class="plate__c"></span>
-      <p class="tag" data-type>Products · the one thing</p>
-      <h2 class="head" id="proof-title">2x more bud. Same weight.</h2>
-      <p class="statement">Most cannabis is dried by hanging for weeks. <span translate="no">Space&nbsp;Weed</span> is frozen within an hour of harvest and dried under vacuum.</p>
-      <p>Flash&nbsp;Frozen&nbsp;Curing removes excess moisture from the bud. Since water is so heavy, <span translate="no">Space&nbsp;Weed</span> has twice the volume of hang-dried flower.</p>
-      <ul class="proof__facts" aria-label="The checked facts">
-        <li class="fact"><span class="fact__n mono">1 h</span><span class="tag">frozen within an hour</span></li>
-        <li class="fact"><span class="fact__n mono">80%</span><span class="tag">of the water gone</span></li>
-        <li class="fact"><span class="fact__n mono">2x</span><span class="tag">the volume in the jar</span></li>
-        <li class="fact"><span class="fact__n mono">4</span><span class="tag">issued US patents</span></li>
-      </ul>
-    </div>
-    <figure class="cargo__port">
-      <div class="port">
-        <span class="port__bolt"></span><span class="port__bolt"></span><span class="port__bolt"></span><span class="port__bolt"></span>
-        <div class="port__glass">
-          <picture>
-            <source type="image/webp" srcset="assets/img/same-weight-jars-800.webp">
-            <img src="assets/img/same-weight-jars-800.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Two clear jars side by side, holding the same weight of flower. The Space Weed jar on the left is full to the lid; the jar of conventionally cured flower on the right is well under half full.">
-          </picture>
-        </div>
-      </div>
-      <figcaption>The same weight in each jar. <span translate="no">Space&nbsp;Weed</span> on the left, conventionally cured on the right.</figcaption>
-    </figure>
-    <div class="cargo__hold" data-reveal>
-      <p class="tag" data-type>Products · what we make</p>
-      <ul class="cargo__bays" aria-label="What we make">
-        <li class="bay"><picture><source type="image/webp" srcset="assets/img/jar-open-700.webp"><img src="assets/img/jar-open-700.jpg" width="700" height="482" loading="lazy" decoding="async" alt="A closed Space Weed jar standing on white, with green buds inside it and beside it."></picture><span class="sub">Flower</span><span class="small"><span translate="no">Space&nbsp;Weed</span> is Flash&nbsp;Frozen&nbsp;Cured to preserve cannabis in its freshest state.</span></li>
-        <li class="bay"><picture><source type="image/webp" srcset="assets/img/pre-rolls-700.webp"><img src="assets/img/pre-rolls-700.jpg" width="700" height="700" loading="lazy" decoding="async" alt="Two Space Weed pre-rolls lying side by side, close up, with green flower visible at the ends."></picture><span class="sub">Space Cones</span><span class="small">Our space cones are filled with pre-ground flower. More flower, same size.</span></li>
-        <li class="bay"><picture><source type="image/webp" srcset="assets/img/capsule-700.webp"><img src="assets/img/capsule-700.jpg" width="700" height="700" loading="lazy" decoding="async" alt="One clear capsule filled with green Space Weed flower, lying on white."></picture><span class="sub">Space Capsules</span><span class="small">Our flower capsules come in two varieties: activated and raw. Both versions are free of chemical solvents, sugar, and other additives.</span></li>
-      </ul>
-      <a class="door door--inline cargo__door" href="products.html"><span class="door__frame"><span class="door__glass"></span><span class="door__seam"></span></span><span class="door__name tag tag--ice">Enter · Products</span></a>
-    </div>
-    <div class="cargo__notes plate" data-reveal>
-      <span class="plate__c"></span>
-      <p class="tag" data-type>Products · what you’ll notice</p>
-      <dl class="notes">
-        <div class="note"><dt class="sub">In the hand</dt><dd><span translate="no">Space&nbsp;Weed</span> has a uniquely soft texture which makes it super easy and fun to break apart. No grinder needed.</dd></div>
-        <div class="note"><dt class="sub">Keeping it</dt><dd>Keep it sealed, cool and dark. No humidity packs, no fussing.</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
-
-<div class="travel travel--walk travel--left" aria-hidden="true">
-  <div class="bulkhead travel__rule" aria-hidden="true"><span class="bulkhead__n">Deck 04</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Partner</span></div>
-    <div class="travel__stage">
-    <div class="pass">
-      <div class="pass__world">
-        <div class="pass__box pass__box--from pass--cargo">
-          <i class="pass__top"></i><i class="pass__bot"></i>
-          <div class="travel__a"><img class="travel__pic" src="assets/img/milky-way-1200.webp" srcset="assets/img/milky-tall-760.webp 760w, assets/img/milky-way-1200.webp 1200w, assets/img/milky-way-2400.webp 2400w" sizes="100vw" width="2400" height="1200" alt="" loading="lazy" decoding="async"><span class="nugs"><img class="nug nug--8" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="4vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--7" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="5vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--6" src="assets/img/nug-c-480.webp" srcset="assets/img/nug-c-280.webp 280w, assets/img/nug-c-480.webp 480w, assets/img/nug-c-900.webp 696w" sizes="12vw" alt="" width="696" height="553" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--5" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="12vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--4" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="(max-aspect-ratio: 1/1) 16vw, 9vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--3" src="assets/img/nug-c-480.webp" srcset="assets/img/nug-c-280.webp 280w, assets/img/nug-c-480.webp 480w, assets/img/nug-c-900.webp 696w" sizes="(max-aspect-ratio: 1/1) 26vw, 15vw" alt="" width="696" height="553" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--2" src="assets/img/nug-b-480.webp" srcset="assets/img/nug-b-280.webp 168w, assets/img/nug-b-480.webp 287w, assets/img/nug-b-900.webp 539w" sizes="(max-aspect-ratio: 1/1) 26vw, 15vw" alt="" width="539" height="900" loading="lazy" fetchpriority="low" decoding="async"><img class="nug nug--1" src="assets/img/nug-a-480.webp" srcset="assets/img/nug-a-280.webp 226w, assets/img/nug-a-480.webp 387w, assets/img/nug-a-900.webp 726w" sizes="(max-aspect-ratio: 1/1) 40vw, 23vw" alt="" width="726" height="900" loading="lazy" fetchpriority="low" decoding="async"></span><i class="shell shell--cargo"></i></div>
-          <div class="pass__wall"><span class="pass__door"><i class="pass__leaf pass__leaf--l"></i><i class="pass__leaf pass__leaf--r"></i></span><i class="pass__plate"></i><i class="pass__corner"></i></div>
-        </div>
-        <div class="pass__box pass__box--to pass--crew">
-          <i class="pass__top"></i><i class="pass__bot"></i><i class="pass__side pass__side--l"></i><i class="pass__side pass__side--r"></i>
-          <div class="travel__b"><div class="crew pass__crew"><i class="shell shell--crew"></i><ul class="hatches"><li class="hatch"><span class="door__frame"><span class="door__glass"></span></span></li><li class="hatch"><span class="door__frame"><span class="door__glass"></span></span></li><li class="hatch"><span class="door__frame"><span class="door__glass"></span></span></li></ul></div></div>
-        </div>
-      </div>
-    </div>
-    <span class="travel__tag tag">Deck 04 · <span class="travel__how">door · </span>Partner</span>
-  </div>
-</div>
-
-<section class="room room--crew" id="crew" data-deck="Partner" aria-labelledby="partner-title">
-  <div class="room__window" aria-hidden="true"></div>
-  <p class="room__label" aria-hidden="true">Deck 04 · the crew corridor</p>
-  <div class="room__content crew">
-    <i class="shell shell--crew" aria-hidden="true"></i>
-    <div class="roster__head" data-reveal>
-      <p class="tag" data-type>Partner · ready for liftoff?</p>
-      <h2 class="head" id="partner-title">There’s a seat on this ship.</h2>
-      <p class="lead">Whether you’re behind the counter or in front of it. Three hatches, one for each.</p>
-    </div>
-    <ul class="hatches" aria-label="Three ways in">
-      <li class="hatch">
-        <a class="door door--hatch" href="partner.html#stores-title"><span class="door__sign" aria-hidden="true">Hatch A1</span><span class="door__name roster__name">Dispensaries</span></a>
-        <span class="door__frame" aria-hidden="true"><span class="door__glass"></span></span>
-        <p data-name="Hatch A1 · Dispensaries"><span translate="no">Space&nbsp;Weed</span> is different. But why does that difference matter to you at the dispensary? Our flower turns fast.</p>
-      </li>
-      <li class="hatch">
-        <a class="door door--hatch" href="partner.html#budtenders-title"><span class="door__sign" aria-hidden="true">Hatch A2</span><span class="door__name roster__name">Budtenders</span></a>
-        <span class="door__frame" aria-hidden="true"><span class="door__glass"></span></span>
-        <p data-name="Hatch A2 · Budtenders">Here at the mothership we value budtenders! We invite you to complete our (very fast!) <span translate="no">Space&nbsp;Weed</span> Certification Program.</p>
-      </li>
-      <li class="hatch">
-        <a class="door door--hatch" href="partner.html#growers-title"><span class="door__sign" aria-hidden="true">Hatch A3</span><span class="door__name roster__name">Growers</span></a>
-        <span class="door__frame" aria-hidden="true"><span class="door__glass"></span></span>
-        <p data-name="Hatch A3 · Growers">We are currently in the process of partnering with select growers/producers interested in licensing our technology, the <span translate="no">Space&nbsp;Weed</span> brand or both!</p>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<div class="bulkhead" aria-hidden="true"><span class="bulkhead__n">Deck 05</span><span class="bulkhead__rule"></span><span class="bulkhead__name">Mission Control</span></div>
-<section class="room room--control" id="control" data-deck="Mission Control" aria-labelledby="control-title">
-  <div class="room__window" aria-hidden="true">
-    <img src="assets/img/earthrise-800.jpg" srcset="assets/img/earthrise-800.jpg 800w, assets/img/earthrise-1600.jpg 1600w" sizes="100vw" width="1600" height="1280" alt="" loading="lazy" decoding="async">
-    <span class="fg fg--mast fg--flip"><picture><source type="image/webp" srcset="assets/img/fg-mast-604.webp"><img src="assets/img/fg-mast-604.png" width="604" height="1293" alt="" loading="lazy" decoding="async"></picture></span>
-    <i class="shell shell--control"></i>
-  </div>
-  <p class="room__label" aria-hidden="true">Window 05 · Earthrise · NASA, 24 Dec 1968</p>
-  <div class="room__content control">
-    <div class="control__text" data-reveal>
-      <p class="tag" data-type>Mission Control · send us a transmission</p>
-      <h2 class="head" id="control-title">Contact Mission Control.</h2>
-      <p class="lead">Questions about stocking the flower, licensing the process, or the flower itself? Send us a message and one of our Space Cadets will get back to you in an intergalactic minute!</p>
-      <p class="age">For adults 21+.</p>
-      <a class="button" href="contact.html" data-comms><span class="button__in">Contact Mission Control</span></a>
-    </div>
-    <div class="control__console plate" data-reveal>
-      <span class="plate__c"></span>
-      <p class="tag" data-type>Mission Control · channels</p>
-      <dl class="control__rows">
-        <div class="control__row"><dt>Email</dt><dd><a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></dd></div>
-        <div class="control__row"><dt>About</dt><dd>Budtender or dispensary · Licensing the process · Something else</dd></div>
-        <div class="control__row"><dt>Reply</dt><dd>One of the crew will get back to you.</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
-
 </main>
-
 <footer class="foot">
   <div class="foot__grid">
-    <picture class="foot__mark"><source type="image/webp" srcset="assets/img/lockup-white-800.webp"><img src="assets/img/lockup-white-800.png" width="800" height="270" loading="lazy" decoding="async" alt="Space Weed, Flash Frozen Cured"></picture>
-    <div class="foot__text">
-      <p class="foot__rule">For use only by adults 21&nbsp;years of&nbsp;age and older. Keep out of reach of&nbsp;children.</p>
-      <p>Flash&nbsp;Frozen&nbsp;Cured is CannaGenesis’s process. <span translate="no">Space&nbsp;Weed USA</span>, est. 2015.</p>
-      <p><a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></p>
-      <p class="small">A proposal mockup, November 2026, not the live site. Some statements on it are waiting for the client’s confirmation.</p>
+    <div>
+      <img class="foot__mark" src="assets/img/lockup-white-800.webp" width="800" height="270" loading="lazy" decoding="async" alt="Space Weed, Flash Frozen Cured">
+      <div class="foot__text">
+        <p class="foot__rule">This product has intoxicating effects and may be habit forming. Cannabis can impair concentration, coordination, and judgment. Do not operate a vehicle or machinery under the influence of this drug. There may be health risks associated with consumption of this product. For use only by adults 21 and older. Keep out of the reach of children.</p>
+        <p>Flash&nbsp;Frozen&nbsp;Cured is CannaGenesis’s process. <span translate="no">Space&nbsp;Weed USA</span>, est. 2015.</p>
+        <p><a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a></p>
+        <p class="small">A proposal mockup, November 2026, not the live site. Some statements on it are waiting for the client’s confirmation.</p>
+      </div>
     </div>
     <ul class="foot__links">
       <li><a href="process.html">Learn</a></li>
       <li><a href="products.html">Products</a></li>
       <li><a href="partner.html">Partner</a></li>
-      <li><a href="contact.html" data-comms>Mission Control</a></li>
-      <li><a href="https://shopspaceweed.com/">Shop<span class="sr"> (a separate site)</span></a></li>
-      <li><a href="contact.html" data-dossier-open>Join the file (21+)</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Mission Control</a></li>
+      <li><a href="https://shopspaceweed.com/">Shop<span class="vh"> (a separate site)</span></a></li>
+      <li><a href="classified.html">Join as a cadet (21+)</a></li>
       <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="https://www.cannagenesis.com/">CannaGenesis<span class="sr"> (a separate site)</span></a></li>
+      <li><a href="https://www.cannagenesis.com/">CannaGenesis<span class="vh"> (a separate site)</span></a></li>
     </ul>
-    <div class="foot__credits">
-      <p class="foot__agency small">Ship pictures made with AI. Space pictures: NASA, ESA/Webb, ESO. Not affiliated with or endorsed by any space agency.</p>
-      <p class="foot__credit small">The Milky Way: <a href="https://www.eso.org/public/images/eso0932a/">ESO/S. Brunier</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, cropped and dimmed.</p>
-    </div>
+    <p class="foot__credits small">Ship pictures made with AI. Not affiliated with or endorsed by any space agency.</p>
   </div>
 </footer>
-
-<script src="assets/site.v1.js" defer></script>
-
+<div class="turn" aria-hidden="true">
+  <img src="assets/img/wordmark-white-300.webp" width="600" height="370" alt="">
+  <svg width="44" height="44" viewBox="0 0 44 44" focusable="false"><rect x="14" y="6" width="16" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 30a14 14 0 0 1 0-16M5 17l3-3 3 3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  <p>Turn your phone upright to board the ship.</p>
+</div>
+<script src="assets/board.v1.js" defer></script>
 </body>
 </html>

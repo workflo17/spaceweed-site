@@ -1,0 +1,7 @@
+/* Ours, on Angel's room only (linked after his board.v1.css by tools/board_sync.py). Melissa's headline (recording 0:50 to 1:28) is a
+   sentence where his was four words, and his rule keeps the room's heading on one line. Set as the site's hero set it: a small lead-in,
+   the process name large and on one line, a small tail; only the small parts wrap. */
+.deck h1.display { white-space: normal; max-width: min(36rem, 100%); }
+.deck .room-title__small { display: block; font-size: 0.42em; line-height: 1.25; letter-spacing: 0; font-stretch: 100%; font-weight: 400; }
+.deck .room-title__big { display: block; white-space: nowrap; margin: 0.08em 0 0.12em; }
+@media (max-width: 420px) { .deck .room-title__big { font-size: 0.92em; } }

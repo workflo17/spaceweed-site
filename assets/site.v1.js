@@ -29,7 +29,7 @@
     const behind = [...document.body.children].filter((el) => el !== gate && el.tagName !== 'SCRIPT');
     const write = () => {
       const stamp = String(Date.now());
-      try { localStorage.setItem('sw-age-ok', stamp); } catch { try { sessionStorage.setItem('sw-age-ok', stamp); } catch {  } }
+      try { sessionStorage.setItem('sw-age-ok', stamp); } catch {  }   // one visit, as Angel's gate keeps it (13 Nov 2026)
     };
     const q = gate.querySelector('.gate__q');
     const buttons = gate.querySelector('.gate__buttons');
