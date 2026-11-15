@@ -83,10 +83,14 @@ document.documentElement.classList.add('js');
   function isHome(u) { return /\/(index\.html)?$/.test(u.pathname); }
   function slug(u) { return u.pathname.split('/').pop() || 'index.html'; }
 
+  /* a phone (touch, no hover) gets no door between pages (13 Nov 2026, round four): the 880 ms airlock was a wait on every tap, and the
+     home page's own door list already goes straight through; the desktop keeps the one door */
+  var TOUCH = false;
+  try { TOUCH = matchMedia('(hover: none) and (pointer: coarse)').matches; } catch (err) { TOUCH = false; }
   addEventListener('pageswap', function (e) {
     var vt = e.viewTransition;
     if (!vt) return;
-    if (html.classList.contains('motion-off')) { vt.ready.catch(function () {}); vt.finished.catch(function () {}); vt.skipTransition(); return; }
+    if (html.classList.contains('motion-off') || TOUCH) { vt.ready.catch(function () {}); vt.finished.catch(function () {}); vt.skipTransition(); return; }
     var toUrl = e.activation && e.activation.entry ? e.activation.entry.url : lastLink;
     if (!toUrl) return;
     var to = new URL(toUrl, location.href);
@@ -113,7 +117,7 @@ document.documentElement.classList.add('js');
        page opts into these transitions too, and without this line the airlock's leaves would close and open after its flash) */
     /* a skipped transition rejects its promises: they are caught, or every skip logs an uncaught error */
     if (html.classList.contains('arrive-still')) { vt.ready.catch(function () {}); vt.finished.catch(function () {}); vt.skipTransition(); return; }
-    if (html.classList.contains('motion-off')) { vt.ready.catch(function () {}); vt.finished.catch(function () {}); vt.skipTransition(); return; }
+    if (html.classList.contains('motion-off') || TOUCH) { vt.ready.catch(function () {}); vt.finished.catch(function () {}); vt.skipTransition(); return; }
     var note = '';
     try { note = sessionStorage.getItem('sw-vt') || ''; sessionStorage.removeItem('sw-vt'); } catch (err) { note = ''; }
     var parts = note.split(',');

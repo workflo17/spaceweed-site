@@ -5,3 +5,118 @@
 .deck .room-title__small { display: block; font-size: 0.42em; line-height: 1.25; letter-spacing: 0; font-stretch: 100%; font-weight: 400; }
 .deck .room-title__big { display: block; white-space: nowrap; margin: 0.08em 0 0.12em; }
 @media (max-width: 420px) { .deck .room-title__big { font-size: 0.92em; } }
+
+/* ---- The dome looks out on space (Don, 13 Nov 2026: "the windows looking out to space more on the main page with floating nugs in
+   space"). Our copy of his room picture (assets/img/room-glass-*.webp, cut by tools/dome.py) has the dome's panes cut to clear glass, and
+   the stage's first child, .dome, stands behind it: a strip of the ESO Milky Way (the sky the cargo bay looks out on, so the ship has one
+   sky), eight of the client's own nugs crossing on slow arcs that follow the ring of windows, and a faint glass tint over both. Everything
+   is behind his picture, so the mullions, the ceiling and the doors are his pixels. The nugs move on the compositor only (transform); they
+   run once the room is up (.room.is-adrift, set by assets/board-room.v1.js) and pause while the tab is hidden; Motion off and reduced
+   motion leave each nug still at its own place on the arc (the static transform below is the same arc at --f). ---- */
+.room__stage .dome { position: absolute; left: 0; top: 0; width: 100%; height: 34%; overflow: clip; container-type: size; background: #02040a; pointer-events: none; -webkit-user-select: none; user-select: none; }
+.dome__sky { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 42%; }
+.dome .nugs { position: absolute; inset: 0; }
+/* each nug: --b its width in hundredths of the band's height, --x0/--x1 where it enters and leaves (hundredths of the band's width,
+   from the middle), --ya its height at the ends of the crossing and --yb in the middle (the windows sit high at the sides and low in
+   the middle), --r0/--r1 its turn, --t the crossing time, --f where along the crossing it starts */
+.dome .nug { --w: calc(var(--b) * 1cqh); --x: calc((var(--x0) + (var(--x1) - var(--x0)) * var(--f)) * 1cqw); --y: calc((var(--ya) + (var(--yb) - var(--ya)) * (4 * var(--f) - 4 * var(--f) * var(--f))) * 1cqh); --r: calc(var(--r0) + (var(--r1) - var(--r0)) * var(--f));
+  position: absolute; left: 50%; top: 0; width: var(--w); height: auto; max-width: none;
+  transform: translate(-50%, -50%) translate3d(var(--x), var(--y), 0) rotate(var(--r));
+  animation: dome-drift var(--t) linear calc(var(--t) * var(--f) * -1) infinite; animation-play-state: paused; }
+.room.is-adrift .dome .nug { animation-play-state: running; }
+.dome .nug:not(.is-in) { visibility: hidden; }   /* until its picture is in (assets/board-room.v1.js): a loading picture drew as an empty frame on a phone */
+@keyframes dome-drift {
+  0%   { transform: translate(-50%, -50%) translate3d(calc(var(--x0) * 1cqw), calc(var(--ya) * 1cqh), 0) rotate(var(--r0)); }
+  25%  { transform: translate(-50%, -50%) translate3d(calc((var(--x0) + (var(--x1) - var(--x0)) * 0.25) * 1cqw), calc((var(--ya) + (var(--yb) - var(--ya)) * 0.75) * 1cqh), 0) rotate(calc(var(--r0) + (var(--r1) - var(--r0)) * 0.25)); }
+  50%  { transform: translate(-50%, -50%) translate3d(calc((var(--x0) + var(--x1)) * 0.5cqw), calc(var(--yb) * 1cqh), 0) rotate(calc((var(--r0) + var(--r1)) * 0.5)); }
+  75%  { transform: translate(-50%, -50%) translate3d(calc((var(--x0) + (var(--x1) - var(--x0)) * 0.75) * 1cqw), calc((var(--ya) + (var(--yb) - var(--ya)) * 0.75) * 1cqh), 0) rotate(calc(var(--r0) + (var(--r1) - var(--r0)) * 0.75)); }
+  100% { transform: translate(-50%, -50%) translate3d(calc(var(--x1) * 1cqw), calc(var(--ya) * 1cqh), 0) rotate(var(--r1)); }
+}
+/* six, near ones large and quicker, far ones small, dimmer and slower; the three cut-outs take turns. Each crossing runs well past
+   the band's edges (90 hundredths each side), so a nug is out of sight for about two fifths of its round and three or four are in the
+   glass at a time, never the whole set; the starting places are spread so they do not bunch */
+.dome .nug--1 { --b: 40; --x0: 92; --x1: -92; --ya: 14; --yb: 70; --r0: 12deg; --r1: -72deg; --t: 150s; --f: 0.3; }
+.dome .nug--2 { --b: 28; --x0: -90; --x1: 90; --ya: 8; --yb: 62; --r0: -30deg; --r1: 84deg; --t: 184s; --f: 0.56; }
+.dome .nug--3 { --b: 32; --x0: 90; --x1: -90; --ya: 24; --yb: 78; --r0: 0deg; --r1: 118deg; --t: 168s; --f: 0.86; }
+.dome .nug--4 { --b: 15; --x0: -88; --x1: 88; --ya: 20; --yb: 66; --r0: 170deg; --r1: 292deg; --t: 210s; --f: 0.12; opacity: 0.9; }
+.dome .nug--5 { --b: 11; --x0: 88; --x1: -88; --ya: 6; --yb: 58; --r0: 80deg; --r1: -40deg; --t: 236s; --f: 0.44; opacity: 0.84; }
+.dome .nug--6 { --b: 8; --x0: -86; --x1: 86; --ya: 30; --yb: 74; --r0: 40deg; --r1: 162deg; --t: 262s; --f: 0.7; opacity: 0.78; }
+/* the flower is out in the dark, lit by nothing nearer than the sun: graded down so no drifting nug outshines the lit bud on the
+   pedestal, the far ones more (the critique of 13 Nov) */
+.dome .nug--1, .dome .nug--2, .dome .nug--3 { filter: brightness(0.8) saturate(0.88); }
+.dome .nug--4, .dome .nug--5, .dome .nug--6 { filter: brightness(0.66) saturate(0.82); }
+/* the glass: a cool tint that warms toward the sill, as his dusk did, over the sky and whatever drifts past; under his picture */
+.dome::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(155, 220, 247, 0.06), rgba(30, 48, 96, 0.1) 55%, rgba(160, 110, 170, 0.16)); }
+
+/* ---- The bud over the pedestal turns (Don, 14 Nov 2026: "a 3d model you can spin"). assets/bud3d.v1.js builds a solid from his
+   picture of the bud and draws it on a canvas laid over that picture, which stays underneath as the fallback. The canvas is a fifth
+   wider than his box so the body has room to swing, and clipped round so the pointer meets it only on the flower, not on the doors
+   behind the corners; it floats on his keyframes, started at the same point as his picture's. The hint shows on hover (a mouse), for
+   a few seconds after the body appears (a finger), and on keyboard focus, and never again once the visitor has turned it. ---- */
+.bud canvas { position: absolute; inset: -10%; width: 120%; height: 120%; z-index: 2; opacity: 0; pointer-events: none; display: block;
+  clip-path: circle(42% at 50% 50%); animation: drift 7s ease-in-out infinite alternate; outline: none; }
+/* a sideways finger on the flower turns it; an up-and-down one still scrolls the page, as anywhere else on the strip */
+.bud.is-turning canvas { opacity: 1; pointer-events: auto; touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; transition: opacity 400ms ease; }
+.bud.is-turning.is-held canvas { cursor: grabbing; }
+.bud.is-turning img { opacity: 0; transition: opacity 400ms ease 60ms; }
+.bud:has(canvas:focus-visible)::before { background: radial-gradient(closest-side, rgba(155, 220, 247, 0.6), rgba(155, 220, 247, 0)); animation: none; opacity: 1; }
+.bud__hint { position: absolute; left: 50%; top: 104%; z-index: 3; transform: translateX(-50%); padding: 0.32rem 0.6rem; background: rgba(4, 7, 12, 0.76);
+  border: 1px solid rgba(236, 241, 246, 0.18); color: var(--ink); font-family: var(--font-mono); font-size: 0.75rem; line-height: 1; letter-spacing: 0.06em;
+  text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 240ms ease; }
+.bud.is-turning.show-hint:not(.was-turned) .bud__hint, .bud.is-turning:not(.was-turned):has(canvas:focus-visible) .bud__hint { opacity: 1; }
+/* on hover the hint waits half a second, so a pointer passing over the flower on its way to a door never flashes it */
+.bud.is-turning:not(.was-turned):hover .bud__hint { opacity: 1; transition-delay: 450ms; }
+@media (max-width: 999px), (max-aspect-ratio: 6/5) { .bud__hint { font-size: 12px; top: 106%; } }
+
+/* ---- The doors open on hover and on focus, and show the room the visitor lands in (Don: "each door should open when hovered and show
+   a different room for each"). assets/board-room.v1.js builds the same two leaves his click builds (cut from the room picture) and sets
+   is-peek on the door; the leaves part with his timing, the view behind settles a step closer, and leaving closes them a little faster
+   than they opened. His is-opening (a click) keeps the leaves open and widens the glow. The view behind every door is ours: a tall cut of
+   that page's own room (tools/dome.py), in place of his door-N.webp (page screenshots; one carried a held word), for his click path too. */
+.door--1 .door__beyond { background-image: url(img/door-view-1-360.webp); }
+.door--2 .door__beyond { background-image: url(img/door-view-2-360.webp); }
+.door--3 .door__beyond { background-image: url(img/door-view-3-360.webp); }
+.door--4 .door__beyond { background-image: url(img/door-view-4-360.webp); }
+.door--5 .door__beyond { background-image: url(img/door-view-5-360.webp); }
+.door--6 .door__beyond { background-image: url(img/door-view-6-360.webp); }
+.door .door__leaf { transition: transform 420ms cubic-bezier(0.65, 0, 0.35, 1) 0ms; }
+/* a hover answers within the first frames: the leaves start after 40 ms on a decelerating curve (his click keeps his 110 ms and his easing) */
+.door.is-peek .door__leaf { transition: transform 480ms cubic-bezier(0.3, 0, 0.2, 1) 40ms; }
+.door.is-opening .door__leaf { transition: transform 540ms cubic-bezier(0.7, 0, 0.22, 1) 110ms; }
+.door.is-peek .door__leaf--l { transform: translateX(calc(var(--s) * -1)); }
+.door.is-peek .door__leaf--r { transform: translateX(calc(100% - var(--s))); }
+.door.is-peek .door__leaf::after { opacity: 1; }
+.door .door__beyond { transform: scale(1.08); transition: transform 420ms cubic-bezier(0.65, 0, 0.35, 1); }
+.door.is-peek .door__beyond, .door.is-opening .door__beyond { transform: none; transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1) 40ms; }
+.door.is-peek .door__hit::after { opacity: 1; }
+/* the doorway's light while a door stands open on hover: his glow was made for the second a click takes, and held it read as fog;
+   at about half it keeps the depth of the room behind (the critique of 13 Nov; his click path keeps his glow) */
+.door.is-peek:not(.is-opening) .door__beyond::before { opacity: 0.55; }
+
+/* ---- The phone (the strip): the room shows its windows too, so the sky and the flower are on the phone as well; the signs read at
+   12 px on a phone of ordinary height (and shrink with their plates on a short one, where the list below names every room anyway);
+   each row of the door list shows its room, since hover means nothing to a finger; the mono face is the system's, so JetBrains Mono
+   (29 KB) is never fetched for seven numerals and a hint. ---- */
+@media (max-width: 999px), (max-aspect-ratio: 6/5) {
+  :root { --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+  .room { --view-h: clamp(18rem, 56vh, 34rem); }
+  @supports (height: 1svh) { .room { --view-h: clamp(18rem, 56svh, 34rem); } }
+  .room__stage { --stage-h: calc(var(--view-h) / 0.8); margin-top: calc(var(--stage-h) * -0.02); }
+  .door__sign { font-size: clamp(10px, calc(var(--stage-w) * 0.0116), 12.5px); }
+  .doorlist a { grid-template-columns: 2.25rem 1fr auto auto; min-height: 4rem; }
+  .doorlist a > svg { grid-column: 4; }   /* the Shop row has no room to show: its arrow still stands in the arrow column */
+  .doorlist__pic { width: 4.5rem; height: 3rem; object-fit: cover; border: 1px solid var(--line); background: var(--panel); filter: brightness(1.2); }
+  .dome .nug--5, .dome .nug--6 { display: none; }
+  /* the strip opens on the middle of the room: the near nug starts in the panes a visitor sees before swiping, a second is on its way in */
+  .dome .nug--1 { --f: 0.56; --b: 46; }
+  .dome .nug--2 { --f: 0.18; }
+  .dome .nug--4 { --f: 0.45; }
+  /* the Classified page's ID card: its labels floored at 12 px (his floor is 11) */
+  .card__kind { font-size: max(12px, 3.4cqw); }
+  .card__meta { font-size: max(12px, 3.1cqw); }
+  .card__meta dt { font-size: max(12px, 0.86em); }
+}
+@media not ((max-width: 999px) or (max-aspect-ratio: 6/5)) { .doorlist__pic { display: none; } }
+/* the headline's big line is set not to wrap; under 333 px it ran past the edge by up to 12 px on its 2.2rem floor, so there it takes
+   the width the line has (Archivo 300 at width 112: the three words run about 9.7 em) */
+@media (max-width: 340px) { .deck .room-title__big { font-size: min(0.92em, calc((100vw - 2 * var(--margin)) / 9.7)); } }

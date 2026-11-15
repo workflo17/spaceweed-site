@@ -296,7 +296,7 @@
     const watch = () => {
       const io = new IntersectionObserver((entries) => {
         for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
+      }, { rootMargin: matchMedia('(hover: none) and (pointer: coarse)').matches ? '0px' : '0px 0px -12% 0px', threshold: 0.1 });   // a phone reveals at the edge, not 12% in
       const live = new Set();
       whenArrived(els, (el) => { live.add(el); io.observe(el); });
       let idle = 0;
@@ -312,7 +312,7 @@
   })();
   (() => {
     const gated = html.classList.contains('gate-pending');
-    if (!motionOn() || !(gated || CSS.supports('selector(html:active-view-transition-type(door))'))) return;
+    if (!motionOn() || matchMedia('(hover: none) and (pointer: coarse)').matches || !(gated || CSS.supports('selector(html:active-view-transition-type(door))'))) return;
     const warm = () => {
       const narrow = matchMedia('(max-width: 700px)').matches;
       [narrow ? 'assets/img/airlock-leaves-tall-768.webp' : 'assets/img/airlock-leaves-1280.webp', 'assets/img/port-glass-320.webp', 'assets/img/frost-640.webp']
@@ -1070,7 +1070,7 @@
     addEventListener('pageshow', (e) => { if (e.persisted) { frozen = true; clearTimeout(timer); } });
   })();
   (() => {
-    if (!motionOn() || !('IntersectionObserver' in window)) return;
+    if (!motionOn() || !('IntersectionObserver' in window) || matchMedia('(hover: none) and (pointer: coarse)').matches) return;
     const targets = [...document.querySelectorAll('main .head, main .statement')].filter((el) => !el.hasAttribute('data-whole') && !el.closest('.hero') && !el.closest('.intro') && el.getBoundingClientRect().top > innerHeight * 0.9);
     if (!targets.length) return;
     const load = (src) => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
