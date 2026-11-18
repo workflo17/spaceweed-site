@@ -1022,7 +1022,7 @@
         const first = (form.querySelector('#s-first')?.value || '').trim();
         const subject = `Space Weed signup: ${about.join(', ')}`;
         const body = ['Please add me to the Space Weed list.', '', 'I confirm I am 21 or older.', `Email: ${email.value.trim()}`, first ? `First name: ${first}` : null, `Options: ${about.join('; ')}`, '',
-          'Sent from the signup window on the site mockup. Nothing is added to a list until the launch site is live.'].filter((l) => l !== null).join('\r\n');   // CRLF, as section 9 (RFC 6068)
+          'Sent from the sign-up window on the site. Nothing is added to a list until the newsletter opens.'].filter((l) => l !== null).join('\r\n');   // CRLF, as section 9 (RFC 6068)
         location.href = `mailto:${form.dataset.signup}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Your mail app should have opened with your request filled in. Nothing has been sent yet: send it from there to join. If nothing opened, write to info@spaceweedusa.com with the subject Space Weed signup.';
         if (label) label.textContent = 'Open it again';

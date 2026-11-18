@@ -11,6 +11,11 @@ document.documentElement.classList.add('js');
   var ok = 0;
   try { ok = Number(sessionStorage.getItem('sw-age-ok') || 0); } catch (e) { ok = 0; }
   try { localStorage.removeItem('sw-age-ok'); } catch (e) { /* the old 30-day memory, retired */ }
+  /* a search or answer engine's crawler keeps no answer between pages, so the send-off to the gate page would hand it the home page for
+     every address and nothing else of the site could be indexed (the search plan of 9 Nov 2026 assumes the crawler reads the page). A
+     crawler is let straight through; people meet the gate exactly as before (16 Nov 2026). Taking these two lines out puts it back. */
+  var crawler = /Googlebot|Google-InspectionTool|GoogleOther|Storebot-Google|bingbot|DuckDuckBot|Applebot|OAI-SearchBot|ChatGPT-User|GPTBot|PerplexityBot|Perplexity-User|Claude-SearchBot|Claude-User|ClaudeBot|CCBot|YandexBot|Baiduspider|facebookexternalhit|Twitterbot|LinkedInBot|Slackbot/i.test(navigator.userAgent || '');
+  if (crawler) ok = 1;
   var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
   var reload = nav ? nav.type === 'reload' : !!(performance.navigation && performance.navigation.type === 1);
   /* ---- the age gate is Angel's (design/GATE-HANDOVER.md). A visitor with no answer is sent to the page that carries it before the first
