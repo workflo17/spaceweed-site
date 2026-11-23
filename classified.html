@@ -8,7 +8,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#04070C">
 <meta name="format-detection" content="telephone=no">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self' https://www.wixapis.com; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Classified | Space Weed">
 <meta property="og:description" content="Classified. Space Cadets only. Signing up makes you a Space Cadet and opens this room. For adults 21 and older.">
@@ -78,7 +78,7 @@
       <h1 class="display" id="cl-title">Classified. Space&nbsp;Cadets only.</h1>
       <p class="lead cl__lede">Signing up makes you a Space Cadet and opens this room.</p>
     </div>
-    <form class="form" id="signup" method="post" action="classified.html" aria-labelledby="signup-title">
+    <form class="form" id="signup" data-wix="{&quot;client&quot;:&quot;bbbf9130-57d1-458b-a731-259a27ccb1c9&quot;,&quot;form&quot;:&quot;c277c419-1383-4c76-a95f-aa4f57cc04aa&quot;,&quot;fields&quot;:{&quot;email&quot;:&quot;email_422f&quot;,&quot;first&quot;:&quot;first_name_79c3&quot;,&quot;age&quot;:&quot;form_field_51a9&quot;,&quot;subscribe&quot;:&quot;form_field_8d88&quot;,&quot;Cadet&quot;:&quot;form_field_487d&quot;,&quot;Budtender or dispensary&quot;:&quot;form_field_fba8&quot;,&quot;Licensing the process&quot;:&quot;form_field_390f&quot;}}" method="post" action="classified.html" aria-labelledby="signup-title">
       <div class="form__head">
         <h2 id="signup-title">Hear about new drops first.</h2>
         <p>A couple of emails a month at most: new strains and how the process works. For adults 21 and older.</p>
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-    <p class="mocknote">Sign-up opens soon: nothing is sent yet, and your answers stay in this browser.<button class="textlink" type="button" data-clear hidden>Clear them</button></p>
+    <p class="mocknote">Signing up sends your email address and first name to Space&nbsp;Weed’s mailing list, which is kept at Wix. One email will ask you to confirm. See the <a href="privacy.html">privacy page</a>. Your cadet card and its number stay in this browser.<button class="textlink" type="button" data-clear hidden>Clear them</button></p>
   </div>
   <article class="file" id="file" aria-labelledby="file-no">
     <p class="file__no"><span id="file-no">File 001</span><span class="file__stamp" data-locked>Classified</span><span class="file__stamp" data-open>Declassified</span></p>
@@ -160,6 +160,7 @@
   <p>Turn your phone upright to board the ship.</p>
 </div>
 <script src="assets/board.v1.js" defer></script>
+<script src="assets/cadet-wix.v1.js" defer></script>
 <script src="assets/cadet.v1.js" defer></script>
 </body>
 </html>

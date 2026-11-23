@@ -149,3 +149,8 @@
 .post__pic { display: grid; gap: 0.7rem; margin: 0 0 2rem; }
 .post__pic img { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--night); }
 .post__pic figcaption { font-size: 0.875rem; line-height: 1.5; color: var(--muted); }
+/* the Classified sign-up, sent to the Wix list (23 Nov 2026; assets/cadet-wix.v1.js adds these two elements to his form): a field
+   no person sees or reaches, and the line under the button that says what is happening. His own rules style the rest. */
+.cadet-trap { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.cadet-status:empty { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); }   /* empty, it is drawn but unseen, not display: none, so the first words put in it are announced */
+#signup[aria-busy="true"] .button { opacity: 0.6; cursor: progress; }
