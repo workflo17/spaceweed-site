@@ -7,7 +7,7 @@
 <meta name="description" content="How licensed growers, dispensaries and budtenders work with Space Weed, from licensing the Flash Frozen Cured process to carrying the flower.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#04070C">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self' https://www.wixapis.com; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
 <link rel="canonical" href="https://spaceweedusa.com/partner.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Partner with Space Weed: Growers and Dispensaries">
@@ -98,14 +98,14 @@
   <p class="small form__status" data-form-note role="status"></p>
 </form>
 </dialog>
-<dialog class="comms comms--dossier" id="dossier" aria-labelledby="dossier-title" aria-describedby="dossier-sub">
+<dialog class="comms comms--dossier" id="dossier" aria-labelledby="dossier-title" aria-describedby="dossier-sub" data-dossier-auto>
   <div class="dossier plate">
   <span class="plate__c"></span>
   <div class="comms__bar">
     <p class="tag tag--ice">Welcome aboard · File 001</p>
     <button class="textlink comms__close" type="button" data-dossier-close>Close</button>
   </div>
-  <form class="form dossier__form" data-signup="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" novalidate>
+  <form class="form dossier__form" data-signup="info@spaceweedusa.com" data-wix="{&quot;client&quot;:&quot;bbbf9130-57d1-458b-a731-259a27ccb1c9&quot;,&quot;form&quot;:&quot;c277c419-1383-4c76-a95f-aa4f57cc04aa&quot;,&quot;fields&quot;:{&quot;email&quot;:&quot;email_422f&quot;,&quot;first&quot;:&quot;first_name_79c3&quot;,&quot;age&quot;:&quot;form_field_51a9&quot;,&quot;subscribe&quot;:&quot;form_field_8d88&quot;,&quot;Cadet&quot;:&quot;form_field_487d&quot;,&quot;Budtender or dispensary&quot;:&quot;form_field_fba8&quot;,&quot;Licensing the process&quot;:&quot;form_field_390f&quot;}}" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" novalidate>
     <div class="dossier__brief">
       <span class="dossier__stamp" aria-hidden="true"><b class="dossier__st dossier__st--was">Classified</b><b class="dossier__st dossier__st--now">Declassified</b></span>
       <h2 class="sub dossier__title" id="dossier-title" tabindex="-1">Join as a cadet.</h2>
@@ -139,18 +139,19 @@
         <label class="form__opt" for="s-age"><input id="s-age" name="age" type="checkbox" value="21+" required autocomplete="off" aria-describedby="s-age-err"><span>I confirm I am 21&nbsp;or older.<span aria-hidden="true">*</span><span class="sr"> (required)</span></span></label>
         <p class="form__err" id="s-age-err" hidden></p>
       </div>
-      <button class="button" type="submit"><span class="button__in">Open an email to request access</span></button>
+      <div class="dossier__trap" aria-hidden="true"><label for="s-website">Website (leave this empty)</label><input id="s-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+      <button class="button" type="submit"><span class="button__in">Request access</span></button>
       <p class="small form__status" data-signup-note role="status"></p>
     </div>
     <div class="dossier__foot">
       <p class="small">Joining means <span translate="no">Space&nbsp;Weed</span> may email you at this address. Every email will have an unsubscribe link. <span aria-hidden="true">* Required.</span></p>
-      <p class="small form__note">The button opens your own mail app with your request filled in. Nothing is sent from this page, and nobody is added to a list. If nothing opens, write to <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a>.</p>
+      <p class="small form__note">We use your email only for <span translate="no">Space&nbsp;Weed</span> messages. You will get one email asking you to confirm. See the <a href="privacy.html">privacy page</a>.</p>
       <button class="textlink dossier__switch" type="button" data-dossier-switch>Prefer to write to us? Open Mission Control.</button>
     </div>
   </form>
 </div>
 </dialog>
-
+<aside class="dossiertab plate" id="dossiertab" aria-label="Ship’s file" hidden><span class="plate__c"></span><button class="dossiertab__open" type="button" data-dossier-open><span class="dossiertab__chip">File 001</span> Join as a cadet</button><button class="dossiertab__close" type="button" aria-label="Close the file notice">Close</button></aside>
 
 <div class="deck" aria-hidden="true">
   <span class="deck__item deck__item--name"><span translate="no">Space&nbsp;Weed</span> · <span id="deck-name">Partner</span></span>

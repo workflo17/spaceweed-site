@@ -997,6 +997,35 @@
       const err = { email: form.querySelector('#s-email-err'), about: form.querySelector('#s-about-err'), age: form.querySelector('#s-age-err') };
       const RX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       let tried = false;
+      let wix = null;
+      try { wix = form.dataset.wix ? JSON.parse(form.dataset.wix) : null; } catch { wix = null; }
+      const trap = form.querySelector('#s-website');
+      const firstLabel = label ? label.textContent : '';
+      let armedAt = 0;
+      let sending = false;
+      let sent = false;
+      form.addEventListener('focusin', () => { if (!armedAt) armedAt = Date.now(); });
+      const RECEIVED = 'Request received. An email is on its way to this address: confirm it to join. If it does not arrive, check your junk folder.';
+      const received = () => {
+        sent = true;
+        status.textContent = RECEIVED;
+        if (label) label.textContent = 'Request sent';
+        note('joined');
+        hideTab();
+      };
+      const post = async (values) => {
+        const API = 'https://www.wixapis.com';
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 15000);
+        try {
+          const tr = await fetch(`${API}/oauth2/token`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clientId: wix.client, grantType: 'anonymous' }), signal: ctl.signal });
+          if (!tr.ok) throw new Error(`token ${tr.status}`);
+          const token = (await tr.json()).access_token;
+          const r = await fetch(`${API}/form-submission-service/v4/submissions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: token },
+            body: JSON.stringify({ submission: { formId: wix.form, submissions: values } }), signal: ctl.signal });
+          if (!r.ok) throw new Error(`submit ${r.status}`);
+        } finally { clearTimeout(timer); }
+      };
       const check = () => {
         const bad = {};
         const v = email.value.trim();
@@ -1020,6 +1049,34 @@
         if (bad.age) { age.focus(); return; }
         const about = boxes.filter((b) => b.checked).map((b) => b.value);
         const first = (form.querySelector('#s-first')?.value || '').trim();
+        if (wix) {
+          if (sending) return;
+          if (sent) { status.textContent = RECEIVED; return; }
+          if (trap && trap.value) { received(); return; }
+          const f = wix.fields;
+          const values = { [f.email]: email.value.trim(), [f.age]: true, [f.subscribe]: true };
+          if (first) values[f.first] = first;
+          for (const a of about) if (f[a]) values[f[a]] = true;
+          sending = true;
+          form.setAttribute('aria-busy', 'true');
+          if (label) label.textContent = 'Sending…';
+          status.textContent = 'Sending your request…';
+          const wait = Math.max(0, 2000 - (Date.now() - (armedAt || Date.now())));
+          (async () => {
+            try {
+              if (wait) await new Promise((res) => setTimeout(res, wait));
+              await post(values);
+              received();
+            } catch {
+              status.textContent = 'That did not go through. Try again in a moment, or write to info@spaceweedusa.com.';
+              if (label) label.textContent = firstLabel;
+            } finally {
+              sending = false;
+              form.removeAttribute('aria-busy');
+            }
+          })();
+          return;
+        }
         const subject = `Space Weed signup: ${about.join(', ')}`;
         const body = ['Please add me to the Space Weed list.', '', 'I confirm I am 21 or older.', `Email: ${email.value.trim()}`, first ? `First name: ${first}` : null, `Options: ${about.join('; ')}`, '',
           'Sent from the sign-up window on the site. Nothing is added to a list until the newsletter opens.'].filter((l) => l !== null).join('\r\n');   // CRLF, as section 9 (RFC 6068)

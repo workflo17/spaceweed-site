@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy | Space Weed</title>
-<meta name="description" content="What this site stores in your browser, and what it does not collect. For adults 21+.">
+<meta name="description" content="What this site stores in your browser, and what it sends when you sign up. For adults 21+.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#04070C">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self' https://www.wixapis.com; form-action 'self' mailto:; base-uri 'self'; object-src 'none'">
 <link rel="canonical" href="https://spaceweedusa.com/privacy.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Privacy | Space Weed">
-<meta property="og:description" content="What this site stores in your browser, and what it does not collect. For adults 21+.">
+<meta property="og:description" content="What this site stores in your browser, and what it sends when you sign up. For adults 21+.">
 <meta property="og:image" content="https://spaceweedusa.com/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -104,7 +104,7 @@
     <p class="tag tag--ice">Welcome aboard · File 001</p>
     <button class="textlink comms__close" type="button" data-dossier-close>Close</button>
   </div>
-  <form class="form dossier__form" data-signup="info@spaceweedusa.com" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" novalidate>
+  <form class="form dossier__form" data-signup="info@spaceweedusa.com" data-wix="{&quot;client&quot;:&quot;bbbf9130-57d1-458b-a731-259a27ccb1c9&quot;,&quot;form&quot;:&quot;c277c419-1383-4c76-a95f-aa4f57cc04aa&quot;,&quot;fields&quot;:{&quot;email&quot;:&quot;email_422f&quot;,&quot;first&quot;:&quot;first_name_79c3&quot;,&quot;age&quot;:&quot;form_field_51a9&quot;,&quot;subscribe&quot;:&quot;form_field_8d88&quot;,&quot;Cadet&quot;:&quot;form_field_487d&quot;,&quot;Budtender or dispensary&quot;:&quot;form_field_fba8&quot;,&quot;Licensing the process&quot;:&quot;form_field_390f&quot;}}" method="post" action="mailto:info@spaceweedusa.com" enctype="text/plain" novalidate>
     <div class="dossier__brief">
       <span class="dossier__stamp" aria-hidden="true"><b class="dossier__st dossier__st--was">Classified</b><b class="dossier__st dossier__st--now">Declassified</b></span>
       <h2 class="sub dossier__title" id="dossier-title" tabindex="-1">Join as a cadet.</h2>
@@ -138,12 +138,13 @@
         <label class="form__opt" for="s-age"><input id="s-age" name="age" type="checkbox" value="21+" required autocomplete="off" aria-describedby="s-age-err"><span>I confirm I am 21&nbsp;or older.<span aria-hidden="true">*</span><span class="sr"> (required)</span></span></label>
         <p class="form__err" id="s-age-err" hidden></p>
       </div>
-      <button class="button" type="submit"><span class="button__in">Open an email to request access</span></button>
+      <div class="dossier__trap" aria-hidden="true"><label for="s-website">Website (leave this empty)</label><input id="s-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+      <button class="button" type="submit"><span class="button__in">Request access</span></button>
       <p class="small form__status" data-signup-note role="status"></p>
     </div>
     <div class="dossier__foot">
       <p class="small">Joining means <span translate="no">Space&nbsp;Weed</span> may email you at this address. Every email will have an unsubscribe link. <span aria-hidden="true">* Required.</span></p>
-      <p class="small form__note">The button opens your own mail app with your request filled in. Nothing is sent from this page, and nobody is added to a list. If nothing opens, write to <a href="mailto:info@spaceweedusa.com">info@spaceweedusa.com</a>.</p>
+      <p class="small form__note">We use your email only for <span translate="no">Space&nbsp;Weed</span> messages. You will get one email asking you to confirm. See the <a href="privacy.html">privacy page</a>.</p>
       <button class="textlink dossier__switch" type="button" data-dossier-switch>Prefer to write to us? Open Mission Control.</button>
     </div>
   </form>
@@ -194,7 +195,7 @@
   <p class="tag tag--ice intro__tag" data-type>What this site stores</p>
   <h1 class="display intro__title" id="intro-title">Privacy.</h1>
   <div class="intro__lede">
-    <p class="lead">This site does not collect personal information.</p>
+    <p class="lead">This site collects personal information only when you sign up.</p>
     <p class="age">For adults 21+.</p>
   </div>
 </section>
@@ -271,7 +272,7 @@
       <li class="run__word">
         <div class="run__plate">
           <h3 class="sub">Your email</h3>
-          <p>If you email info@spaceweedusa.com, your message is handled by the <span translate="no">Space&nbsp;Weed</span> team. The contact form (on the Contact page, at the foot of the Partner page, and in the window that Mission Control opens) and the sign-up window open your own mail app; they send nothing from here.</p>
+          <p>If you email info@spaceweedusa.com, your message is handled by the <span translate="no">Space&nbsp;Weed</span> team. The contact form (on the Contact page, at the foot of the Partner page, and in the window that Mission Control opens) opens your own mail app; it sends nothing from here. The sign-up window is the one thing that does. When you join, your email address, your first name if you give it, the boxes you tick and your confirmation that you are 21&nbsp;or older go to <span translate="no">Space&nbsp;Weed</span>’s mailing list, which is kept at Wix. Wix sends one email asking you to confirm, and every <span translate="no">Space&nbsp;Weed</span> email has an unsubscribe link.</p>
         </div>
       </li>
     </ol>
