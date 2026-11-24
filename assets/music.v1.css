@@ -1,0 +1,32 @@
+/* Space Weed music player. One small dock in the bottom-left corner: play/pause, the track name, and a next button
+   once there is more than one track. Off until the visitor turns it on. No inline styles (the site's CSP is style-src 'self'). */
+.swm{position:fixed;left:max(var(--margin,1rem),env(safe-area-inset-left,0px));bottom:max(var(--margin,1rem),env(safe-area-inset-bottom,0px));z-index:38;display:flex;align-items:center;gap:0.5rem;max-width:min(22rem,calc(100vw - 2 * var(--margin,1rem)));padding:0.375rem 0.75rem 0.375rem 0.375rem;background:color-mix(in oklab,var(--night,#0A1424) 88%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line,#22304A);border-radius:999px;color:var(--ink,#ECF1F6);font-family:var(--font-mono,"JetBrains Mono",Consolas,monospace);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;transition:border-color var(--t-hover,180ms) ease,opacity var(--t-ui,240ms) ease}
+.swm--lift{bottom:calc(max(var(--margin,1rem),env(safe-area-inset-bottom,0px)) + 4.25rem)}
+.swm.is-on{border-color:color-mix(in oklab,var(--ice,#9BDCF7) 55%,var(--line,#22304A))}
+.swm__btn{flex:none;display:grid;place-items:center;width:2.25rem;height:2.25rem;padding:0;border:0;border-radius:50%;background:var(--ice,#9BDCF7);color:var(--ice-ink,#04070C);cursor:pointer;transition:transform var(--t-press,140ms) ease,background var(--t-hover,180ms) ease}
+.swm__btn:hover{background:var(--frost,#DCEFF8)}
+.swm__btn:active{transform:scale(0.94)}
+.swm__btn:focus-visible,.swm__next:focus-visible{outline:2px solid var(--ice,#9BDCF7);outline-offset:3px}
+.swm__btn svg{width:0.95rem;height:0.95rem;fill:currentColor}
+.swm__btn .swm__i-pause{display:none}
+.swm.is-on .swm__btn .swm__i-play{display:none}
+.swm.is-on .swm__btn .swm__i-pause{display:block}
+.swm__meta{min-width:0;display:flex;align-items:center;gap:0.5rem}
+.swm__label{color:var(--muted,#9FADBD)}
+.swm__title{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.swm__bars{flex:none;display:flex;align-items:flex-end;gap:2px;width:14px;height:12px}
+.swm__bars i{display:block;width:2px;height:3px;background:var(--ice,#9BDCF7);border-radius:1px}
+.swm.is-on .swm__bars i{animation:swm-bar 900ms ease-in-out infinite alternate}
+.swm.is-on .swm__bars i:nth-child(2){animation-delay:-300ms}
+.swm.is-on .swm__bars i:nth-child(3){animation-delay:-600ms}
+.swm.is-on .swm__bars i:nth-child(4){animation-delay:-150ms}
+@keyframes swm-bar{0%{height:3px}100%{height:12px}}
+.swm__next{flex:none;display:none;place-items:center;width:1.75rem;height:1.75rem;padding:0;border:1px solid var(--line,#22304A);border-radius:50%;background:transparent;color:var(--ink,#ECF1F6);cursor:pointer}
+.swm--multi .swm__next{display:grid}
+.swm__next:hover{border-color:var(--ice,#9BDCF7)}
+.swm__next svg{width:0.7rem;height:0.7rem;fill:currentColor}
+.swm.is-blocked .swm__label::after{content:" · tap to resume"}
+.swm[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.swm.is-on .swm__bars i{animation:none;height:8px}}
+@media (max-width:480px){.swm__label{display:none}}
+@media print{.swm{display:none}}
