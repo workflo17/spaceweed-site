@@ -1,4 +1,4 @@
-/* The Space Weed budtender certification: Eric's ten questions from the "Toptender Quiz Copies" doc, word for word.
+/* The Space Weed budtender certification: Eric's questions from the "Toptender Quiz Copies" doc, word for word, except question 5, which Melissa asked to replace on 25 Nov (the 48-hour fact is from the same doc).
    To change a question, edit it here. "answer" is the position of the right option, counting from 0.
    The answer key is still to be confirmed by Eric or Melissa (the doc does not mark the answers).
    "hint" shows after a wrong pick; "nice" shows after the right one. Both use only facts from the same doc. */
@@ -32,11 +32,11 @@ window.SW_ACADEMY = [
     nice: 'Less water in the bud means it conducts less heat.'
   },
   {
-    q: 'Flash Frozen Curing is a more expensive way to cure cannabis.',
-    options: ['True', 'False'],
+    q: 'How soon after harvest can Flash Frozen Cured flower be dried and ready?',
+    options: ['Within 48 hours', 'About two weeks', 'About two months'],
     answer: 0,
-    hint: 'Freezers and vacuum chambers cost more than a drying room.',
-    nice: 'It costs more to do. Eric spent two years getting the drying right.'
+    hint: 'Much faster than hanging it in a drying room.',
+    nice: 'Within 48 hours of harvest, instead of weeks of hang drying.'
   },
   {
     q: 'Who came up with the name: ‘Space Weed’?',
